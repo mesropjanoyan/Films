@@ -41,11 +41,13 @@ The site explores three "courses" that question the nature of reality, identity,
 
 ### Visual Design
 - ✅ **Apple-inspired aesthetic** with clean typography, subtle shadows, and refined spacing
+- ✅ **Dark/light mode toggle** with localStorage persistence and system preference detection
 - ✅ **Hero section** with animated collage background and gradient overlay
 - ✅ **Gradient intro card** that overlaps the hero with smooth transition
+- ✅ **Theme-specific color palettes** for each course section (Matrix Green, Perfect Blue, Paprika Red, Millennium Gold)
 - ✅ **Responsive design** optimized for desktop (1024px+), tablet (768px), and mobile (480px)
 - ✅ **Custom fonts**: Inter for body text, Jacquard 12 for decorative elements, Rubik Glitch for hero
-- ✅ **Material Symbols** icon system throughout
+- ✅ **Material Symbols** icon system throughout with decorative scatter layouts
 
 ### Interactive Elements
 - ✅ **Image slideshows** for each film with navigation arrows and indicators
@@ -72,11 +74,22 @@ The site explores three "courses" that question the nature of reality, identity,
 
 ### Link Preview System
 - ✅ **Local image hosting** for article previews (stored in `/images/link-previews/`)
-- ✅ **16 preview images** across all sections (Ghost/Matrix: 4, Perfect Blue: 3, Paprika: 4, Millennium Actress: 4)
+- ✅ **16 preview images** across all sections (Ghost/Matrix: 4, Perfect Blue: 4, Paprika: 4, Millennium Actress: 4)
 - ✅ **Material Symbols fallback** for links without images
 - ✅ **Rich metadata display** with publisher, date, and link styling
 
+### Code Architecture & Maintainability
+- ✅ **CSS Custom Properties system** with comprehensive variable definitions for colors, spacing, and theme values
+- ✅ **Semantic class-based selectors** replacing fragile `:nth-of-type()` pseudo-classes
+- ✅ **Course theme classes** (`.course-system`, `.course-self`, `.course-bridge`, `.course-dessert`) for robust styling
+- ✅ **Consolidated color system** with no hardcoded colors or duplicate values
+- ✅ **Efficient CSS architecture** eliminating unnecessary complexity while maintaining visual fidelity
+
 ### Recent Enhancements
+- ✅ **Dark mode implementation** - fully functional theme toggle with automatic persistence
+- ✅ **CSS refactoring for maintainability** - replaced 200+ lines of `:nth-of-type()` selectors with semantic classes
+- ✅ **Comprehensive color system audit** - eliminated hardcoded colors, consolidated to CSS variables
+- ✅ **Divider styling optimization** - unified divider styles with proper light/dark mode support
 - ✅ **Hero structure optimization** - removed unnecessary wrapper, improved z-index layering
 - ✅ **Mobile intro card fix** - resolved column-span issue causing misplaced subtitle
 - ✅ **Refined UI details** - enhanced dividers, disclaimers, cards, and links with Apple-like polish
@@ -87,29 +100,34 @@ The site explores three "courses" that question the nature of reality, identity,
 
 ## 🎨 Design Philosophy
 
-The site embraces a **modern, Apple-inspired design language**:
+The site embraces a **modern, Apple-inspired design language** with:
 - Generous white space and breathing room
 - Subtle shadows and borders for depth
 - Smooth transitions and micro-interactions
 - Typography hierarchy with careful font selection
-- Color palette centered on neutrals with blue accents
+- **Comprehensive theming system** with light and dark modes
+- **Color palette** centered on neutrals with four distinct course themes (Matrix Green, Perfect Blue, Paprika Red, Millennium Gold)
+- **Semantic CSS architecture** using maintainable class-based selectors
 - Responsive layouts that adapt elegantly to all screen sizes
 
 ## 🏗️ Technical Stack
 
 - **Pure HTML5, CSS3, and Vanilla JavaScript** - no frameworks or dependencies
-- **CSS Custom Properties** for maintainable theming
+- **CSS Custom Properties** for maintainable theming with light/dark mode support
+- **Semantic class-based CSS architecture** for robust, maintainable styling
 - **Flexbox and Grid** for responsive layouts
 - **CSS Animations** with cubic-bezier easing functions
 - **ES6+ JavaScript** with modern patterns and DOMContentLoaded initialization
+- **localStorage API** for theme preference persistence
+- **matchMedia API** for system preference detection
 
-## � Project Structure
+## 📁 Project Structure
 
 ```
 Films/
-├── index.html              # Main document (423 lines)
-├── styles.css              # All styling (1632+ lines)
-├── script.js               # Interactivity (880+ lines)
+├── index.html              # Main document (508 lines)
+├── styles.css              # All styling (2685 lines)
+├── script.js               # Interactivity (1023 lines)
 ├── README.md               # This file
 └── images/
     ├── ghost-in-shell/     # Film posters and screengrabs
@@ -119,18 +137,20 @@ Films/
     ├── paprika/
     ├── inception/
     ├── millennium-actress/
-    └── link-previews/      # Article preview images (16 files, ~3.3MB)
+    └── link-previews/      # Article preview images (16 files, ~1.6MB)
 ```
 
 ## 🚀 Current Status
 
-The project is **production-ready** with:
+The project is **production-ready and actively maintained** with:
 - All core features implemented and polished
 - Comprehensive content for all seven films
+- Full dark/light mode theming system
 - Responsive design tested across breakpoints
-- Clean, maintainable codebase
+- Clean, maintainable codebase with semantic architecture
 - Optimized performance with lazy loading
 - Full accessibility support
+- Recent major refactoring for improved code quality and maintainability
 
 ## 🎯 Future Possibilities
 
@@ -139,8 +159,10 @@ Potential enhancements could include:
 - Interactive comparison tools (side-by-side scene analysis)
 - User comments or community contributions
 - Multilingual support (Japanese subtitles/content)
-- Dark mode theme option
+- ~~Dark mode theme option~~ ✅ **Implemented!**
 - Expanded "Further Reading" with more curated articles
+- Animation on scroll effects for course sections
+- Print stylesheet for offline reading
 
 ## 🎬 Credits
 
