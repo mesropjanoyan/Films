@@ -695,10 +695,12 @@ function initHeroCollage() {
 
     // Configuration constants
     const CONFIG = {
-        CYCLE_INTERVAL: 3000,      // Move one image every 3 seconds
-        IMAGE_MAX_WIDTH: 320,       // Maximum image width in pixels
-        IMAGE_MAX_HEIGHT: 240,      // Maximum image height in pixels
-        BOTTOM_SAFE_ZONE: 250       // Pixels from bottom to avoid gradient cutoff
+        CYCLE_INTERVAL: 3000,           // Move one image every 3 seconds
+        SCREENGRAB_MAX_WIDTH: 320,      // Maximum screengrab width in pixels
+        SCREENGRAB_MAX_HEIGHT: 240,     // Maximum screengrab height in pixels
+        POSTER_MAX_WIDTH: 200,          // Maximum poster width (smaller, portrait)
+        POSTER_MAX_HEIGHT: 300,         // Maximum poster height (portrait ratio)
+        BOTTOM_SAFE_ZONE: 250           // Pixels from bottom to avoid gradient cutoff
     };
 
     // Film directories with screengrab counts
@@ -714,12 +716,22 @@ function initHeroCollage() {
     
     const SCREENGRABS_PER_FILM = 8;
 
-    // Build array of all screengrab paths (7 films × 8 = 56 total)
-    const allImages = FILMS.flatMap(film =>
-        Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) =>
-            `images/${film}/screengrab${i + 1}.jpg`
+    // Build array of all images: posters + screengrabs
+    // 7 posters + (7 films × 8 screengrabs) = 63 total
+    const allImages = [
+        // Add posters first (marked with type for sizing)
+        ...FILMS.map(film => ({
+            src: `images/${film}/poster.jpg`,
+            type: 'poster'
+        })),
+        // Add screengrabs
+        ...FILMS.flatMap(film =>
+            Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) => ({
+                src: `images/${film}/screengrab${i + 1}.jpg`,
+                type: 'screengrab'
+            }))
         )
-    );
+    ];
     
     // Shuffle for visual variety
     const shuffledImages = allImages.sort(() => Math.random() - 0.5);
@@ -777,16 +789,20 @@ function initHeroCollage() {
     /**
      * Create an image element with position
      */
-    function createImage(imageSrc, position, zIndex) {
+    function createImage(imageData, position, zIndex) {
         const img = document.createElement('img');
-        img.src = imageSrc;
-        img.alt = 'Film screengrab';
+        img.src = imageData.src;
+        img.alt = imageData.type === 'poster' ? 'Film poster' : 'Film screengrab';
+        
+        // Use different max dimensions based on image type
+        const maxWidth = imageData.type === 'poster' ? CONFIG.POSTER_MAX_WIDTH : CONFIG.SCREENGRAB_MAX_WIDTH;
+        const maxHeight = imageData.type === 'poster' ? CONFIG.POSTER_MAX_HEIGHT : CONFIG.SCREENGRAB_MAX_HEIGHT;
         
         Object.assign(img.style, {
             left: position.left + '%',
             top: position.top + '%',
-            maxWidth: `${CONFIG.IMAGE_MAX_WIDTH}px`,
-            maxHeight: `${CONFIG.IMAGE_MAX_HEIGHT}px`,
+            maxWidth: `${maxWidth}px`,
+            maxHeight: `${maxHeight}px`,
             objectFit: 'cover',
             transform: `rotate(${position.rotation}deg)`,
             zIndex: zIndex
@@ -828,17 +844,18 @@ function initHeroCollage() {
     }
 
     /**
-     * Initialize all 56 images on load
+     * Initialize all 63 images on load (7 posters + 56 screengrabs)
      */
     function initialize() {
-        shuffledImages.forEach((imageSrc, index) => {
+        shuffledImages.forEach((imageData, index) => {
             const position = generatePosition();
-            const img = createImage(imageSrc, position, index + 1);
+            const img = createImage(imageData, position, index + 1);
             
             collageContainer.appendChild(img);
             
             imageElements.push({
                 element: img,
+                imageData: imageData,
                 position: position,
                 lastCycled: Date.now()
             });
