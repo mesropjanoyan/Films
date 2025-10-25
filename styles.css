@@ -41,6 +41,21 @@
     --millennium-gold: #ffc107;
     --millennium-gold-dark: #f57c00;
     --millennium-gold-muted: #ffb300;
+    
+    /* IMDb branding colors */
+    --imdb-yellow: #f5c703;
+    --imdb-yellow-hover: #ffd10d;
+    
+    /* Common overlay/transparency colors */
+    --overlay-white: #ffffff;
+    --overlay-light: rgba(255, 255, 255, 0.1);
+    --overlay-medium: rgba(255, 255, 255, 0.2);
+    --overlay-dark: rgba(0, 0, 0, 0.97);
+    
+    /* Divider and border colors */
+    --divider-color: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.06);
+    --surface-subtle: rgba(0, 0, 0, 0.04);
 }
 
 /* Dark mode colors */
@@ -56,6 +71,10 @@
     --nested-border-color: #38383a;
     --warning-bg: #2d2416;
     --warning-border: #ffb300;
+    
+    /* Dark mode overlays */
+    --divider-color: rgba(255, 255, 255, 0.15);
+    --border-subtle: rgba(255, 255, 255, 0.12);
 }
 
 /* Dark mode border and shadow overrides */
@@ -84,12 +103,7 @@
 }
 
 [data-theme="dark"] .divider {
-    background: linear-gradient(to right, 
-        transparent 0%, 
-        rgba(255, 255, 255, 0.08) 20%, 
-        rgba(255, 255, 255, 0.12) 50%, 
-        rgba(255, 255, 255, 0.08) 80%, 
-        transparent 100%);
+    background: var(--divider-color);
 }
 
 /* Prefers dark mode - respect system preference */
@@ -106,6 +120,10 @@
         --nested-border-color: #38383a;
         --warning-bg: #2d2416;
         --warning-border: #ffb300;
+        
+        /* Dark mode overlays */
+        --divider-color: rgba(255, 255, 255, 0.15);
+        --border-subtle: rgba(255, 255, 255, 0.12);
     }
     
     /* System dark mode border and shadow overrides */
@@ -134,23 +152,29 @@
     }
     
     :root:not([data-theme="light"]) .divider {
-        background: linear-gradient(to right, 
-            transparent 0%, 
-            rgba(255, 255, 255, 0.08) 20%, 
-            rgba(255, 255, 255, 0.12) 50%, 
-            rgba(255, 255, 255, 0.08) 80%, 
-            transparent 100%);
+        background: var(--divider-color);
     }
 }
 
 /* Dark mode footer credit divider */
 [data-theme="dark"] .credit {
-    border-top-color: rgba(255, 255, 255, 0.12);
+    border-top-color: var(--border-subtle);
+}
+
+/* Dark mode film tagline borders */
+[data-theme="dark"] .film-tagline {
+    border-top-color: var(--divider-color);
+    border-bottom-color: var(--divider-color);
 }
 
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) .credit {
-        border-top-color: rgba(255, 255, 255, 0.12);
+        border-top-color: var(--border-subtle);
+    }
+    
+    :root:not([data-theme="light"]) .film-tagline {
+        border-top-color: var(--divider-color);
+        border-bottom-color: var(--divider-color);
     }
 }
 
@@ -260,7 +284,7 @@ a:focus-visible {
     left: 50%;
     transform: translateX(-50%);
     background: var(--accent-color);
-    color: white;
+    color: var(--overlay-white);
     padding: 0.75rem 1.5rem;
     text-decoration: none;
     font-weight: 600;
@@ -555,12 +579,7 @@ strong {
 /* Divider */
 .divider {
     height: 1px;
-    background: linear-gradient(to right, 
-        transparent 0%, 
-        rgba(0, 0, 0, 0.08) 20%, 
-        rgba(0, 0, 0, 0.12) 50%, 
-        rgba(0, 0, 0, 0.08) 80%, 
-        transparent 100%);
+    background: var(--divider-color);
     margin: calc(var(--spacing-xl) + var(--spacing-md)) auto;
     max-width: 240px;
     border: none;
@@ -612,12 +631,12 @@ strong {
 }
 
 /* Position icons in scattered arrangement around header */
-/* First Course: The System - Matrix Green Theme */
-.course-section:nth-of-type(1) .subtitle {
+/* System Course - Matrix Green Theme */
+.course-system .subtitle {
     color: var(--matrix-green-dark);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+.course-system .course-header .decorative-icon:nth-child(1) {
     top: -20px;
     left: 5%;
     transform: rotate(-12deg);
@@ -627,11 +646,11 @@ strong {
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+.course-system .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+.course-system .course-header .decorative-icon:nth-child(2) {
     top: 10px;
     right: 8%;
     transform: rotate(15deg);
@@ -641,11 +660,11 @@ strong {
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+.course-system .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
+.course-system .course-header .decorative-icon:nth-child(3) {
     top: 80px;
     left: 12%;
     transform: rotate(-8deg);
@@ -655,21 +674,21 @@ strong {
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+.course-system .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
 /* Apply Matrix green to film card icons */
-.course-section:nth-of-type(1) .film-info .material-symbols-rounded {
+.course-system .film-info .material-symbols-rounded {
     color: var(--matrix-green-muted);
 }
 
-/* Second Course: The Self - Perfect Blue Theme */
-.course-section:nth-of-type(2) .subtitle {
+/* Self Course - Perfect Blue Theme */
+.course-self .subtitle {
     color: var(--perfect-blue-dark);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+.course-self .course-header .decorative-icon:nth-child(1) {
     top: -5px;
     right: 10%;
     transform: rotate(18deg);
@@ -679,11 +698,11 @@ strong {
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+.course-self .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+.course-self .course-header .decorative-icon:nth-child(2) {
     top: -15px;
     left: 12%;
     transform: rotate(-10deg);
@@ -693,11 +712,11 @@ strong {
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+.course-self .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
+.course-self .course-header .decorative-icon:nth-child(3) {
     top: 90px;
     right: 15%;
     transform: rotate(5deg);
@@ -707,21 +726,21 @@ strong {
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+.course-self .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
 /* Apply Perfect Blue to film card icons */
-.course-section:nth-of-type(2) .film-info .material-symbols-rounded {
+.course-self .film-info .material-symbols-rounded {
     color: var(--perfect-blue-muted);
 }
 
-/* Third Course: The Bridge - Paprika Red-Orange Theme */
-.course-section:nth-of-type(3) .subtitle {
+/* Bridge Course - Paprika Red-Orange Theme */
+.course-bridge .subtitle {
     color: var(--paprika-red-dark);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+.course-bridge .course-header .decorative-icon:nth-child(1) {
     top: -75px;
     left: 10%;
     transform: rotate(-15deg);
@@ -731,11 +750,11 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+.course-bridge .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
+.course-bridge .course-header .decorative-icon:nth-child(2) {
     top: 85px;
     left: 7%;
     transform: rotate(12deg);
@@ -745,11 +764,11 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+.course-bridge .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+.course-bridge .course-header .decorative-icon:nth-child(3) {
     top: 5px;
     right: 10%;
     transform: rotate(-6deg);
@@ -759,21 +778,21 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+.course-bridge .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
 /* Apply Paprika red-orange to film card icons */
-.course-section:nth-of-type(3) .film-info .material-symbols-rounded {
+.course-bridge .film-info .material-symbols-rounded {
     color: var(--paprika-red-muted);
 }
 
 /* Dessert Course - Millennium Actress Yellow-Gold Theme */
-.course-section.dessert .subtitle {
+.course-dessert .subtitle {
     color: var(--millennium-gold-dark);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(1) {
+.course-dessert .course-header .decorative-icon:nth-child(1) {
     top: 20px;
     left: 0%;
     transform: rotate(8deg);
@@ -783,11 +802,11 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+.course-dessert .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
     color: var(--millennium-gold-dark);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(2) {
+.course-dessert .course-header .decorative-icon:nth-child(2) {
     top: -25px;
     right: 0%;
     transform: rotate(-14deg);
@@ -797,11 +816,11 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+.course-dessert .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
     color: var(--millennium-gold-dark);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(3) {
+.course-dessert .course-header .decorative-icon:nth-child(3) {
     top: 120px;
     right: 11%;
     transform: rotate(10deg);
@@ -811,12 +830,12 @@ strong {
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section.dessert .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+.course-dessert .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
     color: var(--millennium-gold-dark);
 }
 
 /* Apply Millennium gold to film card icons */
-.course-section.dessert .film-info .material-symbols-rounded {
+.course-dessert .film-info .material-symbols-rounded {
     color: var(--millennium-gold-muted);
 }
 
@@ -867,14 +886,14 @@ strong {
     background: var(--card-background);
     padding: calc(var(--spacing-md) + 0.25rem) var(--spacing-md);
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-subtle);
     margin-bottom: var(--spacing-lg);
     font-size: 0.9375rem;
     line-height: 1.6;
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-sm);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 3px var(--surface-subtle);
 }
 
 .disclaimer .material-symbols-rounded {
@@ -944,36 +963,36 @@ strong {
         'opsz' 24;
 }
 
-/* First Course: The System - Matrix Green Theme */
-.course-section:nth-of-type(1) .arrow-connector {
+/* System Course - Matrix Green Theme */
+.course-system .arrow-connector {
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
     border: 1.5px solid rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(1) .arrow-connector .material-symbols-rounded {
+.course-system .arrow-connector .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
-/* Second Course: The Self - Perfect Blue Theme */
-.course-section:nth-of-type(2) .arrow-connector {
+/* Self Course - Perfect Blue Theme */
+.course-self .arrow-connector {
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
     border: 1.5px solid rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(2) .arrow-connector .material-symbols-rounded {
+.course-self .arrow-connector .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
-/* Third Course: The Bridge - Paprika Red-Orange Theme */
-.course-section:nth-of-type(3) .arrow-connector {
+/* Bridge Course - Paprika Red-Orange Theme */
+.course-bridge .arrow-connector {
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
     border: 1.5px solid rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.course-section:nth-of-type(3) .arrow-connector .material-symbols-rounded {
+.course-bridge .arrow-connector .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
@@ -985,8 +1004,8 @@ strong {
     padding-bottom: var(--spacing-md);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
                 box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 2px 8px var(--surface-subtle);
 }
 
 .film-card:hover {
@@ -1019,7 +1038,7 @@ strong {
     width: 28px;
     height: 28px;
     border-radius: 6px;
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--surface-subtle);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1048,13 +1067,13 @@ strong {
     width: 28px;
     height: 28px;
     border-radius: 6px;
-    background: rgb(245, 199, 3);
+    background: var(--imdb-yellow);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0;
 }
 
 .imdb-link:hover {
-    background: rgb(255, 209, 13);
+    background: var(--imdb-yellow-hover);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(245, 199, 3, 0.3);
 }
@@ -1115,11 +1134,10 @@ strong {
     letter-spacing: 0.12em;
     margin-bottom: 1rem;
     padding: 0.75rem 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 1px solid var(--divider-color);
+    border-bottom: 1px solid var(--divider-color);
     text-transform: uppercase;
     opacity: 0.75;
-    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.01) 50%, transparent 100%);
 }
 
 .letterboxd-link {
@@ -1322,11 +1340,11 @@ strong {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--overlay-light);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
+    color: var(--overlay-white);
     font-size: 2rem;
     padding: 0.5rem;
     cursor: pointer;
@@ -1343,7 +1361,7 @@ strong {
 
 .slide-nav .material-symbols-rounded {
     font-size: 28px;
-    color: white;
+    color: var(--overlay-white);
 }
 
 .slideshow-container:hover .slide-nav {
@@ -1351,7 +1369,7 @@ strong {
 }
 
 .slide-nav:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--overlay-medium);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     transform: translateY(-50%) scale(1.05);
@@ -1421,7 +1439,7 @@ strong {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.97);
+    background: var(--overlay-dark);
     z-index: 10000;
     padding: 4.5rem 3rem 3rem;
     opacity: 0;
@@ -1451,11 +1469,11 @@ strong {
     position: fixed;
     top: 1.5rem;
     right: 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--overlay-light);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
+    color: var(--overlay-white);
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 10001;
@@ -1474,7 +1492,7 @@ strong {
 
 .lightbox-close:hover,
 .lightbox-close:focus {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--overlay-medium);
     border-color: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
     outline: none;
@@ -1528,11 +1546,11 @@ strong {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--overlay-light);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
+    color: var(--overlay-white);
     font-size: 2rem;
     padding: 1rem;
     cursor: pointer;
@@ -1546,12 +1564,12 @@ strong {
 
 .lightbox-nav .material-symbols-rounded {
     font-size: 32px;
-    color: white;
+    color: var(--overlay-white);
 }
 
 .lightbox-nav:hover:not(:disabled),
 .lightbox-nav:focus:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--overlay-medium);
     border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-50%) scale(1.05);
     outline: none;
@@ -1698,8 +1716,8 @@ strong {
     border-radius: 18px;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 2px 8px var(--surface-subtle);
 }
 
 .commentary-card p {
@@ -1721,8 +1739,8 @@ strong {
     padding: calc(var(--spacing-md) + 0.25rem) var(--spacing-md) var(--spacing-md);
     border-radius: 18px;
     margin-top: var(--spacing-lg);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 2px 8px var(--surface-subtle);
 }
 
 .links-section h4 {
@@ -1738,19 +1756,19 @@ strong {
 }
 
 /* Theme colors for "Further Reading" heading icons */
-.course-section:nth-of-type(1) .links-section h4 .material-symbols-rounded {
+.course-system .links-section h4 .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
-.course-section:nth-of-type(2) .links-section h4 .material-symbols-rounded {
+.course-self .links-section h4 .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
-.course-section:nth-of-type(3) .links-section h4 .material-symbols-rounded {
+.course-bridge .links-section h4 .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
-.course-section.dessert .links-section h4 .material-symbols-rounded {
+.course-dessert .links-section h4 .material-symbols-rounded {
     color: var(--millennium-gold-dark);
 }
 
@@ -1928,59 +1946,59 @@ strong {
 }
 
 /* Theme-specific colors for Further Reading link icons */
-/* First Course: The System - Matrix Green */
-.course-section:nth-of-type(1) .link-publisher .material-symbols-rounded,
-.course-section:nth-of-type(1) .link-date .material-symbols-rounded {
+/* System Course - Matrix Green */
+.course-system .link-publisher .material-symbols-rounded,
+.course-system .link-date .material-symbols-rounded {
     color: var(--matrix-green-muted);
 }
 
-.course-section:nth-of-type(1) .link-icon-fallback .material-symbols-rounded {
+.course-system .link-icon-fallback .material-symbols-rounded {
     color: var(--matrix-green-muted);
 }
 
-.course-section:nth-of-type(1) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+.course-system .links-list a:hover .link-icon-fallback .material-symbols-rounded {
     color: var(--matrix-green-dark);
 }
 
-/* Second Course: The Self - Perfect Blue */
-.course-section:nth-of-type(2) .link-publisher .material-symbols-rounded,
-.course-section:nth-of-type(2) .link-date .material-symbols-rounded {
+/* Self Course - Perfect Blue */
+.course-self .link-publisher .material-symbols-rounded,
+.course-self .link-date .material-symbols-rounded {
     color: var(--perfect-blue-muted);
 }
 
-.course-section:nth-of-type(2) .link-icon-fallback .material-symbols-rounded {
+.course-self .link-icon-fallback .material-symbols-rounded {
     color: var(--perfect-blue-muted);
 }
 
-.course-section:nth-of-type(2) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+.course-self .links-list a:hover .link-icon-fallback .material-symbols-rounded {
     color: var(--perfect-blue-dark);
 }
 
-/* Third Course: The Bridge - Paprika Red-Orange */
-.course-section:nth-of-type(3) .link-publisher .material-symbols-rounded,
-.course-section:nth-of-type(3) .link-date .material-symbols-rounded {
+/* Bridge Course - Paprika Red-Orange */
+.course-bridge .link-publisher .material-symbols-rounded,
+.course-bridge .link-date .material-symbols-rounded {
     color: var(--paprika-red-muted);
 }
 
-.course-section:nth-of-type(3) .link-icon-fallback .material-symbols-rounded {
+.course-bridge .link-icon-fallback .material-symbols-rounded {
     color: var(--paprika-red-muted);
 }
 
-.course-section:nth-of-type(3) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+.course-bridge .links-list a:hover .link-icon-fallback .material-symbols-rounded {
     color: var(--paprika-red-dark);
 }
 
 /* Dessert Course - Millennium Actress Yellow-Gold */
-.course-section.dessert .link-publisher .material-symbols-rounded,
-.course-section.dessert .link-date .material-symbols-rounded {
+.course-dessert .link-publisher .material-symbols-rounded,
+.course-dessert .link-date .material-symbols-rounded {
     color: var(--millennium-gold-muted);
 }
 
-.course-section.dessert .link-icon-fallback .material-symbols-rounded {
+.course-dessert .link-icon-fallback .material-symbols-rounded {
     color: var(--millennium-gold-muted);
 }
 
-.course-section.dessert .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+.course-dessert .links-list a:hover .link-icon-fallback .material-symbols-rounded {
     color: var(--millennium-gold-dark);
 }
 
@@ -2223,66 +2241,66 @@ strong {
         font-size: 24px;
     }
 
-    /* First Course - scale positions proportionally */
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+    /* System Course - scale positions proportionally */
+    .course-system .course-header .decorative-icon:nth-child(1) {
         top: -15px;
         left: 4%;
     }
 
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+    .course-system .course-header .decorative-icon:nth-child(2) {
         top: 8px;
         right: 6%;
     }
 
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
+    .course-system .course-header .decorative-icon:nth-child(3) {
         top: 60px;
         left: 9%;
     }
 
-    /* Second Course - scale positions proportionally */
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+    /* Self Course - scale positions proportionally */
+    .course-self .course-header .decorative-icon:nth-child(1) {
         top: -4px;
         right: 8%;
     }
 
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+    .course-self .course-header .decorative-icon:nth-child(2) {
         top: -12px;
         left: 9%;
     }
 
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
+    .course-self .course-header .decorative-icon:nth-child(3) {
         top: 68px;
         right: 12%;
     }
 
-    /* Third Course - scale positions proportionally */
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+    /* Bridge Course - scale positions proportionally */
+    .course-bridge .course-header .decorative-icon:nth-child(1) {
         top: -56px;
         left: 8%;
     }
 
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
+    .course-bridge .course-header .decorative-icon:nth-child(2) {
         top: 64px;
         left: 5%;
     }
 
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+    .course-bridge .course-header .decorative-icon:nth-child(3) {
         top: 4px;
         right: 8%;
     }
 
     /* Dessert Course - scale positions proportionally */
-    .course-section.dessert .course-header .decorative-icon:nth-child(1) {
+    .course-dessert .course-header .decorative-icon:nth-child(1) {
         top: 15px;
         left: 0%;
     }
 
-    .course-section.dessert .course-header .decorative-icon:nth-child(2) {
+    .course-dessert .course-header .decorative-icon:nth-child(2) {
         top: -19px;
         right: 0%;
     }
 
-    .course-section.dessert .course-header .decorative-icon:nth-child(3) {
+    .course-dessert .course-header .decorative-icon:nth-child(3) {
         top: 68px;
         right: 9%;
     }
@@ -2350,15 +2368,15 @@ strong {
     }
     
     /* Restore theme colors for mobile arrows */
-    .course-section:nth-of-type(1) .arrow-connector .material-symbols-rounded::before {
+    .course-system .arrow-connector .material-symbols-rounded::before {
         color: var(--matrix-green-dark);
     }
     
-    .course-section:nth-of-type(2) .arrow-connector .material-symbols-rounded::before {
+    .course-self .arrow-connector .material-symbols-rounded::before {
         color: var(--perfect-blue-dark);
     }
     
-    .course-section:nth-of-type(3) .arrow-connector .material-symbols-rounded::before {
+    .course-bridge .arrow-connector .material-symbols-rounded::before {
         color: var(--paprika-red-dark);
     }
     
@@ -2445,35 +2463,35 @@ strong {
     }
 
     /* Tighten horizontal spacing to prevent edge cutoff */
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+    .course-system .course-header .decorative-icon:nth-child(1) {
         left: 3%;
     }
 
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+    .course-system .course-header .decorative-icon:nth-child(2) {
         right: 5%;
     }
 
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+    .course-self .course-header .decorative-icon:nth-child(1) {
         right: 7%;
     }
 
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+    .course-self .course-header .decorative-icon:nth-child(2) {
         left: 7%;
     }
 
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+    .course-bridge .course-header .decorative-icon:nth-child(1) {
         left: 7%;
     }
 
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+    .course-bridge .course-header .decorative-icon:nth-child(3) {
         right: 7%;
     }
 
-    .course-section.dessert .course-header .decorative-icon:nth-child(1) {
+    .course-dessert .course-header .decorative-icon:nth-child(1) {
         left: 2%;
     }
 
-    .course-section.dessert .course-header .decorative-icon:nth-child(2) {
+    .course-dessert .course-header .decorative-icon:nth-child(2) {
         right: 2%;
     }
 
@@ -2594,7 +2612,7 @@ strong {
 /* Print Styles */
 @media print {
     body {
-        background: white;
+        background: var(--overlay-white);
     }
 
     .film-card {
