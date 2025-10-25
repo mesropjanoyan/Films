@@ -234,6 +234,11 @@ strong {
 }
 
 .hero h1 {
+    font-family: 'Texturina', serif;
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    font-weight: 900;
+    font-variation-settings: 'opsz' 72;
+    font-feature-settings: 'liga' 1, 'dlig' 1, 'clig' 1;
     color: white;
     text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 
                  0 1px 4px rgba(0, 0, 0, 0.4),
