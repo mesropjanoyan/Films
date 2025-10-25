@@ -315,9 +315,15 @@ strong {
 /* Divider */
 .divider {
     height: 1px;
-    background: var(--border-color);
-    margin: var(--spacing-xl) auto;
-    max-width: 200px;
+    background: linear-gradient(to right, 
+        transparent 0%, 
+        rgba(0, 0, 0, 0.08) 20%, 
+        rgba(0, 0, 0, 0.12) 50%, 
+        rgba(0, 0, 0, 0.08) 80%, 
+        transparent 100%);
+    margin: calc(var(--spacing-xl) + var(--spacing-md)) auto;
+    max-width: 240px;
+    border: none;
 }
 
 /* Course Section */
@@ -346,15 +352,16 @@ strong {
 /* Disclaimer */
 .disclaimer {
     background: var(--card-background);
-    padding: var(--spacing-md);
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: calc(var(--spacing-md) + 0.25rem) var(--spacing-md);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
     margin-bottom: var(--spacing-lg);
     font-size: 0.9375rem;
-    line-height: 1.5;
+    line-height: 1.6;
     display: flex;
     align-items: flex-start;
     gap: var(--spacing-sm);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .disclaimer .material-symbols-rounded {
@@ -375,7 +382,8 @@ strong {
 
 .disclaimer.warning {
     background: var(--warning-bg);
-    border-color: rgba(255, 179, 0, 0.2);
+    border-color: rgba(255, 179, 0, 0.25);
+    box-shadow: 0 1px 4px rgba(255, 179, 0, 0.08);
 }
 
 .disclaimer.warning .material-symbols-rounded {
@@ -418,12 +426,13 @@ strong {
     padding-bottom: var(--spacing-md);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
                 box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .film-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.10), 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .film-card h3 {
@@ -472,13 +481,14 @@ strong {
     font-size: 0.8125rem;
     color: var(--primary-text);
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     margin-bottom: 1rem;
-    padding: 0.625rem 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.75;
+    background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.01) 50%, transparent 100%);
 }
 
 .letterboxd-link {
@@ -512,18 +522,19 @@ strong {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem;
+    padding: 0.875rem;
     background: white;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
     margin-top: 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .letterboxd-link.smart-link:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: var(--accent-color);
+    box-shadow: 0 6px 16px rgba(0, 113, 227, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 113, 227, 0.3);
 }
 
 .letterboxd-thumb {
@@ -1002,7 +1013,8 @@ strong {
     border-radius: 18px;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .commentary-card p {
@@ -1021,10 +1033,11 @@ strong {
 /* Links Section - Smart link cards with rich metadata */
 .links-section {
     background: var(--card-background);
-    padding: var(--spacing-md);
-    border-radius: 16px;
+    padding: calc(var(--spacing-md) + 0.25rem) var(--spacing-md) var(--spacing-md);
+    border-radius: 18px;
     margin-top: var(--spacing-lg);
-    border: 1px solid rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .links-section h4 {
@@ -1039,12 +1052,13 @@ strong {
     margin-bottom: 1rem;
     padding: 0;
     background: white;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     animation: fadeInLink 0.4s ease-out forwards;
     opacity: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 @keyframes fadeInLink {
@@ -1067,8 +1081,8 @@ strong {
 
 .links-list li:hover {
     transform: translateX(4px);
-    box-shadow: 0 2px 12px rgba(0, 113, 227, 0.12), 0 1px 4px rgba(0, 0, 0, 0.06);
-    border-color: var(--accent-color);
+    box-shadow: 0 4px 16px rgba(0, 113, 227, 0.14), 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 113, 227, 0.25);
 }
 
 .links-list li:last-child {
@@ -1237,11 +1251,11 @@ strong {
     font-size: 0.8125rem;
     font-weight: 400;
     color: var(--secondary-text);
-    opacity: 0.6;
-    letter-spacing: 0.01em;
+    opacity: 0.5;
+    letter-spacing: 0.015em;
     padding: var(--spacing-md) 0;
     margin: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Animations */
