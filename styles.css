@@ -570,7 +570,6 @@ strong {
 .course-section {
     margin-bottom: var(--spacing-xl);
     animation: fadeInUp 0.6s ease-out;
-    overflow: visible; /* Allow decorative icons to extend beyond section */
 }
 
 .course-header {
@@ -578,10 +577,13 @@ strong {
     text-align: center;
     position: relative;
     padding: 2rem 0;
-    overflow: visible; /* Allow icons to extend slightly beyond bounds */
 }
 
-/* Decorative Icons - Apple-style circular badges */
+/* ============================================
+   DECORATIVE ORBIT ICONS - COMPLETE REWRITE
+   Icons positioned to reach viewport edges
+   ============================================ */
+
 .decorative-icon {
     position: absolute;
     width: 56px;
@@ -590,19 +592,16 @@ strong {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), rgba(0, 113, 227, 0.05));
     backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(0, 113, 227, 0.15);
-    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    -webkit-backdrop-filter: blur(10px);
     pointer-events: none;
     user-select: none;
     animation: floatIcon 4s ease-in-out infinite;
-    z-index: 0;
+    z-index: 1;
 }
 
 .decorative-icon .material-symbols-rounded {
     font-size: 28px;
-    color: var(--accent-color);
     opacity: 0.7;
     font-variation-settings:
         'FILL' 1,
@@ -611,19 +610,19 @@ strong {
         'opsz' 24;
 }
 
-/* Position icons in scattered arrangement around header */
 /* First Course: The System - Matrix Green Theme */
 .course-section:nth-of-type(1) .subtitle {
     color: var(--matrix-green-dark);
 }
 
+/* Matrix Green Icons */
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
     top: -20px;
-    left: 5%;
+    left: calc((100vw - 100%) / -2);
     transform: rotate(-12deg);
     animation-delay: 0s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border-color: rgba(0, 204, 51, 0.2);
+    border: 1.5px solid rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -633,11 +632,11 @@ strong {
 
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
     top: 10px;
-    right: 8%;
+    right: calc((100vw - 100%) / -2);
     transform: rotate(15deg);
     animation-delay: 1.3s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border-color: rgba(0, 204, 51, 0.2);
+    border: 1.5px solid rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -651,7 +650,7 @@ strong {
     transform: rotate(-8deg);
     animation-delay: 2.6s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border-color: rgba(0, 204, 51, 0.2);
+    border: 1.5px solid rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -659,7 +658,6 @@ strong {
     color: var(--matrix-green-dark);
 }
 
-/* Apply Matrix green to film card icons */
 .course-section:nth-of-type(1) .film-info .material-symbols-rounded {
     color: var(--matrix-green-muted);
 }
@@ -671,11 +669,11 @@ strong {
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
     top: -5px;
-    right: 10%;
+    right: calc((100vw - 100%) / -2);
     transform: rotate(18deg);
     animation-delay: 0.5s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border-color: rgba(25, 118, 210, 0.2);
+    border: 1.5px solid rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -685,11 +683,11 @@ strong {
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
     top: -15px;
-    left: 12%;
+    left: calc((100vw - 100%) / -2);
     transform: rotate(-10deg);
     animation-delay: 1.8s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border-color: rgba(25, 118, 210, 0.2);
+    border: 1.5px solid rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -703,7 +701,7 @@ strong {
     transform: rotate(5deg);
     animation-delay: 3.1s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border-color: rgba(25, 118, 210, 0.2);
+    border: 1.5px solid rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -711,7 +709,6 @@ strong {
     color: var(--perfect-blue-dark);
 }
 
-/* Apply Perfect Blue to film card icons */
 .course-section:nth-of-type(2) .film-info .material-symbols-rounded {
     color: var(--perfect-blue-muted);
 }
@@ -723,11 +720,11 @@ strong {
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
     top: -75px;
-    left: 10%;
+    left: calc((100vw - 100%) / -2);
     transform: rotate(-15deg);
     animation-delay: 0.3s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border-color: rgba(217, 71, 28, 0.2);
+    border: 1.5px solid rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -741,7 +738,7 @@ strong {
     transform: rotate(12deg);
     animation-delay: 1.6s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border-color: rgba(217, 71, 28, 0.2);
+    border: 1.5px solid rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -751,11 +748,11 @@ strong {
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
     top: 5px;
-    right: 10%;
+    right: calc((100vw - 100%) / -2);
     transform: rotate(-6deg);
     animation-delay: 2.9s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border-color: rgba(217, 71, 28, 0.2);
+    border: 1.5px solid rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -763,7 +760,6 @@ strong {
     color: var(--paprika-red-dark);
 }
 
-/* Apply Paprika red-orange to film card icons */
 .course-section:nth-of-type(3) .film-info .material-symbols-rounded {
     color: var(--paprika-red-muted);
 }
@@ -775,11 +771,11 @@ strong {
 
 .course-section.dessert .course-header .decorative-icon:nth-child(1) {
     top: 20px;
-    left: 0%;
+    left: calc((100vw - 100%) / -2);
     transform: rotate(8deg);
     animation-delay: 0.7s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border-color: rgba(245, 124, 0, 0.2);
+    border: 1.5px solid rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -789,11 +785,11 @@ strong {
 
 .course-section.dessert .course-header .decorative-icon:nth-child(2) {
     top: -25px;
-    right: 0%;
+    right: calc((100vw - 100%) / -2);
     transform: rotate(-14deg);
     animation-delay: 2s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border-color: rgba(245, 124, 0, 0.2);
+    border: 1.5px solid rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -807,7 +803,7 @@ strong {
     transform: rotate(10deg);
     animation-delay: 3.3s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border-color: rgba(245, 124, 0, 0.2);
+    border: 1.5px solid rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -815,7 +811,6 @@ strong {
     color: var(--millennium-gold-dark);
 }
 
-/* Apply Millennium gold to film card icons */
 .course-section.dessert .film-info .material-symbols-rounded {
     color: var(--millennium-gold-muted);
 }
@@ -2144,68 +2139,40 @@ strong {
         font-size: 24px;
     }
 
-    /* First Course - scale positions proportionally */
+    /* First Course - Edge icons touch viewport edges */
     .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
-        top: -15px;
-        left: 4%;
+        left: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
     .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
-        top: 8px;
-        right: 6%;
+        right: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
-        top: 60px;
-        left: 9%;
-    }
-
-    /* Second Course - scale positions proportionally */
+    /* Second Course - Edge icons touch viewport edges */
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
-        top: -4px;
-        right: 8%;
+        right: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
-        top: -12px;
-        left: 9%;
+        left: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
-    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
-        top: 68px;
-        right: 12%;
-    }
-
-    /* Third Course - scale positions proportionally */
+    /* Third Course - Edge icons touch viewport edges */
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
-        top: -56px;
-        left: 8%;
-    }
-
-    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
-        top: 64px;
-        left: 5%;
+        left: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
-        top: 4px;
-        right: 8%;
+        right: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
-    /* Dessert Course - scale positions proportionally */
+    /* Dessert Course - Edge icons touch viewport edges */
     .course-section.dessert .course-header .decorative-icon:nth-child(1) {
-        top: 15px;
-        left: 0%;
+        left: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
     .course-section.dessert .course-header .decorative-icon:nth-child(2) {
-        top: -19px;
-        right: 0%;
-    }
-
-    .course-section.dessert .course-header .decorative-icon:nth-child(3) {
-        top: 68px;
-        right: 9%;
+        right: calc((100vw - 100%) / -2 + 0.5rem);
     }
 
     .finale {
@@ -2370,32 +2337,50 @@ strong {
         left: 3%;
     }
 
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
-        right: 5%;
+    /* Small mobile - smaller icons, edge-aligned */
+    .decorative-icon {
+        width: 44px;
+        height: 44px;
     }
 
+    .decorative-icon .material-symbols-rounded {
+        font-size: 22px;
+    }
+
+    /* First Course - Edge icons with slight inset */
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+        left: calc((100vw - 100%) / -2 + 0.25rem);
+    }
+
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+        right: calc((100vw - 100%) / -2 + 0.25rem);
+    }
+
+    /* Second Course - Edge icons with slight inset */
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
-        right: 7%;
+        right: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
-        left: 7%;
+        left: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
+    /* Third Course - Edge icons with slight inset */
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
-        left: 7%;
+        left: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
-        right: 7%;
+        right: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
+    /* Dessert Course - Edge icons with slight inset */
     .course-section.dessert .course-header .decorative-icon:nth-child(1) {
-        left: 2%;
+        left: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
     .course-section.dessert .course-header .decorative-icon:nth-child(2) {
-        right: 2%;
+        right: calc((100vw - 100%) / -2 + 0.25rem);
     }
 
     /* Intro card spacing adjustments */
