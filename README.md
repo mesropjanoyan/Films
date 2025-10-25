@@ -1,6 +1,6 @@
 # The Enduring Influence of Anime on Cinema
 
-### Live link: mes-film-guide.vercel.app
+### [Live link to Vercel deployment](https://mes-film-guide.vercel.app)
 
 A beautifully designed, single-page web experience exploring how groundbreaking anime films shaped Hollywood's biggest movies. This project pairs three iconic anime masterpieces with the live-action films they directly influenced, creating an educational journey through the intersection of Japanese animation and Western cinema.
 
