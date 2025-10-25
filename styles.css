@@ -162,17 +162,66 @@ strong {
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
-    height: 800px;
+    height: 1050px;
     overflow: hidden;
     z-index: -1;
+    background-color: var(--background);
 }
 
-.hero-image {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    background-size: cover;
-    background-position: center top;
+.hero-image-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 300px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.05) 10%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0.25) 30%,
+        rgba(255, 255, 255, 0.4) 40%,
+        rgba(255, 255, 255, 0.55) 50%,
+        rgba(255, 255, 255, 0.7) 60%,
+        rgba(255, 255, 255, 0.82) 70%,
+        rgba(255, 255, 255, 0.92) 80%,
+        rgba(255, 255, 255, 0.97) 90%,
+        rgba(255, 255, 255, 1) 100%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.hero-collage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: visible;
+}
+
+.hero-collage img {
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    will-change: transform;
+}
+
+.hero-collage img.falling {
+    animation: fallIntoPlace 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fallIntoPlace {
+    from {
+        transform: translateY(-120%) scale(0.8) rotate(var(--initial-rotation, 0deg));
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1) rotate(var(--final-rotation, 0deg));
+        opacity: 1;
+    }
 }
 
 .hero-content-overlay {
@@ -186,13 +235,16 @@ strong {
 
 .hero h1 {
     color: white;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 
+                 0 1px 4px rgba(0, 0, 0, 0.4),
+                 0 6px 16px rgba(0, 0, 0, 0.3);
     margin-bottom: var(--spacing-md);
 }
 
 .hero .subtitle {
-    color: rgba(255, 255, 255, 0.95);
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4),
+                 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .container {
@@ -1115,7 +1167,7 @@ strong {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-image-wrapper {
-        height: 600px;
+        height: 850px;
     }
 
     .hero-content-overlay {
@@ -1210,7 +1262,7 @@ strong {
 
 @media (max-width: 480px) {
     .hero-image-wrapper {
-        height: 500px;
+        height: 750px;
     }
 
     .hero-content-overlay {

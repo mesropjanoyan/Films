@@ -49,8 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightbox();
     initSlideshows();
     initScrollAnimations();
-    initLinkManagement();
-    logInstructions();
+    initHeroCollage();
 });
 
 /**
@@ -685,3 +684,192 @@ document.addEventListener('keydown', (e) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 });
+
+// Hero Collage Animation
+function initHeroCollage() {
+    const collageContainer = document.getElementById('heroCollage');
+    if (!collageContainer) return;
+
+    // Configuration constants
+    const CONFIG = {
+        CYCLE_INTERVAL: 3000, // Move one image every 3 seconds
+        IMAGE_MAX_WIDTH: 320,
+        IMAGE_MAX_HEIGHT: 240,
+        BOTTOM_SAFE_ZONE: 250 // Pixels from bottom
+    };
+
+    // Film directories with screengrab counts
+    const FILMS = [
+        'ghost-in-shell',
+        'matrix',
+        'perfect-blue',
+        'black-swan',
+        'paprika',
+        'inception',
+        'millennium-actress'
+    ];
+    
+    const SCREENGRABS_PER_FILM = 8;
+
+    // Build array of all screengrab paths (56 total)
+    const allImages = FILMS.flatMap(film =>
+        Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) =>
+            `images/${film}/screengrab${i + 1}.jpg`
+        )
+    );
+    
+    // Shuffle for variety
+    const shuffledImages = allImages.sort(() => Math.random() - 0.5);
+
+    // Track all image elements
+    const imageElements = [];
+
+    /**
+     * Generate position using density gradient approach
+     * Dense at top and center, sparse at bottom
+     */
+    function generatePosition() {
+        const container = collageContainer.getBoundingClientRect();
+        const containerWidth = container.width;
+        const containerHeight = container.height;
+        
+        // Calculate usable area (avoid bottom safe zone)
+        const usableTop = 0;
+        const usableBottom = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
+        const usableHeight = usableBottom - usableTop;
+        
+        // Vertical: Strong bias toward top
+        const verticalBias = Math.pow(Math.random(), 2.5);
+        const top = usableTop + (verticalBias * usableHeight);
+        
+        // Horizontal: Center-focused bell curve
+        let horizontalRandom = 0;
+        for (let i = 0; i < 3; i++) {
+            horizontalRandom += Math.random();
+        }
+        horizontalRandom = horizontalRandom / 3;
+        
+        const horizontalBias = (horizontalRandom - 0.5) * 2;
+        const centerX = 50; // Center of viewport
+        const left = centerX + (horizontalBias * 50); // ±50% from center
+        
+        // Manual correction: shift 150px left
+        const leftCorrectionPercent = (-150 / containerWidth) * 100;
+        const correctedLeft = left + leftCorrectionPercent;
+        
+        // Small jitter
+        const jitterX = (Math.random() - 0.5) * 3;
+        const jitterY = (Math.random() - 0.5) * 3;
+        
+        return {
+            left: Math.max(0, Math.min(100, correctedLeft + jitterX)),
+            top: Math.max(0, Math.min(usableBottom, top + jitterY)),
+            rotation: (Math.random() - 0.5) * 8
+        };
+    }
+
+    /**
+     * Create an image element with position
+     */
+    function createImage(imageSrc, position, zIndex) {
+        const img = document.createElement('img');
+        img.src = imageSrc;
+        img.alt = 'Film screengrab';
+        
+        Object.assign(img.style, {
+            left: position.left + '%',
+            top: position.top + '%',
+            maxWidth: `${CONFIG.IMAGE_MAX_WIDTH}px`,
+            maxHeight: `${CONFIG.IMAGE_MAX_HEIGHT}px`,
+            objectFit: 'cover',
+            transform: `rotate(${position.rotation}deg)`,
+            zIndex: zIndex
+        });
+        
+        return img;
+    }
+
+    /**
+     * Reposition an image from bottom to top with new random position
+     */
+    function cycleImage(imgData) {
+        // Generate new position
+        const newPosition = generatePosition();
+        
+        // Animate to new position from above
+        const img = imgData.element;
+        
+        // Set initial state (above viewport)
+        img.style.transition = 'none';
+        img.style.opacity = '0';
+        img.style.transform = `translateY(-120%) scale(0.8) rotate(${newPosition.rotation - 15}deg)`;
+        
+        // Update position
+        img.style.left = newPosition.left + '%';
+        img.style.top = newPosition.top + '%';
+        
+        // Force reflow
+        img.offsetHeight;
+        
+        // Animate in
+        img.style.transition = 'transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 1.2s ease-out';
+        img.style.opacity = '1';
+        img.style.transform = `translateY(0) scale(1) rotate(${newPosition.rotation}deg)`;
+        
+        // Update stored position
+        imgData.position = newPosition;
+        imgData.lastCycled = Date.now();
+    }
+
+    /**
+     * Initialize all 56 images on load
+     */
+    function initialize() {
+        shuffledImages.forEach((imageSrc, index) => {
+            const position = generatePosition();
+            const img = createImage(imageSrc, position, index + 1);
+            
+            collageContainer.appendChild(img);
+            
+            imageElements.push({
+                element: img,
+                position: position,
+                lastCycled: Date.now()
+            });
+        });
+
+        console.log(`Loaded ${imageElements.length} screengrabs into hero collage`);
+
+        // Start cycling: find oldest (bottom-most) image and recycle it
+        setInterval(() => {
+            // Find images in bottom 30% that are oldest
+            const container = collageContainer.getBoundingClientRect();
+            const containerHeight = container.height;
+            const bottomThreshold = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
+            
+            const bottomImages = imageElements.filter(img => 
+                img.position.top > bottomThreshold * 0.7 // In lower 30%
+            );
+            
+            if (bottomImages.length > 0) {
+                // Find oldest cycled image
+                const oldestImage = bottomImages.reduce((oldest, current) => 
+                    current.lastCycled < oldest.lastCycled ? current : oldest
+                );
+                
+                cycleImage(oldestImage);
+            } else {
+                // If none at bottom, just cycle the oldest overall
+                const oldestImage = imageElements.reduce((oldest, current) => 
+                    current.lastCycled < oldest.lastCycled ? current : oldest
+                );
+                
+                cycleImage(oldestImage);
+            }
+        }, CONFIG.CYCLE_INTERVAL);
+    }
+
+    // Start the collage
+    initialize();
+}
+
