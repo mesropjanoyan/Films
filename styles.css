@@ -843,6 +843,26 @@ strong {
     }
 }
 
+/* Floating animation for centered arrow icons */
+@keyframes floatIconCentered {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-8px);
+    }
+}
+
+/* Mobile floating animation - ensures centering with 50% top position */
+@keyframes floatIconCenteredMobile {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-8px);
+    }
+}
+
 .course-intro {
     font-size: clamp(1.0625rem, 2vw, 1.125rem);
     margin-bottom: var(--spacing-lg);
@@ -903,11 +923,71 @@ strong {
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     align-items: start;
+    position: relative;
+    overflow: visible;
 }
 
-/* Hide arrow connector completely */
+/* Decorative arrow icon - floating between cards */
 .arrow-connector {
-    display: none;
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: none;
+    user-select: none;
+    animation: floatIconCentered 4s ease-in-out infinite;
+    z-index: 10;
+    left: 50%;
+    top: 35%;
+    animation-delay: 0.8s;
+}
+
+.arrow-connector .material-symbols-rounded {
+    font-size: 28px;
+    opacity: 0.9;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* First Course: The System - Matrix Green Theme */
+.course-section:nth-of-type(1) .arrow-connector {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
+    border: 1.5px solid rgba(0, 204, 51, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(1) .arrow-connector .material-symbols-rounded {
+    color: var(--matrix-green-dark);
+}
+
+/* Second Course: The Self - Perfect Blue Theme */
+.course-section:nth-of-type(2) .arrow-connector {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
+    border: 1.5px solid rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(2) .arrow-connector .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
+}
+
+/* Third Course: The Bridge - Paprika Red-Orange Theme */
+.course-section:nth-of-type(3) .arrow-connector {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
+    border: 1.5px solid rgba(217, 71, 28, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(3) .arrow-connector .material-symbols-rounded {
+    color: var(--paprika-red-dark);
 }
 
 /* Film Card */
@@ -2170,6 +2250,57 @@ strong {
     .double-feature {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
+    }
+    
+    /* Reposition arrow for stacked cards on mobile */
+    .arrow-connector {
+        top: 50%;
+        animation: floatIconCenteredMobile 4s ease-in-out infinite;
+        animation-delay: 0.8s;
+    }
+    
+    /* Change to down arrow on mobile */
+    .arrow-connector .material-symbols-rounded {
+        position: relative;
+        width: 28px;
+        height: 28px;
+        font-size: 0; /* Hide the original icon text */
+    }
+    
+    .arrow-connector .material-symbols-rounded::before {
+        content: 'arrow_downward';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 28px;
+        font-family: 'Material Symbols Rounded';
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24;
+        opacity: 0.9;
+    }
+    
+    /* Restore theme colors for mobile arrows */
+    .course-section:nth-of-type(1) .arrow-connector .material-symbols-rounded::before {
+        color: var(--matrix-green-dark);
+    }
+    
+    .course-section:nth-of-type(2) .arrow-connector .material-symbols-rounded::before {
+        color: var(--perfect-blue-dark);
+    }
+    
+    .course-section:nth-of-type(3) .arrow-connector .material-symbols-rounded::before {
+        color: var(--paprika-red-dark);
+    }
+    
+    .arrow-connector .material-symbols-rounded::after {
+        content: '';
+        display: block;
+        width: 28px;
+        height: 28px;
     }
 
     .film-card {
