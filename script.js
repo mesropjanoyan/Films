@@ -61,32 +61,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Populate all Further Reading sections with smart links
+ * Populate all Further Reading sections with curated articles
  * Organized by course section with rich metadata
  */
 function populateFurtherReadingLinks() {
     // First Course: The System — Ghost in the Shell & The Matrix
-    addFilmLink('links-system', 'https://www.theguardian.com/film/2009/oct/19/hollywood-ghost-in-the-shell', 'Hollywood\'s new frontier', 'The Guardian', 'Oct 2009');
-    addFilmLink('links-system', 'https://www.slashfilm.com/778619/the-classic-anime-that-inspired-the-matrix/', 'The Classic Anime That Inspired The Matrix', 'SlashFilm');
-    addFilmLink('links-system', 'https://bigpicturefilmclub.com/how-ghost-in-the-shell-inspired-the-matrix-a-cyberpunk-revolution/', 'How Ghost in the Shell Inspired The Matrix', 'Big Picture Film Club');
-    addFilmLink('links-system', 'https://www.vox.com/2017/4/4/15138682/ghost-in-the-shell-anime-philosophy', 'Ghost in the Shell\'s anime philosophy', 'Vox', 'Apr 2017');
+    addFilmLink('links-system', 'https://www.theguardian.com/film/2009/oct/19/hollywood-ghost-in-the-shell', 'Hollywood\'s new frontier', 'The Guardian', 'Oct 2009', 'images/link-previews/ghost-theguardian.jpg');
+    addFilmLink('links-system', 'https://www.slashfilm.com/778619/the-classic-anime-that-inspired-the-matrix/', 'The Classic Anime That Inspired The Matrix', 'SlashFilm', null, 'images/link-previews/ghost-slashfilm.jpg');
+    addFilmLink('links-system', 'https://bigpicturefilmclub.com/how-ghost-in-the-shell-inspired-the-matrix-a-cyberpunk-revolution/', 'How Ghost in the Shell Inspired The Matrix', 'Big Picture Film Club', null, 'images/link-previews/ghost-bigpicturefilmclub.jpg');
+    addFilmLink('links-system', 'https://www.vox.com/2017/4/4/15138682/ghost-in-the-shell-anime-philosophy', 'Ghost in the Shell\'s anime philosophy', 'Vox', 'Apr 2017', 'images/link-previews/ghost-vox.jpg');
     
     // Second Course: The Self — Perfect Blue & Black Swan
-    addFilmLink('links-self', 'https://www.dazeddigital.com/artsandculture/article/26075/1/the-cult-japanese-filmmaker-that-inspired-darren-aronofsky', 'The cult Japanese filmmaker that inspired Darren Aronofsky', 'Dazed Digital');
-    addFilmLink('links-self', 'https://faroutmagazine.co.uk/identity-crisis-perfect-blue-persona-black-swan/', 'Identity crisis: Perfect Blue, Persona, and Black Swan', 'Far Out Magazine');
-    addFilmLink('links-self', 'https://animationobsessive.substack.com/p/the-real-history-of-perfect-blue', 'The Real History of Perfect Blue', 'Animation Obsessive');
+    addFilmLink('links-self', 'https://www.dazeddigital.com/artsandculture/article/26075/1/the-cult-japanese-filmmaker-that-inspired-darren-aronofsky', 'The cult Japanese filmmaker that inspired Darren Aronofsky', 'Dazed Digital', null, 'images/link-previews/perfect-dazeddigital.jpg');
+    addFilmLink('links-self', 'https://faroutmagazine.co.uk/identity-crisis-perfect-blue-persona-black-swan/', 'Identity crisis: Perfect Blue, Persona, and Black Swan', 'Far Out Magazine', null, 'images/link-previews/perfect-faroutmagazine.jpg');
+    addFilmLink('links-self', 'https://animationobsessive.substack.com/p/the-real-history-of-perfect-blue', 'The Real History of Perfect Blue', 'Animation Obsessive', null, 'images/link-previews/perfect-animationobsessive.jpg');
     
     // Third Course: The Bridge — Paprika & Inception
-    addFilmLink('links-bridge', 'https://filmschoolrejects.com/inception-paprika-synergy/', 'Inception and Paprika: Synergy', 'Film School Rejects');
-    addFilmLink('links-bridge', 'https://www.hollywoodinsider.com/paprika-inception-dream-world/', 'Paprika and Inception\'s Dream World', 'The Hollywood Insider');
-    addFilmLink('links-bridge', 'https://independentpicturehouse.org/2025/01/03/paprika-more-than-anime-inception/', 'Paprika: More than anime Inception', 'Independent Picturehouse', 'Jan 2025');
-    addFilmLink('links-bridge', 'https://collider.com/best-movies-inspired-by-anime-the-matrix-avatar/', 'Best Movies Inspired by Anime', 'Collider');
+    addFilmLink('links-bridge', 'https://filmschoolrejects.com/inception-paprika-synergy/', 'Inception and Paprika: Synergy', 'Film School Rejects', null, 'images/link-previews/paprika-filmschoolrejects.jpg');
+    addFilmLink('links-bridge', 'https://www.hollywoodinsider.com/paprika-inception-dream-world/', 'Paprika and Inception\'s Dream World', 'The Hollywood Insider', null, 'images/link-previews/paprika-hollywoodinsider.jpg');
+    addFilmLink('links-bridge', 'https://independentpicturehouse.org/2025/01/03/paprika-more-than-anime-inception/', 'Paprika: More than anime Inception', 'Independent Picturehouse', 'Jan 2025', 'images/link-previews/paprika-independentpicturehouse.jpg');
+    addFilmLink('links-bridge', 'https://collider.com/best-movies-inspired-by-anime-the-matrix-avatar/', 'Best Movies Inspired by Anime', 'Collider', null, 'images/link-previews/paprika-collider.jpg');
     
     // The Dessert Course: Millennium Actress
-    addFilmLink('links-dessert', 'https://lwlies.com/home-ents/millennium-actress-satoshi-kon-cinema-love-letter', 'Millennium Actress: A cinema love letter', 'Little White Lies');
-    addFilmLink('links-dessert', 'https://vaguevisages.com/2019/09/19/millennium-actress-satoshi-kan-essay/', 'Millennium Actress: Satoshi Kon Essay', 'Vague Visages', 'Sep 2019');
-    addFilmLink('links-dessert', 'https://bfidatadigipres.github.io/pdf/2022-05-04-millennium-actress.pdf', 'Millennium Actress Analysis', 'BFI', 'May 2022');
-    addFilmLink('links-dessert', 'https://www.youtube.com/watch?v=1dfn-yMmvis', 'Millennium Actress Video Essay', 'YouTube');
+    addFilmLink('links-dessert', 'https://lwlies.com/home-ents/millennium-actress-satoshi-kon-cinema-love-letter', 'Millennium Actress: A cinema love letter', 'Little White Lies', null, 'images/link-previews/millennium-lwlies.jpg');
+    addFilmLink('links-dessert', 'https://vaguevisages.com/2019/09/19/millennium-actress-satoshi-kan-essay/', 'Millennium Actress: Satoshi Kon Essay', 'Vague Visages', 'Sep 2019', 'images/link-previews/millennium-vaguevisages.jpg');
+    addFilmLink('links-dessert', 'https://bfidatadigipres.github.io/pdf/2022-05-04-millennium-actress.pdf', 'Millennium Actress Analysis', 'BFI', 'May 2022', 'images/link-previews/millennium-bfidatadigipres.jpg');
+    addFilmLink('links-dessert', 'https://www.youtube.com/watch?v=1dfn-yMmvis', 'Millennium Actress Video Essay', 'YouTube', null, 'images/link-previews/youtube-millennium.jpg');
 }
 
 /**
@@ -569,7 +569,7 @@ function initLinkManagement() {
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         
-        // Add preview image if available
+        // Add preview image if available, otherwise add fallback icon
         if (imageUrl) {
             const img = document.createElement('img');
             img.src = imageUrl;
@@ -577,6 +577,16 @@ function initLinkManagement() {
             img.className = 'link-preview';
             img.loading = 'lazy'; // Performance: lazy load images
             a.appendChild(img);
+        } else {
+            // Fallback: Material Symbols article icon
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'link-icon-fallback';
+            const icon = document.createElement('span');
+            icon.className = 'material-symbols-rounded';
+            icon.textContent = 'article';
+            icon.setAttribute('aria-hidden', 'true');
+            iconDiv.appendChild(icon);
+            a.appendChild(iconDiv);
         }
         
         // Create content wrapper

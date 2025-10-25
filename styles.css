@@ -1119,6 +1119,33 @@ strong {
     transform: scale(1.03);
 }
 
+.link-icon-fallback {
+    width: 120px;
+    height: 80px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background: var(--card-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.link-icon-fallback .material-symbols-rounded {
+    font-size: 48px;
+    color: var(--secondary-text);
+    transition: color 0.3s ease;
+}
+
+.links-list a:hover .link-icon-fallback {
+    transform: scale(1.03);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.links-list a:hover .link-icon-fallback .material-symbols-rounded {
+    color: var(--primary-text);
+}
+
 .link-title {
     color: var(--primary-text);
     font-size: 1.0625rem;
@@ -1340,6 +1367,15 @@ strong {
         height: 66px;
     }
 
+    .link-icon-fallback {
+        width: 100px;
+        height: 66px;
+    }
+
+    .link-icon-fallback .material-symbols-rounded {
+        font-size: 40px;
+    }
+
     .link-title {
         font-size: 1rem;
     }
@@ -1387,6 +1423,16 @@ strong {
         width: 100%;
         height: 140px;
         order: -1;
+    }
+
+    .link-icon-fallback {
+        width: 100%;
+        height: 140px;
+        order: -1;
+    }
+
+    .link-icon-fallback .material-symbols-rounded {
+        font-size: 64px;
     }
 
     .link-title {
