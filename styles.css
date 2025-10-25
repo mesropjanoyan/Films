@@ -1426,11 +1426,6 @@ strong {
     outline-offset: 2px;
 }
 
-/* Poster Placeholder - Keep for backward compatibility but hidden */
-.poster-placeholder {
-    display: none;
-}
-
 /* Lightbox Modal */
 .lightbox {
     display: none;
