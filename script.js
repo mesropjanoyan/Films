@@ -45,10 +45,66 @@ const slideshows = {};
 let lightboxInstance = null;
 
 /**
+ * Initialize theme toggle functionality
+ * Handles light/dark mode switching with localStorage persistence
+ */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+    
+    const html = document.documentElement;
+    const icon = themeToggle.querySelector('.material-symbols-rounded');
+    
+    // Check for saved theme preference, fallback to system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Apply initial theme
+    if (savedTheme) {
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+    } else if (systemPrefersDark) {
+        html.setAttribute('data-theme', 'dark');
+        updateIcon('dark');
+    } else {
+        html.setAttribute('data-theme', 'light');
+        updateIcon('light');
+    }
+    
+    // Theme toggle click handler
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcon(newTheme);
+    });
+    
+    // Update icon based on theme
+    function updateIcon(theme) {
+        if (icon) {
+            icon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+        }
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        // Only update if user hasn't set a preference
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            updateIcon(newTheme);
+        }
+    });
+}
+
+/**
  * Main initialization - runs when DOM is fully loaded
  * Initializes all interactive features in sequence
  */
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
     initSmoothScrolling();
     initLightbox();
     initSlideshows();
@@ -922,3 +978,45 @@ function initHeroCollage() {
     // Start the collage
     initialize();
 }
+
+/**
+ * Theme toggle functionality
+ * Respects system preference and saves user choice to localStorage
+ */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('.material-symbols-rounded');
+    const html = document.documentElement;
+    
+    // Check for saved theme preference or default to system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    
+    // Apply initial theme
+    html.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+    
+    // Update icon based on theme
+    function updateThemeIcon(theme) {
+        themeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+    });
+}
+
