@@ -22,6 +22,23 @@
     --spacing-lg: 2.5rem;
     --spacing-xl: 4rem;
     --spacing-xxl: 5rem;
+    
+    /* Section color themes */
+    --matrix-green: #00ff41;
+    --matrix-green-dark: #00b828;
+    --matrix-green-muted: #00cc33;
+    
+    --perfect-blue: #1e90ff;
+    --perfect-blue-dark: #1565c0;
+    --perfect-blue-muted: #1976d2;
+    
+    --paprika-red: #ff6b35;
+    --paprika-red-dark: #d9471c;
+    --paprika-red-muted: #ff7043;
+    
+    --millennium-gold: #ffc107;
+    --millennium-gold-dark: #f57c00;
+    --millennium-gold-muted: #ffb300;
 }
 
 body {
@@ -258,7 +275,12 @@ strong {
 .container {
     position: relative;
     z-index: 2;
-    background: linear-gradient(to bottom, var(--card-background), var(--background));
+    background: 
+        linear-gradient(to bottom, 
+            var(--card-background) 0%, 
+            var(--card-background) 300px,
+            var(--background) 700px,
+            var(--background) 100%);
     border-radius: 20px 20px 0 0;
     padding-top: 0;
     margin-top: -520px;
@@ -383,13 +405,23 @@ strong {
 }
 
 /* Position icons in scattered arrangement around header */
-/* First Course: The System */
-#course-system ~ .decorative-icon:nth-child(1),
+/* First Course: The System - Matrix Green Theme */
+.course-section:nth-of-type(1) .subtitle {
+    color: var(--matrix-green-dark);
+}
+
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
     top: -20px;
     left: 5%;
     transform: rotate(-12deg);
     animation-delay: 0s;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
+    border-color: rgba(0, 204, 51, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+    color: var(--matrix-green-dark);
 }
 
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
@@ -397,6 +429,13 @@ strong {
     right: 8%;
     transform: rotate(15deg);
     animation-delay: 1.3s;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
+    border-color: rgba(0, 204, 51, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+    color: var(--matrix-green-dark);
 }
 
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
@@ -404,14 +443,37 @@ strong {
     left: 12%;
     transform: rotate(-8deg);
     animation-delay: 2.6s;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
+    border-color: rgba(0, 204, 51, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* Second Course: The Self */
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+    color: var(--matrix-green-dark);
+}
+
+/* Apply Matrix green to film card icons */
+.course-section:nth-of-type(1) .film-info .material-symbols-rounded {
+    color: var(--matrix-green-muted);
+}
+
+/* Second Course: The Self - Perfect Blue Theme */
+.course-section:nth-of-type(2) .subtitle {
+    color: var(--perfect-blue-dark);
+}
+
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
     top: -5px;
     right: 10%;
     transform: rotate(18deg);
     animation-delay: 0.5s;
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
+    border-color: rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
 }
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
@@ -419,6 +481,13 @@ strong {
     left: 12%;
     transform: rotate(-10deg);
     animation-delay: 1.8s;
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
+    border-color: rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
 }
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
@@ -426,14 +495,37 @@ strong {
     right: 15%;
     transform: rotate(5deg);
     animation-delay: 3.1s;
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
+    border-color: rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* Third Course: The Bridge */
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
+}
+
+/* Apply Perfect Blue to film card icons */
+.course-section:nth-of-type(2) .film-info .material-symbols-rounded {
+    color: var(--perfect-blue-muted);
+}
+
+/* Third Course: The Bridge - Paprika Red-Orange Theme */
+.course-section:nth-of-type(3) .subtitle {
+    color: var(--paprika-red-dark);
+}
+
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
     top: -75px;
     left: 10%;
     transform: rotate(-15deg);
     animation-delay: 0.3s;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
+    border-color: rgba(217, 71, 28, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+    color: var(--paprika-red-dark);
 }
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
@@ -441,6 +533,13 @@ strong {
     left: 7%;
     transform: rotate(12deg);
     animation-delay: 1.6s;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
+    border-color: rgba(217, 71, 28, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+    color: var(--paprika-red-dark);
 }
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
@@ -448,14 +547,37 @@ strong {
     right: 10%;
     transform: rotate(-6deg);
     animation-delay: 2.9s;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
+    border-color: rgba(217, 71, 28, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* Dessert Course */
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+    color: var(--paprika-red-dark);
+}
+
+/* Apply Paprika red-orange to film card icons */
+.course-section:nth-of-type(3) .film-info .material-symbols-rounded {
+    color: var(--paprika-red-muted);
+}
+
+/* Dessert Course - Millennium Actress Yellow-Gold Theme */
+.course-section.dessert .subtitle {
+    color: var(--millennium-gold-dark);
+}
+
 .course-section.dessert .course-header .decorative-icon:nth-child(1) {
     top: 20px;
     left: 0%;
     transform: rotate(8deg);
     animation-delay: 0.7s;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
+    border-color: rgba(245, 124, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section.dessert .course-header .decorative-icon:nth-child(1) .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
 }
 
 .course-section.dessert .course-header .decorative-icon:nth-child(2) {
@@ -463,13 +585,32 @@ strong {
     right: 0%;
     transform: rotate(-14deg);
     animation-delay: 2s;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
+    border-color: rgba(245, 124, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section.dessert .course-header .decorative-icon:nth-child(2) .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
 }
 
 .course-section.dessert .course-header .decorative-icon:nth-child(3) {
-    top: 90px;
+    top: 120px;
     right: 11%;
     transform: rotate(10deg);
     animation-delay: 3.3s;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
+    border-color: rgba(245, 124, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.course-section.dessert .course-header .decorative-icon:nth-child(3) .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
+}
+
+/* Apply Millennium gold to film card icons */
+.course-section.dessert .film-info .material-symbols-rounded {
+    color: var(--millennium-gold-muted);
 }
 
 /* Floating animation for decorative icons */
