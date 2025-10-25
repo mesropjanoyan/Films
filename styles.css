@@ -236,28 +236,18 @@ strong {
     z-index: 2;
 }
 
-/* Hero title with Texturina - sophisticated, readable, ligature-rich */
+/* Hero title with Rubik Glitch - distinctive, glitchy aesthetic */
 .hero h1 {
-    font-family: 'Texturina', serif;
+    font-family: 'Rubik Glitch', system-ui;
     font-size: clamp(3.5rem, 8vw, 5rem);
-    font-weight: 900;
+    font-weight: 400;
     line-height: 1.0;
-    letter-spacing: -0.035em;
-    font-variation-settings: 'opsz' 72;
-    font-feature-settings: 'liga' 1, 'dlig' 1, 'clig' 1;
+    letter-spacing: 0.02em;
     color: white;
     text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5), 
                  0 1px 4px rgba(0, 0, 0, 0.4),
                  0 6px 16px rgba(0, 0, 0, 0.3);
-    margin-bottom: var(--spacing-md);
-}
-
-.hero .subtitle {
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.98);
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4),
-                 0 1px 3px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0;
 }
 
 .container {
@@ -276,6 +266,13 @@ strong {
     letter-spacing: -0.015em;
 }
 
+/* Hero subtitle - only when in hero context */
+.hero .subtitle {
+    color: rgba(255, 255, 255, 0.98);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4),
+                 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 /* Introduction */
 .intro {
     margin-bottom: var(--spacing-xl);
@@ -287,12 +284,25 @@ strong {
     margin-right: auto;
 }
 
+/* Subtitle in intro acts as heading */
+.intro .subtitle {
+    column-span: all;
+    font-size: clamp(2rem, 4vw, 5rem);
+    line-height: 0.9;
+    text-align: center;
+    color: var(--primary-text);
+    margin-bottom: var(--spacing-xl);
+    margin-top: 0;
+}
+
 .intro p {
     font-size: clamp(1.0625rem, 2vw, 1.1875rem);
     line-height: 1.65;
     color: var(--primary-text);
     orphans: 3;
     widows: 3;
+    break-inside: avoid-column;
+    margin-bottom: var(--spacing-sm);
 }
 
 .intro-ornament {
@@ -975,8 +985,8 @@ strong {
     width: 100%;
 }
 
-/* Drop Caps */
-.intro p:first-child::first-letter,
+/* Drop Caps - apply to first content paragraph */
+.intro .subtitle + p::first-letter,
 .commentary-card p:first-child::first-letter {
     font-family: 'Jacquard 12', serif;
     font-size: 6em;
@@ -986,6 +996,7 @@ strong {
     margin-right: 0.1em;
     margin-top: 0.07em;
     color: var(--primary-text);
+    shape-outside: margin-box;
 }
 
 /* Commentary Card */
