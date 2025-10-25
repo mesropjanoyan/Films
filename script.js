@@ -862,7 +862,7 @@ function initHeroCollage() {
         });
 
         // Start cycling: find oldest (bottom-most) image and recycle it
-        setInterval(() => {
+        let cycleIntervalId = setInterval(() => {
             // Find images in bottom 30% that are oldest
             const container = collageContainer.getBoundingClientRect();
             const containerHeight = container.height;
@@ -888,6 +888,35 @@ function initHeroCollage() {
                 cycleImage(oldestImage);
             }
         }, CONFIG.CYCLE_INTERVAL);
+        
+        // Pause animation when page is not visible (performance optimization)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                clearInterval(cycleIntervalId);
+            } else {
+                cycleIntervalId = setInterval(() => {
+                    const container = collageContainer.getBoundingClientRect();
+                    const containerHeight = container.height;
+                    const bottomThreshold = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
+                    
+                    const bottomImages = imageElements.filter(img => 
+                        img.position.top > bottomThreshold * 0.7
+                    );
+                    
+                    if (bottomImages.length > 0) {
+                        const oldestImage = bottomImages.reduce((oldest, current) => 
+                            current.lastCycled < oldest.lastCycled ? current : oldest
+                        );
+                        cycleImage(oldestImage);
+                    } else {
+                        const oldestImage = imageElements.reduce((oldest, current) => 
+                            current.lastCycled < oldest.lastCycled ? current : oldest
+                        );
+                        cycleImage(oldestImage);
+                    }
+                }, CONFIG.CYCLE_INTERVAL);
+            }
+        });
     }
 
     // Start the collage

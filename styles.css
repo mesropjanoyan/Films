@@ -60,6 +60,19 @@ body {
         'opsz' 24;
 }
 
+/* Focus indicators for accessibility */
+*:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
+}
+
 /* Skip to content link for accessibility */
 .skip-to-content {
     position: fixed;
@@ -813,22 +826,29 @@ strong {
 }
 
 .indicator {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--border-color);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
 }
 
 .indicator.active {
     background: var(--accent-color);
-    transform: scale(1.25);
+    transform: scale(1.4);
+    border-color: var(--accent-color);
 }
 
 .indicator:hover:not(.active) {
     background: var(--secondary-text);
-    transform: scale(1.1);
+    transform: scale(1.2);
+}
+
+.indicator:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 /* Poster Placeholder - Keep for backward compatibility but hidden */
@@ -1653,4 +1673,35 @@ strong {
         --border-color: #424245;
     }
     */
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .hero-collage img {
+        animation: none !important;
+    }
+    
+    .slide {
+        transition: none !important;
+    }
+    
+    .course-section {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .links-list li {
+        animation: none !important;
+        opacity: 1 !important;
+    }
 }
