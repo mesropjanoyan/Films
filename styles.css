@@ -51,6 +51,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'ss01', 'ss02', 'cv05', 'cv10';
+    overflow-x: hidden;
 }
 
 /* Material Symbols base style */
@@ -116,7 +117,7 @@ a:focus-visible {
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--spacing-md) var(--spacing-xxl);
+    padding: 0 var(--spacing-md) 0;
 }
 
 /* Typography */
@@ -1646,8 +1647,13 @@ strong {
 /* Footer */
 .footer {
     text-align: center;
-    padding: calc(var(--spacing-xxl) + var(--spacing-xl)) 0 0;
+    padding: calc(var(--spacing-xxl) + var(--spacing-xl)) 0 0 0;
     margin-top: var(--spacing-xxl);
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 360px);
+    margin-top: calc(var(--spacing-xxl) - 360px);
 }
 
 .finale {
@@ -1671,6 +1677,11 @@ strong {
     animation: rainbowShift 8s ease-in-out infinite;
 }
 
+.credit-container {
+    position: relative;
+    display: inline-block;
+}
+
 .credit {
     font-size: 0.8125rem;
     font-weight: 400;
@@ -1680,6 +1691,90 @@ strong {
     padding: var(--spacing-md) 0;
     margin: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 1;
+}
+
+/* Orbiting icons */
+.orbit-icon {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    left: 50%;
+    top: 50%;
+    transform-origin: 0 0;
+    animation: orbit 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    --orbit-radius: 350px;
+    --angle: calc(var(--icon-index) * 30deg);
+}
+
+.orbit-icon .material-symbols-rounded {
+    font-size: 28px;
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Matrix green icons (System) */
+.orbit-icon.system-icon {
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
+    border-color: rgba(0, 204, 51, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.orbit-icon.system-icon .material-symbols-rounded {
+    color: var(--matrix-green-dark);
+}
+
+/* Perfect Blue icons (Self) */
+.orbit-icon.self-icon {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
+    border-color: rgba(25, 118, 210, 0.2);
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.orbit-icon.self-icon .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
+}
+
+/* Paprika red-orange icons (Bridge) */
+.orbit-icon.bridge-icon {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
+    border-color: rgba(217, 71, 28, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.orbit-icon.bridge-icon .material-symbols-rounded {
+    color: var(--paprika-red-dark);
+}
+
+/* Millennium gold icons (Dessert) */
+.orbit-icon.dessert-icon {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
+    border-color: rgba(245, 124, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.orbit-icon.dessert-icon .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
+}
+
+/* Orbit animation - clockwise rotation */
+@keyframes orbit {
+    from {
+        transform: rotate(var(--angle)) translateX(var(--orbit-radius)) rotate(calc(-1 * var(--angle))) translate(-50%, -50%);
+    }
+    to {
+        transform: rotate(calc(var(--angle) + 360deg)) translateX(var(--orbit-radius)) rotate(calc(-1 * (var(--angle) + 360deg))) translate(-50%, -50%);
+    }
 }
 
 /* Animations */
