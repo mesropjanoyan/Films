@@ -570,6 +570,7 @@ strong {
 .course-section {
     margin-bottom: var(--spacing-xl);
     animation: fadeInUp 0.6s ease-out;
+    overflow: visible; /* Allow decorative icons to extend beyond section */
 }
 
 .course-header {
@@ -577,13 +578,10 @@ strong {
     text-align: center;
     position: relative;
     padding: 2rem 0;
+    overflow: visible; /* Allow icons to extend slightly beyond bounds */
 }
 
-/* ============================================
-   DECORATIVE ORBIT ICONS - COMPLETE REWRITE
-   Icons positioned to reach viewport edges
-   ============================================ */
-
+/* Decorative Icons - Apple-style circular badges */
 .decorative-icon {
     position: absolute;
     width: 56px;
@@ -592,16 +590,19 @@ strong {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), rgba(0, 113, 227, 0.05));
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(0, 113, 227, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
     pointer-events: none;
     user-select: none;
     animation: floatIcon 4s ease-in-out infinite;
-    z-index: 1;
+    z-index: 0;
 }
 
 .decorative-icon .material-symbols-rounded {
     font-size: 28px;
+    color: var(--accent-color);
     opacity: 0.7;
     font-variation-settings:
         'FILL' 1,
@@ -610,19 +611,19 @@ strong {
         'opsz' 24;
 }
 
+/* Position icons in scattered arrangement around header */
 /* First Course: The System - Matrix Green Theme */
 .course-section:nth-of-type(1) .subtitle {
     color: var(--matrix-green-dark);
 }
 
-/* Matrix Green Icons */
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
     top: -20px;
-    left: calc((100vw - 100%) / -2);
+    left: 5%;
     transform: rotate(-12deg);
     animation-delay: 0s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border: 1.5px solid rgba(0, 204, 51, 0.2);
+    border-color: rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -632,11 +633,11 @@ strong {
 
 .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
     top: 10px;
-    right: calc((100vw - 100%) / -2);
+    right: 8%;
     transform: rotate(15deg);
     animation-delay: 1.3s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border: 1.5px solid rgba(0, 204, 51, 0.2);
+    border-color: rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -650,7 +651,7 @@ strong {
     transform: rotate(-8deg);
     animation-delay: 2.6s;
     background: linear-gradient(135deg, rgba(0, 255, 65, 0.12), rgba(0, 255, 65, 0.06));
-    border: 1.5px solid rgba(0, 204, 51, 0.2);
+    border-color: rgba(0, 204, 51, 0.2);
     box-shadow: 0 4px 12px rgba(0, 255, 65, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -658,6 +659,7 @@ strong {
     color: var(--matrix-green-dark);
 }
 
+/* Apply Matrix green to film card icons */
 .course-section:nth-of-type(1) .film-info .material-symbols-rounded {
     color: var(--matrix-green-muted);
 }
@@ -669,11 +671,11 @@ strong {
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
     top: -5px;
-    right: calc((100vw - 100%) / -2);
+    right: 10%;
     transform: rotate(18deg);
     animation-delay: 0.5s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border: 1.5px solid rgba(25, 118, 210, 0.2);
+    border-color: rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -683,11 +685,11 @@ strong {
 
 .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
     top: -15px;
-    left: calc((100vw - 100%) / -2);
+    left: 12%;
     transform: rotate(-10deg);
     animation-delay: 1.8s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border: 1.5px solid rgba(25, 118, 210, 0.2);
+    border-color: rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -701,7 +703,7 @@ strong {
     transform: rotate(5deg);
     animation-delay: 3.1s;
     background: linear-gradient(135deg, rgba(30, 144, 255, 0.12), rgba(30, 144, 255, 0.06));
-    border: 1.5px solid rgba(25, 118, 210, 0.2);
+    border-color: rgba(25, 118, 210, 0.2);
     box-shadow: 0 4px 12px rgba(30, 144, 255, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -709,6 +711,7 @@ strong {
     color: var(--perfect-blue-dark);
 }
 
+/* Apply Perfect Blue to film card icons */
 .course-section:nth-of-type(2) .film-info .material-symbols-rounded {
     color: var(--perfect-blue-muted);
 }
@@ -720,11 +723,11 @@ strong {
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
     top: -75px;
-    left: calc((100vw - 100%) / -2);
+    left: 10%;
     transform: rotate(-15deg);
     animation-delay: 0.3s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border: 1.5px solid rgba(217, 71, 28, 0.2);
+    border-color: rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -738,7 +741,7 @@ strong {
     transform: rotate(12deg);
     animation-delay: 1.6s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border: 1.5px solid rgba(217, 71, 28, 0.2);
+    border-color: rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -748,11 +751,11 @@ strong {
 
 .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
     top: 5px;
-    right: calc((100vw - 100%) / -2);
+    right: 10%;
     transform: rotate(-6deg);
     animation-delay: 2.9s;
     background: linear-gradient(135deg, rgba(255, 107, 53, 0.12), rgba(255, 107, 53, 0.06));
-    border: 1.5px solid rgba(217, 71, 28, 0.2);
+    border-color: rgba(217, 71, 28, 0.2);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -760,6 +763,7 @@ strong {
     color: var(--paprika-red-dark);
 }
 
+/* Apply Paprika red-orange to film card icons */
 .course-section:nth-of-type(3) .film-info .material-symbols-rounded {
     color: var(--paprika-red-muted);
 }
@@ -771,11 +775,11 @@ strong {
 
 .course-section.dessert .course-header .decorative-icon:nth-child(1) {
     top: 20px;
-    left: calc((100vw - 100%) / -2);
+    left: 0%;
     transform: rotate(8deg);
     animation-delay: 0.7s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border: 1.5px solid rgba(245, 124, 0, 0.2);
+    border-color: rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -785,11 +789,11 @@ strong {
 
 .course-section.dessert .course-header .decorative-icon:nth-child(2) {
     top: -25px;
-    right: calc((100vw - 100%) / -2);
+    right: 0%;
     transform: rotate(-14deg);
     animation-delay: 2s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border: 1.5px solid rgba(245, 124, 0, 0.2);
+    border-color: rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -803,7 +807,7 @@ strong {
     transform: rotate(10deg);
     animation-delay: 3.3s;
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
-    border: 1.5px solid rgba(245, 124, 0, 0.2);
+    border-color: rgba(245, 124, 0, 0.2);
     box-shadow: 0 4px 12px rgba(255, 193, 7, 0.12), 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
@@ -811,6 +815,7 @@ strong {
     color: var(--millennium-gold-dark);
 }
 
+/* Apply Millennium gold to film card icons */
 .course-section.dessert .film-info .material-symbols-rounded {
     color: var(--millennium-gold-muted);
 }
@@ -1722,6 +1727,31 @@ strong {
 
 .links-section h4 {
     margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.links-section h4 .material-symbols-rounded {
+    font-size: 24px;
+    transition: color 0.2s ease;
+}
+
+/* Theme colors for "Further Reading" heading icons */
+.course-section:nth-of-type(1) .links-section h4 .material-symbols-rounded {
+    color: var(--matrix-green-dark);
+}
+
+.course-section:nth-of-type(2) .links-section h4 .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
+}
+
+.course-section:nth-of-type(3) .links-section h4 .material-symbols-rounded {
+    color: var(--paprika-red-dark);
+}
+
+.course-section.dessert .links-section h4 .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
 }
 
 .links-list {
@@ -1834,7 +1864,6 @@ strong {
 
 .link-icon-fallback .material-symbols-rounded {
     font-size: 48px;
-    color: var(--secondary-text);
     transition: color 0.3s ease;
 }
 
@@ -1843,9 +1872,7 @@ strong {
     background: rgba(255, 255, 255, 0.05);
 }
 
-.links-list a:hover .link-icon-fallback .material-symbols-rounded {
-    color: var(--primary-text);
-}
+/* Theme-specific hover colors defined below with course-section selectors */
 
 .link-title {
     color: var(--primary-text);
@@ -1898,6 +1925,63 @@ strong {
     margin-right: 0.5rem;
     opacity: 0.5;
     font-size: 0.75rem;
+}
+
+/* Theme-specific colors for Further Reading link icons */
+/* First Course: The System - Matrix Green */
+.course-section:nth-of-type(1) .link-publisher .material-symbols-rounded,
+.course-section:nth-of-type(1) .link-date .material-symbols-rounded {
+    color: var(--matrix-green-muted);
+}
+
+.course-section:nth-of-type(1) .link-icon-fallback .material-symbols-rounded {
+    color: var(--matrix-green-muted);
+}
+
+.course-section:nth-of-type(1) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+    color: var(--matrix-green-dark);
+}
+
+/* Second Course: The Self - Perfect Blue */
+.course-section:nth-of-type(2) .link-publisher .material-symbols-rounded,
+.course-section:nth-of-type(2) .link-date .material-symbols-rounded {
+    color: var(--perfect-blue-muted);
+}
+
+.course-section:nth-of-type(2) .link-icon-fallback .material-symbols-rounded {
+    color: var(--perfect-blue-muted);
+}
+
+.course-section:nth-of-type(2) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+    color: var(--perfect-blue-dark);
+}
+
+/* Third Course: The Bridge - Paprika Red-Orange */
+.course-section:nth-of-type(3) .link-publisher .material-symbols-rounded,
+.course-section:nth-of-type(3) .link-date .material-symbols-rounded {
+    color: var(--paprika-red-muted);
+}
+
+.course-section:nth-of-type(3) .link-icon-fallback .material-symbols-rounded {
+    color: var(--paprika-red-muted);
+}
+
+.course-section:nth-of-type(3) .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+    color: var(--paprika-red-dark);
+}
+
+/* Dessert Course - Millennium Actress Yellow-Gold */
+.course-section.dessert .link-publisher .material-symbols-rounded,
+.course-section.dessert .link-date .material-symbols-rounded {
+    color: var(--millennium-gold-muted);
+}
+
+.course-section.dessert .link-icon-fallback .material-symbols-rounded {
+    color: var(--millennium-gold-muted);
+}
+
+.course-section.dessert .links-list a:hover .link-icon-fallback .material-symbols-rounded {
+    color: var(--millennium-gold-dark);
 }
 
 /* Placeholder links - dashed style for empty slots */
@@ -2139,40 +2223,68 @@ strong {
         font-size: 24px;
     }
 
-    /* First Course - Edge icons touch viewport edges */
+    /* First Course - scale positions proportionally */
     .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.5rem);
+        top: -15px;
+        left: 4%;
     }
 
     .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
-        right: calc((100vw - 100%) / -2 + 0.5rem);
+        top: 8px;
+        right: 6%;
     }
 
-    /* Second Course - Edge icons touch viewport edges */
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
+        top: 60px;
+        left: 9%;
+    }
+
+    /* Second Course - scale positions proportionally */
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
-        right: calc((100vw - 100%) / -2 + 0.5rem);
+        top: -4px;
+        right: 8%;
     }
 
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
-        left: calc((100vw - 100%) / -2 + 0.5rem);
+        top: -12px;
+        left: 9%;
     }
 
-    /* Third Course - Edge icons touch viewport edges */
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
+        top: 68px;
+        right: 12%;
+    }
+
+    /* Third Course - scale positions proportionally */
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.5rem);
+        top: -56px;
+        left: 8%;
+    }
+
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
+        top: 64px;
+        left: 5%;
     }
 
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
-        right: calc((100vw - 100%) / -2 + 0.5rem);
+        top: 4px;
+        right: 8%;
     }
 
-    /* Dessert Course - Edge icons touch viewport edges */
+    /* Dessert Course - scale positions proportionally */
     .course-section.dessert .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.5rem);
+        top: 15px;
+        left: 0%;
     }
 
     .course-section.dessert .course-header .decorative-icon:nth-child(2) {
-        right: calc((100vw - 100%) / -2 + 0.5rem);
+        top: -19px;
+        right: 0%;
+    }
+
+    .course-section.dessert .course-header .decorative-icon:nth-child(3) {
+        top: 68px;
+        right: 9%;
     }
 
     .finale {
@@ -2337,50 +2449,32 @@ strong {
         left: 3%;
     }
 
-    /* Small mobile - smaller icons, edge-aligned */
-    .decorative-icon {
-        width: 44px;
-        height: 44px;
-    }
-
-    .decorative-icon .material-symbols-rounded {
-        font-size: 22px;
-    }
-
-    /* First Course - Edge icons with slight inset */
-    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.25rem);
-    }
-
     .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
-        right: calc((100vw - 100%) / -2 + 0.25rem);
+        right: 5%;
     }
 
-    /* Second Course - Edge icons with slight inset */
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
-        right: calc((100vw - 100%) / -2 + 0.25rem);
+        right: 7%;
     }
 
     .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
-        left: calc((100vw - 100%) / -2 + 0.25rem);
+        left: 7%;
     }
 
-    /* Third Course - Edge icons with slight inset */
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.25rem);
+        left: 7%;
     }
 
     .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
-        right: calc((100vw - 100%) / -2 + 0.25rem);
+        right: 7%;
     }
 
-    /* Dessert Course - Edge icons with slight inset */
     .course-section.dessert .course-header .decorative-icon:nth-child(1) {
-        left: calc((100vw - 100%) / -2 + 0.25rem);
+        left: 2%;
     }
 
     .course-section.dessert .course-header .decorative-icon:nth-child(2) {
-        right: calc((100vw - 100%) / -2 + 0.25rem);
+        right: 2%;
     }
 
     /* Intro card spacing adjustments */
