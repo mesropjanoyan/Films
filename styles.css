@@ -1226,16 +1226,29 @@ strong {
 /* Footer */
 .footer {
     text-align: center;
-    padding: var(--spacing-xl) 0 var(--spacing-md);
-    border-top: 1px solid var(--border-color);
+    padding: calc(var(--spacing-xxl) + var(--spacing-xl)) 0 0;
     margin-top: var(--spacing-xxl);
 }
 
 .finale {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-family: 'Jacquard 12', serif;
+    font-size: clamp(3rem, 5vw, 4rem);
+    font-weight: 400;
     color: var(--primary-text);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    margin-bottom: calc(var(--spacing-xl) + var(--spacing-md));
+    opacity: 0.95;
+}
+
+.credit {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--secondary-text);
+    opacity: 0.6;
+    letter-spacing: 0.01em;
+    padding: var(--spacing-md) 0;
+    margin: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* Animations */
@@ -1296,7 +1309,12 @@ strong {
     }
 
     .finale {
-        font-size: 1.375rem;
+        font-size: clamp(2.25rem, 6vw, 3rem);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .credit {
+        font-size: 0.75rem;
     }
 
     .intro {
