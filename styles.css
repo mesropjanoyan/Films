@@ -343,11 +343,145 @@ strong {
 .course-section {
     margin-bottom: var(--spacing-xl);
     animation: fadeInUp 0.6s ease-out;
+    overflow: visible; /* Allow decorative icons to extend beyond section */
 }
 
 .course-header {
     margin-bottom: var(--spacing-lg);
     text-align: center;
+    position: relative;
+    padding: 2rem 0;
+    overflow: visible; /* Allow icons to extend slightly beyond bounds */
+}
+
+/* Decorative Icons - Apple-style circular badges */
+.decorative-icon {
+    position: absolute;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.1), rgba(0, 113, 227, 0.05));
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(0, 113, 227, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+    pointer-events: none;
+    user-select: none;
+    animation: floatIcon 4s ease-in-out infinite;
+    z-index: 0;
+}
+
+.decorative-icon .material-symbols-rounded {
+    font-size: 28px;
+    color: var(--accent-color);
+    opacity: 0.7;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Position icons in scattered arrangement around header */
+/* First Course: The System */
+#course-system ~ .decorative-icon:nth-child(1),
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+    top: -20px;
+    left: 5%;
+    transform: rotate(-12deg);
+    animation-delay: 0s;
+}
+
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+    top: 10px;
+    right: 8%;
+    transform: rotate(15deg);
+    animation-delay: 1.3s;
+}
+
+.course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
+    top: 80px;
+    left: 12%;
+    transform: rotate(-8deg);
+    animation-delay: 2.6s;
+}
+
+/* Second Course: The Self */
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+    top: -5px;
+    right: 10%;
+    transform: rotate(18deg);
+    animation-delay: 0.5s;
+}
+
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+    top: -15px;
+    left: 12%;
+    transform: rotate(-10deg);
+    animation-delay: 1.8s;
+}
+
+.course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
+    top: 90px;
+    right: 15%;
+    transform: rotate(5deg);
+    animation-delay: 3.1s;
+}
+
+/* Third Course: The Bridge */
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+    top: -75px;
+    left: 10%;
+    transform: rotate(-15deg);
+    animation-delay: 0.3s;
+}
+
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
+    top: 85px;
+    left: 7%;
+    transform: rotate(12deg);
+    animation-delay: 1.6s;
+}
+
+.course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+    top: 5px;
+    right: 10%;
+    transform: rotate(-6deg);
+    animation-delay: 2.9s;
+}
+
+/* Dessert Course */
+.course-section.dessert .course-header .decorative-icon:nth-child(1) {
+    top: 20px;
+    left: 0%;
+    transform: rotate(8deg);
+    animation-delay: 0.7s;
+}
+
+.course-section.dessert .course-header .decorative-icon:nth-child(2) {
+    top: -25px;
+    right: 0%;
+    transform: rotate(-14deg);
+    animation-delay: 2s;
+}
+
+.course-section.dessert .course-header .decorative-icon:nth-child(3) {
+    top: 90px;
+    right: 11%;
+    transform: rotate(10deg);
+    animation-delay: 3.3s;
+}
+
+/* Floating animation for decorative icons */
+@keyframes floatIcon {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 .course-intro {
@@ -1443,6 +1577,85 @@ strong {
         margin-bottom: calc(var(--spacing-lg) * -1);
     }
 
+    /* Ensure course headers have adequate padding for icons */
+    .course-header {
+        padding: 2rem 1rem; /* Add horizontal padding on tablet */
+    }
+
+    /* Adjust decorative icon positions for tablet */
+    .decorative-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .decorative-icon .material-symbols-rounded {
+        font-size: 24px;
+    }
+
+    /* First Course - scale positions proportionally */
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+        top: -15px;
+        left: 4%;
+    }
+
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+        top: 8px;
+        right: 6%;
+    }
+
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(3) {
+        top: 60px;
+        left: 9%;
+    }
+
+    /* Second Course - scale positions proportionally */
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+        top: -4px;
+        right: 8%;
+    }
+
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+        top: -12px;
+        left: 9%;
+    }
+
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(3) {
+        top: 68px;
+        right: 12%;
+    }
+
+    /* Third Course - scale positions proportionally */
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+        top: -56px;
+        left: 8%;
+    }
+
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(2) {
+        top: 64px;
+        left: 5%;
+    }
+
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+        top: 4px;
+        right: 8%;
+    }
+
+    /* Dessert Course - scale positions proportionally */
+    .course-section.dessert .course-header .decorative-icon:nth-child(1) {
+        top: 15px;
+        left: 0%;
+    }
+
+    .course-section.dessert .course-header .decorative-icon:nth-child(2) {
+        top: -19px;
+        right: 0%;
+    }
+
+    .course-section.dessert .course-header .decorative-icon:nth-child(3) {
+        top: 68px;
+        right: 9%;
+    }
+
     .finale {
         font-size: clamp(2.25rem, 6vw, 3rem);
         margin-bottom: var(--spacing-xl);
@@ -1545,6 +1758,57 @@ strong {
     }
 }
 
+/* Additional breakpoint for small tablets/large phones (481px - 640px) */
+@media (min-width: 481px) and (max-width: 640px) {
+    /* Scale down icons further for this intermediate size */
+    .decorative-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .decorative-icon .material-symbols-rounded {
+        font-size: 22px;
+    }
+
+    /* Ensure no icon overflow on smaller viewports */
+    .course-header {
+        padding: 2.5rem 0;
+    }
+
+    /* Tighten horizontal spacing to prevent edge cutoff */
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(1) {
+        left: 3%;
+    }
+
+    .course-section:nth-of-type(1) .course-header .decorative-icon:nth-child(2) {
+        right: 5%;
+    }
+
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(1) {
+        right: 7%;
+    }
+
+    .course-section:nth-of-type(2) .course-header .decorative-icon:nth-child(2) {
+        left: 7%;
+    }
+
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(1) {
+        left: 7%;
+    }
+
+    .course-section:nth-of-type(3) .course-header .decorative-icon:nth-child(3) {
+        right: 7%;
+    }
+
+    .course-section.dessert .course-header .decorative-icon:nth-child(1) {
+        left: 2%;
+    }
+
+    .course-section.dessert .course-header .decorative-icon:nth-child(2) {
+        right: 2%;
+    }
+}
+
 @media (max-width: 480px) {
     .hero {
         height: 750px;
@@ -1557,6 +1821,11 @@ strong {
     .hero h1 {
         font-size: clamp(2.5rem, 7vw, 3.5rem);
         letter-spacing: -0.03em;
+    }
+
+    /* Hide decorative icons on very small screens */
+    .decorative-icon {
+        display: none;
     }
 
     .hero .subtitle {
@@ -1698,6 +1967,10 @@ strong {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
+    }
+    
+    .decorative-icon {
+        animation: none !important;
     }
     
     .links-list li {
