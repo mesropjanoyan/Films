@@ -554,7 +554,6 @@ function initLinkManagement() {
     window.addFilmLink = (sectionId, url, title = null, publisher = null, date = null, imageUrl = null) => {
         const linksList = document.getElementById(sectionId);
         if (!linksList) {
-            console.error(`Section with id "${sectionId}" not found`);
             return;
         }
 
@@ -649,31 +648,6 @@ function initLinkManagement() {
             li.style.opacity = '1';
             li.style.transform = 'translateY(0)';
         }, 10);
-        
-        console.log(`✓ Added link: ${title || url}`);
-    };
-
-    // Helper to update YouTube trailer ID
-    window.updateTrailer = (filmId, youtubeId) => {
-        if (filmData[filmId]) {
-            filmData[filmId].youtubeId = youtubeId;
-            if (slideshows[filmId]) {
-                slideshows[filmId].loadSlides();
-            }
-            console.log(`✓ Updated trailer for ${filmData[filmId].name}`);
-        } else {
-            console.error(`Film ID "${filmId}" not found`);
-        }
-    };
-
-    // Helper to reload a specific slideshow after adding images
-    window.reloadSlideshow = (filmId) => {
-        if (slideshows[filmId]) {
-            slideshows[filmId].loadSlides();
-            console.log(`✓ Reloaded slideshow for ${filmData[filmId].name}`);
-        } else {
-            console.error(`Slideshow for "${filmId}" not found`);
-        }
     };
 }
 
@@ -701,31 +675,6 @@ function initScrollAnimations() {
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(section);
     });
-}
-
-/**
- * Console instructions for the user
- */
-function logInstructions() {
-    console.log('%c🎬 Film Companion Guide - Slideshow Edition', 'font-size: 20px; font-weight: bold; color: #0071e3;');
-    console.log('%c\n📁 Image Directory Structure:', 'font-size: 14px; font-weight: bold; color: #1d1d1f;');
-    console.log('%cPlace images in: images/<film-id>/', 'font-size: 12px; color: #6e6e73;');
-    console.log('%c  • poster.jpg (first slide)', 'font-size: 12px; color: #6e6e73;');
-    console.log('%c  • screengrab1.jpg, screengrab2.jpg, etc. (middle slides)', 'font-size: 12px; color: #6e6e73;');
-    console.log('%c  • Trailer automatically added as last slide', 'font-size: 12px; color: #6e6e73;');
-    
-    console.log('%c\n🎥 Film IDs:', 'font-size: 14px; font-weight: bold; color: #1d1d1f;');
-    Object.keys(filmData).forEach(id => {
-        console.log(`%c  • ${id}`, 'font-size: 12px; color: #6e6e73;');
-    });
-    
-    console.log('%c\n🔧 Useful Functions:', 'font-size: 14px; font-weight: bold; color: #1d1d1f;');
-    console.log('%c  reloadSlideshow("film-id") - Reload after adding images', 'font-size: 12px; color: #6e6e73;');
-    console.log('%c  updateTrailer("film-id", "youtubeId") - Change trailer', 'font-size: 12px; color: #6e6e73;');
-    console.log('%c  addFilmLink("links-section-id", "Title", "url") - Add reading link', 'font-size: 12px; color: #6e6e73;');
-    
-    console.log('%c\n📚 Link Section IDs:', 'font-size: 14px; font-weight: bold; color: #1d1d1f;');
-    console.log('%c  • links-system, links-self, links-bridge, links-dessert', 'font-size: 12px; color: #6e6e73;');
 }
 
 // Add keyboard navigation
@@ -894,8 +843,6 @@ function initHeroCollage() {
                 lastCycled: Date.now()
             });
         });
-
-        console.log(`Loaded ${imageElements.length} screengrabs into hero collage`);
 
         // Start cycling: find oldest (bottom-most) image and recycle it
         setInterval(() => {
