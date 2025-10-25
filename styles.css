@@ -258,7 +258,7 @@ strong {
 .container {
     position: relative;
     z-index: 2;
-    background: var(--background);
+    background: linear-gradient(to bottom, var(--card-background), var(--background));
     border-radius: 20px 20px 0 0;
     padding-top: 0;
     margin-top: -520px;
@@ -289,8 +289,6 @@ strong {
     column-count: 2;
     column-gap: calc(var(--spacing-lg) + var(--spacing-sm));
     max-width: none;
-    background: linear-gradient(to bottom, var(--card-background), #ffffff);
-    border-radius: 16px;
 }
 
 /* Subtitle in intro acts as heading */
@@ -1563,6 +1561,7 @@ strong {
 
     .container {
         padding: 0 var(--spacing-sm) var(--spacing-xl);
+        margin-top: -420px; /* Adjusted for 850px hero (was -520px for 1050px) */
     }
 
     h1 {
@@ -1667,7 +1666,10 @@ strong {
 
     .intro {
         column-count: 1;
-        padding: var(--spacing-xl) var(--spacing-md);
+        margin-top: var(--spacing-lg);
+        margin-left: 0;
+        margin-right: 0;
+        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
     }
 
     .intro .subtitle {
@@ -1760,6 +1762,11 @@ strong {
 
 /* Additional breakpoint for small tablets/large phones (481px - 640px) */
 @media (min-width: 481px) and (max-width: 640px) {
+    /* Adjust container overlap for smaller hero */
+    .container {
+        margin-top: -380px; /* Intermediate value between tablet and mobile */
+    }
+
     /* Scale down icons further for this intermediate size */
     .decorative-icon {
         width: 44px;
@@ -1807,6 +1814,14 @@ strong {
     .course-section.dessert .course-header .decorative-icon:nth-child(2) {
         right: 2%;
     }
+
+    /* Intro card spacing adjustments */
+    .intro {
+        margin-top: var(--spacing-sm);
+        margin-left: 0;
+        margin-right: 0;
+        padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
+    }
 }
 
 @media (max-width: 480px) {
@@ -1835,6 +1850,15 @@ strong {
     .container {
         border-radius: 12px 12px 0 0;
         padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+        margin-top: -350px; /* Adjusted for 750px hero (proportional to desktop) */
+    }
+
+    .intro {
+        margin-top: 0;
+        margin-bottom: var(--spacing-lg);
+        margin-left: 0;
+        margin-right: 0;
+        padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-md);
     }
 
     /* Compact link cards on mobile */
