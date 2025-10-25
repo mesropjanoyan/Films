@@ -44,13 +44,50 @@ const filmData = {
 const slideshows = {};
 let lightboxInstance = null;
 
+/**
+ * Main initialization - runs when DOM is fully loaded
+ * Initializes all interactive features in sequence
+ */
 document.addEventListener('DOMContentLoaded', () => {
     initSmoothScrolling();
     initLightbox();
     initSlideshows();
     initScrollAnimations();
     initHeroCollage();
+    initLinkManagement();
+    
+    // Populate Further Reading sections with curated articles
+    populateFurtherReadingLinks();
 });
+
+/**
+ * Populate all Further Reading sections with smart links
+ * Organized by course section with rich metadata
+ */
+function populateFurtherReadingLinks() {
+    // First Course: The System — Ghost in the Shell & The Matrix
+    addFilmLink('links-system', 'https://www.theguardian.com/film/2009/oct/19/hollywood-ghost-in-the-shell', 'Hollywood\'s new frontier', 'The Guardian', 'Oct 2009');
+    addFilmLink('links-system', 'https://www.slashfilm.com/778619/the-classic-anime-that-inspired-the-matrix/', 'The Classic Anime That Inspired The Matrix', 'SlashFilm');
+    addFilmLink('links-system', 'https://bigpicturefilmclub.com/how-ghost-in-the-shell-inspired-the-matrix-a-cyberpunk-revolution/', 'How Ghost in the Shell Inspired The Matrix', 'Big Picture Film Club');
+    addFilmLink('links-system', 'https://www.vox.com/2017/4/4/15138682/ghost-in-the-shell-anime-philosophy', 'Ghost in the Shell\'s anime philosophy', 'Vox', 'Apr 2017');
+    
+    // Second Course: The Self — Perfect Blue & Black Swan
+    addFilmLink('links-self', 'https://www.dazeddigital.com/artsandculture/article/26075/1/the-cult-japanese-filmmaker-that-inspired-darren-aronofsky', 'The cult Japanese filmmaker that inspired Darren Aronofsky', 'Dazed Digital');
+    addFilmLink('links-self', 'https://faroutmagazine.co.uk/identity-crisis-perfect-blue-persona-black-swan/', 'Identity crisis: Perfect Blue, Persona, and Black Swan', 'Far Out Magazine');
+    addFilmLink('links-self', 'https://animationobsessive.substack.com/p/the-real-history-of-perfect-blue', 'The Real History of Perfect Blue', 'Animation Obsessive');
+    
+    // Third Course: The Bridge — Paprika & Inception
+    addFilmLink('links-bridge', 'https://filmschoolrejects.com/inception-paprika-synergy/', 'Inception and Paprika: Synergy', 'Film School Rejects');
+    addFilmLink('links-bridge', 'https://www.hollywoodinsider.com/paprika-inception-dream-world/', 'Paprika and Inception\'s Dream World', 'The Hollywood Insider');
+    addFilmLink('links-bridge', 'https://independentpicturehouse.org/2025/01/03/paprika-more-than-anime-inception/', 'Paprika: More than anime Inception', 'Independent Picturehouse', 'Jan 2025');
+    addFilmLink('links-bridge', 'https://collider.com/best-movies-inspired-by-anime-the-matrix-avatar/', 'Best Movies Inspired by Anime', 'Collider');
+    
+    // The Dessert Course: Millennium Actress
+    addFilmLink('links-dessert', 'https://lwlies.com/home-ents/millennium-actress-satoshi-kon-cinema-love-letter', 'Millennium Actress: A cinema love letter', 'Little White Lies');
+    addFilmLink('links-dessert', 'https://vaguevisages.com/2019/09/19/millennium-actress-satoshi-kan-essay/', 'Millennium Actress: Satoshi Kon Essay', 'Vague Visages', 'Sep 2019');
+    addFilmLink('links-dessert', 'https://bfidatadigipres.github.io/pdf/2022-05-04-millennium-actress.pdf', 'Millennium Actress Analysis', 'BFI', 'May 2022');
+    addFilmLink('links-dessert', 'https://www.youtube.com/watch?v=1dfn-yMmvis', 'Millennium Actress Video Essay', 'YouTube');
+}
 
 /**
  * Initialize all slideshows
@@ -538,6 +575,7 @@ function initLinkManagement() {
             img.src = imageUrl;
             img.alt = `${title || 'Article'} preview`;
             img.className = 'link-preview';
+            img.loading = 'lazy'; // Performance: lazy load images
             a.appendChild(img);
         }
         
@@ -563,6 +601,7 @@ function initLinkManagement() {
                 const publisherIcon = document.createElement('span');
                 publisherIcon.className = 'material-symbols-rounded';
                 publisherIcon.textContent = 'public';
+                publisherIcon.setAttribute('aria-hidden', 'true'); // Accessibility: icons are decorative
                 publisherSpan.appendChild(publisherIcon);
                 
                 publisherSpan.appendChild(document.createTextNode(publisher));
@@ -576,6 +615,7 @@ function initLinkManagement() {
                 const dateIcon = document.createElement('span');
                 dateIcon.className = 'material-symbols-rounded';
                 dateIcon.textContent = 'schedule';
+                dateIcon.setAttribute('aria-hidden', 'true'); // Accessibility: icons are decorative
                 dateSpan.appendChild(dateIcon);
                 
                 const timeElement = document.createElement('time');
@@ -685,17 +725,21 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Hero Collage Animation
+/**
+ * Hero Collage Animation System
+ * Loads all 56 screengrabs once and cycles them endlessly
+ * Uses density gradient for natural distribution (top-heavy, center-focused)
+ */
 function initHeroCollage() {
     const collageContainer = document.getElementById('heroCollage');
     if (!collageContainer) return;
 
     // Configuration constants
     const CONFIG = {
-        CYCLE_INTERVAL: 3000, // Move one image every 3 seconds
-        IMAGE_MAX_WIDTH: 320,
-        IMAGE_MAX_HEIGHT: 240,
-        BOTTOM_SAFE_ZONE: 250 // Pixels from bottom
+        CYCLE_INTERVAL: 3000,      // Move one image every 3 seconds
+        IMAGE_MAX_WIDTH: 320,       // Maximum image width in pixels
+        IMAGE_MAX_HEIGHT: 240,      // Maximum image height in pixels
+        BOTTOM_SAFE_ZONE: 250       // Pixels from bottom to avoid gradient cutoff
     };
 
     // Film directories with screengrab counts
@@ -711,60 +755,63 @@ function initHeroCollage() {
     
     const SCREENGRABS_PER_FILM = 8;
 
-    // Build array of all screengrab paths (56 total)
+    // Build array of all screengrab paths (7 films × 8 = 56 total)
     const allImages = FILMS.flatMap(film =>
         Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) =>
             `images/${film}/screengrab${i + 1}.jpg`
         )
     );
     
-    // Shuffle for variety
+    // Shuffle for visual variety
     const shuffledImages = allImages.sort(() => Math.random() - 0.5);
 
     // Track all image elements
     const imageElements = [];
 
     /**
-     * Generate position using density gradient approach
-     * Dense at top and center, sparse at bottom
+     * Generate position using density gradient distribution
+     * Top-heavy (power function), center-focused (bell curve), manual left correction
+     * @returns {Object} Position object with left, top (percentages), and rotation (degrees)
      */
     function generatePosition() {
         const container = collageContainer.getBoundingClientRect();
         const containerWidth = container.width;
         const containerHeight = container.height;
         
-        // Calculate usable area (avoid bottom safe zone)
+        // Calculate usable area (exclude bottom safe zone to prevent gradient cutoff)
         const usableTop = 0;
         const usableBottom = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
         const usableHeight = usableBottom - usableTop;
         
-        // Vertical: Strong bias toward top
-        const verticalBias = Math.pow(Math.random(), 2.5);
+        // Vertical distribution: Power function creates strong top bias
+        const verticalBias = Math.pow(Math.random(), 2.5); // ^2.5 heavily favors top
         const top = usableTop + (verticalBias * usableHeight);
         
-        // Horizontal: Center-focused bell curve
+        // Horizontal distribution: Bell curve for center focus
+        // Average of 3 random numbers approximates Gaussian distribution
         let horizontalRandom = 0;
         for (let i = 0; i < 3; i++) {
             horizontalRandom += Math.random();
         }
-        horizontalRandom = horizontalRandom / 3;
+        horizontalRandom = horizontalRandom / 3; // 0-1, centered at 0.5
         
+        // Convert to ±1 range centered at 0
         const horizontalBias = (horizontalRandom - 0.5) * 2;
-        const centerX = 50; // Center of viewport
+        const centerX = 50; // Center of viewport (50%)
         const left = centerX + (horizontalBias * 50); // ±50% from center
         
-        // Manual correction: shift 150px left
+        // Manual symmetry correction: 150px leftward shift counters rightward bias
         const leftCorrectionPercent = (-150 / containerWidth) * 100;
         const correctedLeft = left + leftCorrectionPercent;
         
-        // Small jitter
+        // Add small random jitter for natural variation
         const jitterX = (Math.random() - 0.5) * 3;
         const jitterY = (Math.random() - 0.5) * 3;
         
         return {
             left: Math.max(0, Math.min(100, correctedLeft + jitterX)),
             top: Math.max(0, Math.min(usableBottom, top + jitterY)),
-            rotation: (Math.random() - 0.5) * 8
+            rotation: (Math.random() - 0.5) * 8 // Small rotation for natural look
         };
     }
 
@@ -872,4 +919,3 @@ function initHeroCollage() {
     // Start the collage
     initialize();
 }
-
