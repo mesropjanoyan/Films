@@ -1295,6 +1295,15 @@ strong {
     .arrow-connector .material-symbols-rounded::before {
         content: 'keyboard_arrow_down';
     }
+    
+    /* Hide the original arrow icon text on mobile */
+    .arrow-connector .material-symbols-rounded {
+        font-size: 0;
+    }
+    
+    .arrow-connector .material-symbols-rounded::before {
+        font-size: 36px;
+    }
 
     .film-card {
         padding: var(--spacing-sm) var(--spacing-md);
