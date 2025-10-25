@@ -42,9 +42,11 @@ const filmData = {
 
 // Store slideshow instances
 const slideshows = {};
+let lightboxInstance = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     initSmoothScrolling();
+    initLightbox();
     initSlideshows();
     initScrollAnimations();
     initLinkManagement();
@@ -162,6 +164,14 @@ class Slideshow {
                 img.alt = slide.alt;
                 img.loading = 'lazy';
                 slideElement.appendChild(img);
+                
+                // Add click handler to open lightbox
+                slideElement.addEventListener('click', (e) => {
+                    if (lightboxInstance) {
+                        lightboxInstance.open(this.filmId, index, slideElement);
+                    }
+                });
+                slideElement.style.cursor = 'pointer';
             } else if (slide.type === 'youtube') {
                 const iframe = document.createElement('iframe');
                 iframe.src = `https://www.youtube.com/embed/${slide.videoId}`;
@@ -169,6 +179,15 @@ class Slideshow {
                 iframe.allowFullscreen = true;
                 iframe.title = slide.alt;
                 slideElement.appendChild(iframe);
+                
+                // Add click handler to thumbnail area (not the iframe itself)
+                slideElement.addEventListener('click', (e) => {
+                    // Only open lightbox if clicking outside the iframe
+                    if (e.target === slideElement && lightboxInstance) {
+                        lightboxInstance.open(this.filmId, index, slideElement);
+                    }
+                });
+                slideElement.style.cursor = 'pointer';
             } else if (slide.type === 'placeholder') {
                 slideElement.classList.add('placeholder');
                 const text = document.createElement('div');
@@ -246,6 +265,231 @@ class Slideshow {
         this.prevBtn.disabled = this.currentIndex === 0;
         this.nextBtn.disabled = this.currentIndex === this.slides.length - 1;
     }
+}
+
+/**
+ * Lightbox class for modal image/video gallery
+ */
+class Lightbox {
+    constructor() {
+        this.currentFilmId = null;
+        this.currentIndex = 0;
+        this.focusTrapElements = [];
+        this.triggerElement = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        
+        this.createLightboxHTML();
+        this.attachEventListeners();
+    }
+    
+    createLightboxHTML() {
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.setAttribute('aria-label', 'Image and video gallery');
+        
+        lightbox.innerHTML = `
+            <div class="lightbox-content">
+                <button class="lightbox-close" aria-label="Close lightbox">
+                    <span class="material-symbols-rounded">close</span>
+                </button>
+                <div class="lightbox-slides-container">
+                    <button class="lightbox-nav prev" aria-label="Previous slide">
+                        <span class="material-symbols-rounded">chevron_left</span>
+                    </button>
+                    <div class="lightbox-slides"></div>
+                    <button class="lightbox-nav next" aria-label="Next slide">
+                        <span class="material-symbols-rounded">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(lightbox);
+        
+        this.element = lightbox;
+        this.slidesContainer = lightbox.querySelector('.lightbox-slides');
+        this.closeBtn = lightbox.querySelector('.lightbox-close');
+        this.prevBtn = lightbox.querySelector('.lightbox-nav.prev');
+        this.nextBtn = lightbox.querySelector('.lightbox-nav.next');
+        
+        this.focusTrapElements = [this.closeBtn, this.prevBtn, this.nextBtn];
+    }
+    
+    attachEventListeners() {
+        // Close button
+        this.closeBtn.addEventListener('click', () => this.close());
+        
+        // Navigation buttons
+        this.prevBtn.addEventListener('click', () => this.previousSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+        
+        // Backdrop click
+        this.element.addEventListener('click', (e) => {
+            if (e.target === this.element) {
+                this.close();
+            }
+        });
+        
+        // Keyboard navigation
+        this.keyboardHandler = (e) => {
+            if (!this.element.classList.contains('active')) return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    this.close();
+                    break;
+                case 'ArrowLeft':
+                    this.previousSlide();
+                    break;
+                case 'ArrowRight':
+                    this.nextSlide();
+                    break;
+                case 'Tab':
+                    this.handleTabKey(e);
+                    break;
+            }
+        };
+        document.addEventListener('keydown', this.keyboardHandler);
+        
+        // Touch swipe support
+        this.element.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        this.element.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            const swipeDistance = this.touchStartX - this.touchEndX;
+            
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance > 0) {
+                    this.nextSlide();
+                } else {
+                    this.previousSlide();
+                }
+            }
+        });
+    }
+    
+    handleTabKey(e) {
+        const focusableElements = this.focusTrapElements.filter(el => !el.disabled);
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+        }
+    }
+    
+    open(filmId, slideIndex = 0, triggerElement = null) {
+        this.currentFilmId = filmId;
+        this.currentIndex = slideIndex;
+        this.triggerElement = triggerElement;
+        
+        const slideshow = slideshows[filmId];
+        if (!slideshow) return;
+        
+        // Clear and rebuild slides
+        this.slidesContainer.innerHTML = '';
+        
+        slideshow.slides.forEach((slide, index) => {
+            const lightboxSlide = document.createElement('div');
+            lightboxSlide.className = 'lightbox-slide';
+            if (index === slideIndex) lightboxSlide.classList.add('active');
+            
+            if (slide.type === 'image') {
+                const img = document.createElement('img');
+                img.src = slide.src;
+                img.alt = slide.alt;
+                lightboxSlide.appendChild(img);
+            } else if (slide.type === 'youtube') {
+                const iframe = document.createElement('iframe');
+                // Don't autoplay in lightbox
+                iframe.src = `https://www.youtube.com/embed/${slide.videoId}`;
+                iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                iframe.title = slide.alt;
+                lightboxSlide.appendChild(iframe);
+            }
+            // Skip placeholder slides in lightbox
+            
+            if (slide.type !== 'placeholder') {
+                this.slidesContainer.appendChild(lightboxSlide);
+            }
+        });
+        
+        // Show lightbox
+        this.element.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Update navigation
+        this.updateNavigation();
+        
+        // Focus management
+        setTimeout(() => {
+            this.closeBtn.focus();
+        }, 100);
+    }
+    
+    close() {
+        this.element.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Return focus to trigger element
+        if (this.triggerElement) {
+            setTimeout(() => {
+                this.triggerElement.focus();
+            }, 100);
+        }
+        
+        // Clear slides after animation
+        setTimeout(() => {
+            this.slidesContainer.innerHTML = '';
+        }, 300);
+    }
+    
+    goToSlide(index) {
+        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
+        if (index < 0 || index >= allSlides.length) return;
+        
+        allSlides[this.currentIndex].classList.remove('active');
+        allSlides[index].classList.add('active');
+        
+        this.currentIndex = index;
+        this.updateNavigation();
+    }
+    
+    nextSlide() {
+        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
+        if (this.currentIndex < allSlides.length - 1) {
+            this.goToSlide(this.currentIndex + 1);
+        }
+    }
+    
+    previousSlide() {
+        if (this.currentIndex > 0) {
+            this.goToSlide(this.currentIndex - 1);
+        }
+    }
+    
+    updateNavigation() {
+        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
+        this.prevBtn.disabled = this.currentIndex === 0;
+        this.nextBtn.disabled = this.currentIndex === allSlides.length - 1;
+    }
+}
+
+/**
+ * Initialize lightbox
+ */
+function initLightbox() {
+    lightboxInstance = new Lightbox();
 }
 
 /**
