@@ -60,6 +60,29 @@ body {
         'opsz' 24;
 }
 
+/* Skip to content link for accessibility */
+.skip-to-content {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    z-index: 10000;
+    transition: top 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skip-to-content:focus {
+    top: 1rem;
+    outline: 3px solid var(--accent-hover);
+    outline-offset: 2px;
+}
+
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -97,6 +120,19 @@ h4 {
     margin-bottom: var(--spacing-sm);
     color: var(--primary-text);
     letter-spacing: -0.015em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+h4 .material-symbols-rounded {
+    font-size: 22px;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 600,
+        'GRAD' 0,
+        'opsz' 24;
+    color: var(--accent-color);
 }
 
 p {
@@ -204,8 +240,16 @@ strong {
     align-items: center;
     justify-content: center;
     padding-top: 12rem;
-    font-weight: 300;
     opacity: 0.6;
+}
+
+.arrow-connector .material-symbols-rounded {
+    font-size: 48px;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 300,
+        'GRAD' 0,
+        'opsz' 48;
 }
 
 /* Film Card */
@@ -239,6 +283,31 @@ strong {
     margin-bottom: 0.75rem;
     font-weight: 500;
     letter-spacing: -0.005em;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.icon-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.icon-text .material-symbols-rounded {
+    font-size: 18px;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20;
+    opacity: 0.8;
+}
+
+.metadata-separator {
+    opacity: 0.4;
+    margin: 0 0.125rem;
 }
 
 .film-tagline {
@@ -257,12 +326,22 @@ strong {
 .letterboxd-link {
     display: inline-flex;
     align-items: center;
+    gap: 0.375rem;
     color: var(--accent-color);
     text-decoration: none;
     font-size: 0.9375rem;
     font-weight: 600;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: -0.01em;
+}
+
+.letterboxd-link .material-symbols-rounded {
+    font-size: 18px;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 500,
+        'GRAD' 0,
+        'opsz' 20;
 }
 
 .letterboxd-link:hover {
@@ -718,7 +797,18 @@ strong {
 }
 
 .links-list li {
-    margin-bottom: 0.625rem;
+    margin-bottom: 1rem;
+    padding: 0.875rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.links-list li:hover {
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: var(--accent-color);
 }
 
 .links-list li:last-child {
@@ -729,24 +819,94 @@ strong {
     color: var(--accent-color);
     text-decoration: none;
     font-size: 1rem;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-block;
-    padding: 0.25rem 0;
-    font-weight: 400;
+    font-weight: 600;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
 }
 
 .links-list a:hover {
     color: var(--accent-hover);
-    text-decoration: underline;
+}
+
+.link-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.link-preview {
+    width: 120px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--card-background);
+}
+
+.link-title {
+    color: var(--primary-text);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.link-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--secondary-text);
+    margin-top: 0.375rem;
+}
+
+.link-publisher,
+.link-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.link-publisher .material-symbols-rounded,
+.link-date .material-symbols-rounded {
+    font-size: 16px;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20;
+    opacity: 0.7;
+}
+
+.link-publisher {
+    font-weight: 500;
+}
+
+.link-date {
+    opacity: 0.8;
+}
+
+.link-date::before {
+    content: '•';
+    margin-right: 0.5rem;
+    opacity: 0.5;
+    font-size: 0.75rem;
 }
 
 .links-list a.placeholder-link {
     color: var(--secondary-text);
     font-style: italic;
+    font-weight: 400;
 }
 
-.links-list a.placeholder-link:hover {
-    color: var(--primary-text);
+.links-list li:has(.placeholder-link) {
+    background: transparent;
+    border-style: dashed;
+}
+
+.links-list li:has(.placeholder-link):hover {
+    transform: none;
+    box-shadow: none;
 }
 
 /* Footer */
@@ -824,7 +984,10 @@ strong {
     .arrow-connector {
         transform: rotate(90deg);
         padding: var(--spacing-sm) 0;
-        font-size: 1.75rem;
+    }
+
+    .arrow-connector .material-symbols-rounded {
+        font-size: 36px;
     }
 
     .film-card {

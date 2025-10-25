@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div class="container">
         <!-- Hero Section -->
         <header class="hero">
@@ -19,7 +20,7 @@
         </header>
 
         <!-- Introduction -->
-        <section class="intro">
+        <section class="intro" aria-label="Introduction" id="main-content">
             <p>Welcome! This is a collection of some of the most groundbreaking and mind-bending anime ever made—films that also happen to be some of my all-time favorites. Think of this as an exploration of how creative Japanese animation didn't just <em>inspire</em> but actively <em>shaped</em> many of the live-action movies we know and love.</p>
             
             <p>Here you'll find three double features. Each one pairs a classic, must-see anime with the famous live-action film that it directly influenced.</p>
@@ -31,10 +32,12 @@
 
         <div class="divider"></div>
 
+        <!-- Main Content -->
+        <main>
         <!-- First Course -->
-        <section class="course-section">
+        <article class="course-section" aria-labelledby="course-system">
             <div class="course-header">
-                <h2>First Course: The System</h2>
+                <h2 id="course-system">First Course: The System</h2>
                 <p class="subtitle">Ghost in the Shell & The Matrix</p>
             </div>
 
@@ -56,13 +59,19 @@
                     </div>
                     <div class="film-metadata">
                         <h3>Ghost in the Shell</h3>
-                        <p class="film-info">1995 • Directed by Mamoru Oshii</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="1995">1995</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Mamoru Oshii</span>
+                        </p>
                         <p class="film-tagline">IT FOUND A VOICE… NOW IT NEEDS A BODY.</p>
-                        <a href="https://letterboxd.com/film/ghost-in-the-shell/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/ghost-in-the-shell/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
 
-                <div class="arrow-connector">→</div>
+                <div class="arrow-connector" aria-hidden="true">
+                    <span class="material-symbols-rounded">trending_flat</span>
+                </div>
 
                 <div class="film-card">
                     <div class="slideshow" data-film="matrix">
@@ -75,9 +84,13 @@
                     </div>
                     <div class="film-metadata">
                         <h3>The Matrix</h3>
-                        <p class="film-info">1999 • Directed by the Wachowskis</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="1999">1999</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by the Wachowskis</span>
+                        </p>
                         <p class="film-tagline">BELIEVE THE UNBELIEVABLE.</p>
-                        <a href="https://letterboxd.com/film/the-matrix/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/the-matrix/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
             </div>
@@ -88,19 +101,19 @@
             </div>
 
             <div class="links-section">
-                <h4>Further Reading</h4>
+                <h4><span class="material-symbols-rounded">menu_book</span>Further Reading</h4>
                 <ul class="links-list" id="links-system">
                     <li><a href="#" class="placeholder-link">Add link for further reading</a></li>
                 </ul>
             </div>
-        </section>
+        </article>
 
         <div class="divider"></div>
 
         <!-- Second Course -->
-        <section class="course-section">
+        <article class="course-section" aria-labelledby="course-self">
             <div class="course-header">
-                <h2>Second Course: The Self</h2>
+                <h2 id="course-self">Second Course: The Self</h2>
                 <p class="subtitle">Perfect Blue & Black Swan</p>
             </div>
 
@@ -122,13 +135,19 @@
                     </div>
                     <div class="film-metadata">
                         <h3>Perfect Blue</h3>
-                        <p class="film-info">1997 • Directed by Satoshi Kon</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="1997">1997</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Satoshi Kon</span>
+                        </p>
                         <p class="film-tagline">EXCUSE ME… WHO ARE YOU?</p>
-                        <a href="https://letterboxd.com/film/perfect-blue/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/perfect-blue/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
 
-                <div class="arrow-connector">→</div>
+                <div class="arrow-connector" aria-hidden="true">
+                    <span class="material-symbols-rounded">trending_flat</span>
+                </div>
 
                 <div class="film-card">
                     <div class="slideshow" data-film="black-swan">
@@ -141,9 +160,13 @@
                     </div>
                     <div class="film-metadata">
                         <h3>Black Swan</h3>
-                        <p class="film-info">2010 • Directed by Darren Aronofsky</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="2010">2010</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Darren Aronofsky</span>
+                        </p>
                         <p class="film-tagline">THE PRESSURE OF PERFECTION.</p>
-                        <a href="https://letterboxd.com/film/black-swan/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/black-swan/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
             </div>
@@ -154,19 +177,30 @@
             </div>
 
             <div class="links-section">
-                <h4>Further Reading</h4>
+                <h4><span class="material-symbols-rounded">menu_book</span>Further Reading</h4>
                 <ul class="links-list" id="links-self">
-                    <li><a href="#" class="placeholder-link">Add link for further reading</a></li>
+                    <li>
+                        <a href="https://i-d.co/article/need-to-see-perfect-blue-cult-90s-anime-inspired-darren-aronofsky/" target="_blank" rel="noopener noreferrer">
+                            <img src="https://i-d.co/wp-content/uploads/2024/05/1508842679235-Screen-Shot-2017-10-24-at-115600.png?quality=90&w=1024" alt="Perfect Blue article preview" class="link-preview">
+                            <div class="link-content">
+                                <div class="link-title">Why you need to see Perfect Blue, the cult 90s anime that inspired Darren Aronofsky</div>
+                                <div class="link-meta">
+                                    <span class="link-publisher"><span class="material-symbols-rounded">public</span>i-D</span>
+                                    <span class="link-date"><span class="material-symbols-rounded">schedule</span><time datetime="2017-10-26">October 26, 2017</time></span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
                 </ul>
             </div>
-        </section>
+        </article>
 
         <div class="divider"></div>
 
         <!-- Third Course -->
-        <section class="course-section">
+        <article class="course-section" aria-labelledby="course-bridge">
             <div class="course-header">
-                <h2>Third Course: The Bridge</h2>
+                <h2 id="course-bridge">Third Course: The Bridge</h2>
                 <p class="subtitle">Paprika & Inception</p>
             </div>
 
@@ -184,13 +218,19 @@
                     </div>
                     <div class="film-metadata">
                         <h3>Paprika</h3>
-                        <p class="film-info">2006 • Directed by Satoshi Kon</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="2006">2006</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Satoshi Kon</span>
+                        </p>
                         <p class="film-tagline">THIS IS YOUR BRAIN ON ANIME.</p>
-                        <a href="https://letterboxd.com/film/paprika-2006/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/paprika-2006/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
 
-                <div class="arrow-connector">→</div>
+                <div class="arrow-connector" aria-hidden="true">
+                    <span class="material-symbols-rounded">trending_flat</span>
+                </div>
 
                 <div class="film-card">
                     <div class="slideshow" data-film="inception">
@@ -203,9 +243,13 @@
                     </div>
                     <div class="film-metadata">
                         <h3>Inception</h3>
-                        <p class="film-info">2010 • Directed by Christopher Nolan</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="2010">2010</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Christopher Nolan</span>
+                        </p>
                         <p class="film-tagline">YOUR MIND IS THE SCENE OF THE CRIME.</p>
-                        <a href="https://letterboxd.com/film/inception/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/inception/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
             </div>
@@ -216,19 +260,19 @@
             </div>
 
             <div class="links-section">
-                <h4>Further Reading</h4>
+                <h4><span class="material-symbols-rounded">menu_book</span>Further Reading</h4>
                 <ul class="links-list" id="links-bridge">
                     <li><a href="#" class="placeholder-link">Add link for further reading</a></li>
                 </ul>
             </div>
-        </section>
+        </article>
 
         <div class="divider"></div>
 
         <!-- Dessert Course -->
-        <section class="course-section dessert">
+        <article class="course-section dessert" aria-labelledby="course-dessert">
             <div class="course-header">
-                <h2>The Dessert Course: A Poignant Reflection</h2>
+                <h2 id="course-dessert">The Dessert Course: A Poignant Reflection</h2>
                 <p class="subtitle">The Millennium Actress</p>
             </div>
 
@@ -246,9 +290,13 @@
                     </div>
                     <div class="film-metadata">
                         <h3>The Millennium Actress</h3>
-                        <p class="film-info">2001 • Directed by Satoshi Kon</p>
+                        <p class="film-info">
+                            <span class="icon-text"><span class="material-symbols-rounded">calendar_today</span><time datetime="2001">2001</time></span>
+                            <span class="metadata-separator">•</span>
+                            <span class="icon-text"><span class="material-symbols-rounded">movie</span>Directed by Satoshi Kon</span>
+                        </p>
                         <p class="film-tagline">THE MAGIC OF MOVIES, THE MYSTERY OF MEMORY.</p>
-                        <a href="https://letterboxd.com/film/millennium-actress/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd →</a>
+                        <a href="https://letterboxd.com/film/millennium-actress/" target="_blank" rel="noopener noreferrer" class="letterboxd-link">View on Letterboxd<span class="material-symbols-rounded">open_in_new</span></a>
                     </div>
                 </div>
             </div>
@@ -259,12 +307,13 @@
             </div>
 
             <div class="links-section">
-                <h4>Further Reading</h4>
+                <h4><span class="material-symbols-rounded">menu_book</span>Further Reading</h4>
                 <ul class="links-list" id="links-dessert">
                     <li><a href="#" class="placeholder-link">Add link for further reading</a></li>
                 </ul>
             </div>
-        </section>
+        </article>
+        </main>
 
         <!-- Footer -->
         <footer class="footer">

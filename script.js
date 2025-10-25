@@ -514,7 +514,8 @@ function initSmoothScrolling() {
  * Dynamic link management for the "Further Reading" sections
  */
 function initLinkManagement() {
-    window.addFilmLink = (sectionId, linkText, linkUrl) => {
+    // Enhanced function to add links with rich metadata
+    window.addFilmLink = (sectionId, url, title = null, publisher = null, date = null, imageUrl = null) => {
         const linksList = document.getElementById(sectionId);
         if (!linksList) {
             console.error(`Section with id "${sectionId}" not found`);
@@ -528,11 +529,67 @@ function initLinkManagement() {
 
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.href = linkUrl;
-        a.textContent = linkText;
+        a.href = url;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         
+        // Add preview image if available
+        if (imageUrl) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = `${title || 'Article'} preview`;
+            img.className = 'link-preview';
+            a.appendChild(img);
+        }
+        
+        // Create content wrapper
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'link-content';
+        
+        // Create title
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'link-title';
+        titleDiv.textContent = title || url;
+        contentDiv.appendChild(titleDiv);
+        
+        // Add metadata if available
+        if (publisher || date) {
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'link-meta';
+            
+            if (publisher) {
+                const publisherSpan = document.createElement('span');
+                publisherSpan.className = 'link-publisher';
+                
+                const publisherIcon = document.createElement('span');
+                publisherIcon.className = 'material-symbols-rounded';
+                publisherIcon.textContent = 'public';
+                publisherSpan.appendChild(publisherIcon);
+                
+                publisherSpan.appendChild(document.createTextNode(publisher));
+                metaDiv.appendChild(publisherSpan);
+            }
+            
+            if (date) {
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'link-date';
+                
+                const dateIcon = document.createElement('span');
+                dateIcon.className = 'material-symbols-rounded';
+                dateIcon.textContent = 'schedule';
+                dateSpan.appendChild(dateIcon);
+                
+                const timeElement = document.createElement('time');
+                timeElement.textContent = date;
+                dateSpan.appendChild(timeElement);
+                
+                metaDiv.appendChild(dateSpan);
+            }
+            
+            contentDiv.appendChild(metaDiv);
+        }
+        
+        a.appendChild(contentDiv);
         li.appendChild(a);
         linksList.appendChild(li);
         
@@ -543,6 +600,8 @@ function initLinkManagement() {
             li.style.opacity = '1';
             li.style.transform = 'translateY(0)';
         }, 10);
+        
+        console.log(`✓ Added link: ${title || url}`);
     };
 
     // Helper to update YouTube trailer ID
