@@ -2630,6 +2630,165 @@ strong {
     }
 }
 
+/* Glossary Tooltip Styles */
+.glossary-term {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    cursor: help;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.glossary-term:hover {
+    color: var(--matrix-green-dark);
+    text-decoration-color: var(--matrix-green-dark);
+}
+
+[data-theme="dark"] .glossary-term:hover {
+    color: var(--matrix-green);
+    text-decoration-color: var(--matrix-green);
+}
+
+[data-theme="dark"] .glossary-tooltip {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .glossary-tooltip::after {
+    border-top-color: var(--card-background);
+}
+
+.glossary-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    width: max-content;
+    max-width: 320px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: normal;
+}
+
+/* Adjust tooltip position when near left edge */
+.glossary-term:first-child .glossary-tooltip,
+.glossary-term[data-position="left"] .glossary-tooltip {
+    left: 0;
+    transform: translateX(0) translateY(-8px);
+}
+
+.glossary-term:first-child.active .glossary-tooltip,
+.glossary-term[data-position="left"].active .glossary-tooltip {
+    transform: translateX(0) translateY(-12px);
+}
+
+/* Adjust tooltip position when near right edge */
+.glossary-term:last-child .glossary-tooltip,
+.glossary-term[data-position="right"] .glossary-tooltip {
+    left: auto;
+    right: 0;
+    transform: translateX(0) translateY(-8px);
+}
+
+.glossary-term:last-child.active .glossary-tooltip,
+.glossary-term[data-position="right"].active .glossary-tooltip {
+    transform: translateX(0) translateY(-12px);
+}
+
+.glossary-term.active .glossary-tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(-12px);
+}
+
+/* Arrow pointing down from tooltip */
+.glossary-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--card-background);
+}
+
+.glossary-tooltip-definition {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--secondary-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.glossary-tooltip-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--background);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.glossary-tooltip-link:hover {
+    background: var(--accent-color);
+    color: var(--background);
+    border-color: var(--accent-color);
+}
+
+.glossary-tooltip-link .material-symbols-rounded {
+    font-size: 18px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .glossary-tooltip {
+        position: fixed;
+        bottom: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: calc(100vw - 40px);
+        width: 320px;
+    }
+    
+    .glossary-term.active .glossary-tooltip {
+        transform: translate(-50%, -50%);
+    }
+    
+    .glossary-tooltip::after {
+        display: none;
+    }
+    
+    /* Add backdrop on mobile */
+    .glossary-term.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+}
+
 /* Dark mode support (optional future enhancement) */
 @media (prefers-color-scheme: dark) {
     /* Uncomment to enable dark mode

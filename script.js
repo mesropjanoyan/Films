@@ -40,6 +40,60 @@ const filmData = {
     }
 };
 
+// Glossary data with terms, definitions, and Wikipedia links
+const glossary = [
+    {
+        term: 'live-action',
+        definition: 'A film or show featuring real actors or animals, rather than animation or computer-generated effects.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Live_action'
+    },
+    {
+        term: 'double feature',
+        definition: 'A cinema program where two films are shown back-to-back; used here to pair an anime with its influence.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Double_feature'
+    },
+    {
+        term: 'cyberpunk',
+        definition: 'A subgenre of science fiction set in a futuristic, dystopian society dominated by high-tech computer technology.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Cyberpunk'
+    },
+    {
+        term: 'dystopian',
+        definition: 'An imagined state or society, typically futuristic, characterized by great injustice, oppression, and misery.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Dystopia'
+    },
+    {
+        term: 'psychological horror',
+        definition: 'A subgenre of horror that focuses on mental and emotional instability to create suspense, rather than relying on gore.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Psychological_horror'
+    },
+    {
+        term: 'doppelgänger',
+        definition: 'A look-alike or \'double\' of a living person, often used in fiction (especially in thrillers) to explore themes of identity and the self.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Doppelg%C3%A4nger'
+    },
+    {
+        term: 'homage',
+        definition: 'A respectful tribute within a creative work that references the style or specific elements of another artist\'s work.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Homage_(arts)'
+    },
+    {
+        term: 'surrealism',
+        definition: 'A style in art and film that explores the workings of the mind, featuring illogical, dream-like scenes and symbolic imagery.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Surrealism'
+    },
+    {
+        term: 'blockbuster',
+        definition: 'A film that is a great commercial success, typically one with a large budget, major stars, and widespread appeal.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Blockbuster_(entertainment)'
+    },
+    {
+        term: 'reality-bending',
+        definition: 'A narrative or visual style that warps, questions, or breaks the established rules of the physical world.',
+        wikiLink: 'https://en.wikipedia.org/wiki/Speculative_fiction'
+    }
+];
+
 // Store slideshow instances
 const slideshows = {};
 let lightboxInstance = null;
@@ -111,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initHeroCollage();
     initLinkManagement();
+    initGlossary();
     
     // Populate Further Reading sections with curated articles
     populateFurtherReadingLinks();
@@ -977,5 +1032,263 @@ function initHeroCollage() {
 
     // Start the collage
     initialize();
+}
+
+/**
+ * Initialize glossary tooltips
+ * Finds glossary terms in content and wraps them with interactive tooltips
+ */
+function initGlossary() {
+    // Select content areas to search for glossary terms
+    const contentAreas = document.querySelectorAll('p, li, h3, h4, .film-tagline');
+    
+    // Sort glossary by term length (longest first) to avoid partial matches
+    const sortedGlossary = [...glossary].sort((a, b) => b.term.length - a.term.length);
+    
+    // Track already processed text nodes to avoid duplicate wrapping
+    const processedNodes = new WeakSet();
+    
+    contentAreas.forEach(element => {
+        // Skip if already processed or if it contains glossary terms already
+        if (element.querySelector('.glossary-term')) return;
+        
+        // Get all text nodes
+        const textNodes = getTextNodes(element);
+        
+        textNodes.forEach(textNode => {
+            if (processedNodes.has(textNode)) return;
+            
+            let text = textNode.textContent;
+            let hasMatch = false;
+            const fragments = [];
+            let lastIndex = 0;
+            
+            // Find all glossary terms in this text node
+            sortedGlossary.forEach(({ term, definition, wikiLink }) => {
+                // Create case-insensitive regex that matches whole words
+                const regex = new RegExp(`\\b(${escapeRegex(term)})\\b`, 'gi');
+                let match;
+                
+                while ((match = regex.exec(text)) !== null) {
+                    hasMatch = true;
+                    
+                    // Store the match info
+                    fragments.push({
+                        start: match.index,
+                        end: match.index + match[0].length,
+                        text: match[0],
+                        term,
+                        definition,
+                        wikiLink
+                    });
+                }
+            });
+            
+            if (hasMatch) {
+                // Sort fragments by position
+                fragments.sort((a, b) => a.start - b.start);
+                
+                // Remove overlapping matches (keep first match)
+                const nonOverlapping = [];
+                fragments.forEach(fragment => {
+                    const overlaps = nonOverlapping.some(existing => 
+                        (fragment.start >= existing.start && fragment.start < existing.end) ||
+                        (fragment.end > existing.start && fragment.end <= existing.end)
+                    );
+                    if (!overlaps) {
+                        nonOverlapping.push(fragment);
+                    }
+                });
+                
+                // Create new content with wrapped terms
+                const newContent = document.createDocumentFragment();
+                let currentIndex = 0;
+                
+                nonOverlapping.forEach(fragment => {
+                    // Add text before the match
+                    if (currentIndex < fragment.start) {
+                        newContent.appendChild(
+                            document.createTextNode(text.substring(currentIndex, fragment.start))
+                        );
+                    }
+                    
+                    // Create glossary term wrapper
+                    const wrapper = createGlossaryTerm(fragment.text, fragment.definition, fragment.wikiLink);
+                    newContent.appendChild(wrapper);
+                    
+                    currentIndex = fragment.end;
+                });
+                
+                // Add remaining text
+                if (currentIndex < text.length) {
+                    newContent.appendChild(document.createTextNode(text.substring(currentIndex)));
+                }
+                
+                // Replace the text node with the new content
+                textNode.parentNode.replaceChild(newContent, textNode);
+                processedNodes.add(textNode);
+            }
+        });
+    });
+    
+    // Add event listeners for tooltip interactions
+    initTooltipInteractions();
+}
+
+/**
+ * Get all text nodes within an element
+ */
+function getTextNodes(element) {
+    const textNodes = [];
+    const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode: (node) => {
+                // Skip empty text nodes and nodes in script/style tags
+                if (!node.textContent.trim() || 
+                    node.parentElement.tagName === 'SCRIPT' || 
+                    node.parentElement.tagName === 'STYLE') {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }
+    );
+    
+    let node;
+    while (node = walker.nextNode()) {
+        textNodes.push(node);
+    }
+    
+    return textNodes;
+}
+
+/**
+ * Escape special regex characters
+ */
+function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * Create a glossary term element with tooltip
+ */
+function createGlossaryTerm(text, definition, wikiLink) {
+    const wrapper = document.createElement('span');
+    wrapper.className = 'glossary-term';
+    wrapper.textContent = text;
+    
+    // Create tooltip
+    const tooltip = document.createElement('span');
+    tooltip.className = 'glossary-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    
+    // Definition
+    const def = document.createElement('div');
+    def.className = 'glossary-tooltip-definition';
+    def.textContent = definition;
+    tooltip.appendChild(def);
+    
+    // Wikipedia link
+    const link = document.createElement('a');
+    link.className = 'glossary-tooltip-link';
+    link.href = wikiLink;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.setAttribute('aria-label', `Learn more about ${text} on Wikipedia`);
+    
+    const linkText = document.createElement('span');
+    linkText.textContent = 'Learn more';
+    link.appendChild(linkText);
+    
+    const icon = document.createElement('span');
+    icon.className = 'material-symbols-rounded';
+    icon.textContent = 'open_in_new';
+    icon.setAttribute('aria-hidden', 'true');
+    link.appendChild(icon);
+    
+    tooltip.appendChild(link);
+    wrapper.appendChild(tooltip);
+    
+    return wrapper;
+}
+
+/**
+ * Initialize tooltip interaction handlers
+ */
+function initTooltipInteractions() {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    let activeTooltip = null;
+    
+    // Handle tooltip toggle
+    document.addEventListener('click', (e) => {
+        const glossaryTerm = e.target.closest('.glossary-term');
+        
+        if (glossaryTerm) {
+            e.preventDefault();
+            
+            // Close active tooltip if clicking a different term
+            if (activeTooltip && activeTooltip !== glossaryTerm) {
+                activeTooltip.classList.remove('active');
+            }
+            
+            // Toggle current tooltip
+            glossaryTerm.classList.toggle('active');
+            activeTooltip = glossaryTerm.classList.contains('active') ? glossaryTerm : null;
+            
+            // Prevent link clicks from closing tooltip on mobile
+            if (e.target.closest('.glossary-tooltip-link')) {
+                return;
+            }
+        } else {
+            // Close tooltip when clicking outside
+            if (activeTooltip) {
+                activeTooltip.classList.remove('active');
+                activeTooltip = null;
+            }
+        }
+    });
+    
+    // Desktop hover behavior
+    if (!isMobile) {
+        document.addEventListener('mouseover', (e) => {
+            const glossaryTerm = e.target.closest('.glossary-term');
+            if (glossaryTerm && !activeTooltip) {
+                glossaryTerm.classList.add('active');
+            }
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            const glossaryTerm = e.target.closest('.glossary-term');
+            if (glossaryTerm && !activeTooltip) {
+                glossaryTerm.classList.remove('active');
+            }
+        });
+    }
+    
+    // Keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && activeTooltip) {
+            activeTooltip.classList.remove('active');
+            activeTooltip = null;
+        }
+    });
+    
+    // Close tooltip when clicking on backdrop (mobile)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('glossary-term') && 
+            e.target.classList.contains('active') &&
+            !e.target.querySelector('.glossary-tooltip').contains(e.target)) {
+            // Clicked on backdrop
+            if (isMobile) {
+                const glossaryTerm = e.target;
+                if (!e.target.closest('.glossary-tooltip')) {
+                    glossaryTerm.classList.remove('active');
+                    activeTooltip = null;
+                }
+            }
+        }
+    });
 }
 
