@@ -1406,7 +1406,3 @@ function initTooltipBehavior() {
         }
     });
 }
-
-/**
- * Helper function to get all text nodes in an element
- */
