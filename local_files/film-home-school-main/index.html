@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>film(home)school</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <script>
+        // Load theme before page renders to prevent flash
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else {
+                // Default to light mode
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <!-- Skip to content link for keyboard navigation accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
+    <div id="app">
+        <header>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <span class="material-symbols-rounded sun-icon">light_mode</span>
+                <span class="material-symbols-rounded moon-icon">dark_mode</span>
+            </button>
+            <h1>film(home)school</h1>
+            <p>Your film education journey starts here</p>
+        </header>
+        
+        <main id="main-content">
+            <section class="main-content">
+                <h2>Deconstructing the Frame: A Guide to Cinematic Language</h2>
+                <p>Welcome to "film(home)school," your guide to the hidden art of film. We often feel a movie's power without knowing why. The reason is cinematic language, the complex system of techniques used to tell a story. The entire film form, or the overall set of relationships between a film's parts, is designed to guide your experience. This is true whether a film embraces realism or its direct opposite, antirealism. The ultimate goal is always verisimilitude—a convincing appearance of truth that makes us believe in the world on screen. This applies to a historical epic as much as a nonfictional documentary or a blockbuster filled with CGI (computer-generated imagery).</p>
+                <p>At the heart of most films is a narrative. This isn't just the story (all the events in the world) but the specific plot (the events selected and arranged for us). The film's genre, be it a western or the shadowy film noir, sets our expectations. A genre film often operates on formalism, a conspicuous use of style. This style helps communicate both the explicit meaning (what's on the surface) and the implicit meaning (what's left for us to infer).</p>
+                <p>The two most powerful tools for a director—who may be a true auteur—are mise-en-scène and cinematography. Mise-en-scène, or "putting in the scene," is everything in front of the camera. This includes the framing of the image and kinesis, or all the movement within that frame. The director of photography (DP) helps achieve this vision, starting with light. They balance the key light (the main source) with a fill light to manage shadows. This creates either high-key lighting (bright and even) or low-key lighting (full of dark contrast).</p>
+                <p>Cinematography is the art of the camera itself. The aspect ratio, or the shape of the image, has changed from the classic Academy aperture (Academy ratio) to the widescreen formats we see today, often created with an anamorphic lens. The camera's framing can range from an extreme long shot (ELS) to a long shot (LS) or an intimate close-up (CU). The camera can move, such as in a pan shot (horizontal scan) or a tilt shot (vertical scan). A tracking shot (traveling shot / dolly shot) moves the camera through space, while a handheld shot (handheld camera) feels immediate and shaky. Lens choice is also key. A telephoto lens (long-focal-length lens) flattens the image, while a zoom lens can change focal length mid-shot. This all affects the depth of field. A shallow focus allows for a rack focus to shift our attention, while deep focus keeps the entire image sharp.</p>
+                <p>In postproduction, the film is built through editing. The basic building block is the shot. Most classic films rely on continuity editing, which is designed to be invisible. This system is built on rules like the 180-degree system (axis of action), which keeps the camera on one side of the action. A scene will begin with an establishing shot to orient us. A conversation will use a shot/reverse-shot pattern, held together by the eyeline match. Cuts are often hidden in a match on action (cutting on action) or a more general match cut. Of course, some editing is meant to be seen. A jump cut is a jarring break in continuity. Crosscutting (parallel action) can show two events at once. A montage can compress a long period of time. Classic transitions include the dissolve (lap dissolve), the fade-in/fade-out, and the wipe.</p>
+                <p>Sound, or the diegesis (the story's world), is the final piece. Diegetic sound is sound the characters can hear. Nondiegetic sound, like the musical score, is outside that world. We expect sound fidelity (faithfulness to its source) and synchronous sound (matching the image). However, a director might use asynchronous sound (contrapuntal sound) for contrast. Often, sound is added later through postsynchronization (dubbing).</p>
+                <p>From a single long take (sequence shot / plan-séquence) that unfolds in real time to the jarring pixillation of stop-motion, these techniques are all choices. They can be used to create dazzling special effects (FX), the magic of animation, or the punch of slow motion. Even old B-films (B-features or B-pictures) and the Soviet use of typage (casting for social roles) were deliberate artistic decisions. The final film is a tapestry, a complex style that guides our eye, controlling what we see and what is left in the offscreen space. Even a seemingly simple cut like a reverse-angle shot is a choice. And that is what this school is all about: deconstructing those choices to better understand, and love, the art of film.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 film(home)school by Mesrop Janoyan</p>
+        </footer>
+    </div>
+    
+    <script type="module" src="/app/app.js"></script>
+</body>
+</html>
