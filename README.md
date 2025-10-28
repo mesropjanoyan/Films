@@ -55,6 +55,10 @@ The site explores three "courses" that question the nature of reality, identity,
 - ✅ **YouTube trailer integration** as the final slide in each carousel
 - ✅ **Touch/swipe support** for mobile slideshow navigation
 - ✅ **Smooth scroll animations** and fade-in effects
+- ✅ **Interactive glossary tooltips** with 10 curated film terminology terms
+- ✅ **Section-specific highlighting** with color-coded backgrounds (Matrix green, Perfect blue, Paprika red, Millennium gold)
+- ✅ **Wikipedia-rich tooltips** with article titles and direct links
+- ✅ **Smart term detection** with plural matching (e.g., "feature" matches "features")
 
 ### Content & Metadata
 - ✅ **Film cards** with posters, release dates, directors, taglines, and runtime
@@ -78,6 +82,17 @@ The site explores three "courses" that question the nature of reality, identity,
 - ✅ **Material Symbols fallback** for links without images
 - ✅ **Rich metadata display** with publisher, date, and link styling
 
+### Glossary & Educational Features
+- ✅ **Intelligent term detection** - automatically highlights 10 key film terms throughout the content
+- ✅ **Interactive tooltips** - hover (desktop) or tap (mobile) for instant definitions
+- ✅ **Section-aware styling** - highlights adapt to course colors (green for Matrix, blue for Perfect Blue, etc.)
+- ✅ **Wikipedia integration** - each tooltip includes a rich link card with parsed article title
+- ✅ **Plural matching** - smart regex detects singular and plural forms (e.g., "blockbuster" and "blockbusters")
+- ✅ **Global tooltip architecture** - single reusable tooltip element for optimal performance
+- ✅ **Smart positioning** - tooltips automatically flip above/below based on viewport space
+- ✅ **Enhanced dark mode** - increased opacity (0.22-0.32) for better visibility against dark backgrounds
+- ✅ **Terms covered**: live-action, double feature, cyberpunk, dystopian, psychological horror, doppelgänger, homage, surrealism, blockbuster, reality-bending
+
 ### Code Architecture & Maintainability
 - ✅ **CSS Custom Properties system** with comprehensive variable definitions for colors, spacing, and theme values
 - ✅ **Semantic class-based selectors** replacing fragile `:nth-of-type()` pseudo-classes
@@ -97,6 +112,10 @@ The site explores three "courses" that question the nature of reality, identity,
 - ✅ **IMDb integration** - brand yellow buttons (RGB: 245, 199, 3) with full-width logos
 - ✅ **Icon alignment** - right-aligned Wikipedia and IMDb buttons with left-aligned titles
 - ✅ **Lightbox improvements** - properly sized content, fixed close button positioning across all breakpoints
+- ✅ **Interactive glossary system** - intelligent term highlighting with contextual tooltips throughout the app
+- ✅ **Section-specific color theming** - glossary highlights adapt to course colors for visual coherence
+- ✅ **Enhanced dark mode visibility** - increased opacity values for better term recognition in dark theme
+- ✅ **Wikipedia article integration** - tooltips display parsed article titles from URLs for richer context
 
 ## 🎨 Design Philosophy
 
@@ -125,9 +144,9 @@ The site embraces a **modern, Apple-inspired design language** with:
 
 ```
 Films/
-├── index.html              # Main document (508 lines)
-├── styles.css              # All styling (2685 lines)
-├── script.js               # Interactivity (1023 lines)
+├── index.html              # Main document (523 lines)
+├── styles.css              # All styling (2909 lines)
+├── script.js               # Interactivity (1409 lines)
 ├── README.md               # This file
 └── images/
     ├── ghost-in-shell/     # Film posters and screengrabs
