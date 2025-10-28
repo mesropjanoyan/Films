@@ -2632,44 +2632,103 @@ strong {
 
 /* Glossary Tooltip Styles */
 .glossary-term {
-    color: var(--accent-color);
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    background: rgba(100, 100, 100, 0.12);
+    padding: 2px 4px;
+    border-radius: 3px;
     cursor: help;
     position: relative;
     transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .glossary-term:hover {
-    color: var(--matrix-green-dark);
-    text-decoration-color: var(--matrix-green-dark);
+    background: rgba(100, 100, 100, 0.18);
+}
+
+/* Section-specific highlighting colors */
+.course-system .glossary-term {
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.course-system .glossary-term:hover {
+    background: rgba(16, 185, 129, 0.18);
+}
+
+.course-self .glossary-term {
+    background: rgba(30, 144, 255, 0.12);
+}
+
+.course-self .glossary-term:hover {
+    background: rgba(30, 144, 255, 0.18);
+}
+
+.course-bridge .glossary-term {
+    background: rgba(255, 107, 53, 0.12);
+}
+
+.course-bridge .glossary-term:hover {
+    background: rgba(255, 107, 53, 0.18);
+}
+
+.course-dessert .glossary-term {
+    background: rgba(255, 193, 7, 0.12);
+}
+
+.course-dessert .glossary-term:hover {
+    background: rgba(255, 193, 7, 0.18);
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .glossary-term {
+    background: rgba(100, 100, 100, 0.18);
 }
 
 [data-theme="dark"] .glossary-term:hover {
-    color: var(--matrix-green);
-    text-decoration-color: var(--matrix-green);
+    background: rgba(100, 100, 100, 0.25);
 }
 
-[data-theme="dark"] .glossary-tooltip {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+[data-theme="dark"] .course-system .glossary-term {
+    background: rgba(16, 185, 129, 0.15);
 }
 
-[data-theme="dark"] .glossary-tooltip::after {
-    border-top-color: var(--card-background);
+[data-theme="dark"] .course-system .glossary-term:hover {
+    background: rgba(16, 185, 129, 0.22);
+}
+
+[data-theme="dark"] .course-self .glossary-term {
+    background: rgba(30, 144, 255, 0.15);
+}
+
+[data-theme="dark"] .course-self .glossary-term:hover {
+    background: rgba(30, 144, 255, 0.22);
+}
+
+[data-theme="dark"] .course-bridge .glossary-term {
+    background: rgba(255, 107, 53, 0.15);
+}
+
+[data-theme="dark"] .course-bridge .glossary-term:hover {
+    background: rgba(255, 107, 53, 0.22);
+}
+
+[data-theme="dark"] .course-dessert .glossary-term {
+    background: rgba(255, 193, 7, 0.15);
+}
+
+[data-theme="dark"] .course-dessert .glossary-term:hover {
+    background: rgba(255, 193, 7, 0.22);
 }
 
 .glossary-tooltip {
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-8px);
+    transform: translateX(-50%) translateY(8px);
     background: var(--card-background);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: var(--spacing-md);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     width: max-content;
     max-width: 320px;
@@ -2677,18 +2736,19 @@ strong {
     pointer-events: none;
     transition: opacity 0.2s ease, transform 0.2s ease;
     white-space: normal;
+    margin-top: 4px;
 }
 
 /* Adjust tooltip position when near left edge */
 .glossary-term:first-child .glossary-tooltip,
 .glossary-term[data-position="left"] .glossary-tooltip {
     left: 0;
-    transform: translateX(0) translateY(-8px);
+    transform: translateX(0) translateY(8px);
 }
 
 .glossary-term:first-child.active .glossary-tooltip,
 .glossary-term[data-position="left"].active .glossary-tooltip {
-    transform: translateX(0) translateY(-12px);
+    transform: translateX(0) translateY(12px);
 }
 
 /* Adjust tooltip position when near right edge */
@@ -2696,49 +2756,40 @@ strong {
 .glossary-term[data-position="right"] .glossary-tooltip {
     left: auto;
     right: 0;
-    transform: translateX(0) translateY(-8px);
+    transform: translateX(0) translateY(8px);
 }
 
 .glossary-term:last-child.active .glossary-tooltip,
 .glossary-term[data-position="right"].active .glossary-tooltip {
-    transform: translateX(0) translateY(-12px);
+    transform: translateX(0) translateY(12px);
 }
 
 .glossary-term.active .glossary-tooltip {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(-50%) translateY(-12px);
+    transform: translateX(-50%) translateY(12px);
 }
 
-/* Arrow pointing down from tooltip */
-.glossary-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid var(--card-background);
+[data-theme="dark"] .glossary-tooltip {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
 .glossary-tooltip-definition {
     font-size: 0.875rem;
     line-height: 1.5;
     color: var(--secondary-text);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
 }
 
 .glossary-tooltip-link {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
     font-size: 0.875rem;
-    color: var(--accent-color);
+    color: var(--primary-text);
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 8px;
     background: var(--background);
     border: 1px solid var(--border-color);
@@ -2750,17 +2801,65 @@ strong {
     background: var(--accent-color);
     color: var(--background);
     border-color: var(--accent-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 107, 255, 0.2);
+}
+
+[data-theme="dark"] .glossary-tooltip-link:hover {
+    box-shadow: 0 4px 12px rgba(0, 107, 255, 0.3);
+}
+
+.glossary-tooltip-link-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.glossary-tooltip-link-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.glossary-tooltip-link-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.glossary-tooltip-link-subtitle {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.glossary-tooltip-link:hover .glossary-tooltip-link-subtitle {
+    opacity: 0.9;
+}
+
+.glossary-tooltip-link .wiki-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.glossary-tooltip-link:hover .wiki-icon {
+    opacity: 1;
 }
 
 .glossary-tooltip-link .material-symbols-rounded {
     font-size: 18px;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.glossary-tooltip-link:hover .material-symbols-rounded {
+    opacity: 1;
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
     .glossary-tooltip {
         position: fixed;
-        bottom: auto;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -2770,10 +2869,6 @@ strong {
     
     .glossary-term.active .glossary-tooltip {
         transform: translate(-50%, -50%);
-    }
-    
-    .glossary-tooltip::after {
-        display: none;
     }
     
     /* Add backdrop on mobile */
@@ -2786,6 +2881,7 @@ strong {
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 999;
+        backdrop-filter: blur(4px);
     }
 }
 

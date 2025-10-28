@@ -1190,21 +1190,49 @@ function createGlossaryTerm(text, definition, wikiLink) {
     def.textContent = definition;
     tooltip.appendChild(def);
     
-    // Wikipedia link
+    // Wikipedia link (rich format similar to Letterboxd link)
     const link = document.createElement('a');
     link.className = 'glossary-tooltip-link';
     link.href = wikiLink;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', `Learn more about ${text} on Wikipedia`);
+    link.setAttribute('aria-label', `Read more about ${text} on Wikipedia`);
     
-    const linkText = document.createElement('span');
-    linkText.textContent = 'Learn more';
-    link.appendChild(linkText);
+    // Left side content (icon + text)
+    const linkContent = document.createElement('div');
+    linkContent.className = 'glossary-tooltip-link-content';
     
+    // Wikipedia icon
+    const wikiIcon = document.createElement('img');
+    wikiIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia%27s_W.svg';
+    wikiIcon.alt = 'Wikipedia';
+    wikiIcon.className = 'wiki-icon';
+    wikiIcon.width = 20;
+    wikiIcon.height = 20;
+    wikiIcon.loading = 'lazy';
+    linkContent.appendChild(wikiIcon);
+    
+    // Text container
+    const linkTextContainer = document.createElement('div');
+    linkTextContainer.className = 'glossary-tooltip-link-text';
+    
+    const linkTitle = document.createElement('span');
+    linkTitle.className = 'glossary-tooltip-link-title';
+    linkTitle.textContent = 'Read more';
+    linkTextContainer.appendChild(linkTitle);
+    
+    const linkSubtitle = document.createElement('span');
+    linkSubtitle.className = 'glossary-tooltip-link-subtitle';
+    linkSubtitle.textContent = 'Wikipedia';
+    linkTextContainer.appendChild(linkSubtitle);
+    
+    linkContent.appendChild(linkTextContainer);
+    link.appendChild(linkContent);
+    
+    // Right side arrow icon
     const icon = document.createElement('span');
     icon.className = 'material-symbols-rounded';
-    icon.textContent = 'open_in_new';
+    icon.textContent = 'arrow_forward';
     icon.setAttribute('aria-hidden', 'true');
     link.appendChild(icon);
     
