@@ -1065,8 +1065,12 @@ function initGlossary() {
             
             // Find all glossary terms in this text node
             sortedGlossary.forEach(({ term, definition, wikiLink }) => {
-                // Create case-insensitive regex that matches whole words
-                const regex = new RegExp(`\\b(${escapeRegex(term)})\\b`, 'gi');
+                // Create case-insensitive regex that matches whole words, including plurals
+                // Match the term with optional 's' or 'es' at the end
+                const pluralPattern = term.endsWith('s') 
+                    ? `${escapeRegex(term)}(?:es)?` 
+                    : `${escapeRegex(term)}(?:s|es)?`;
+                const regex = new RegExp(`\\b(${pluralPattern})\\b`, 'gi');
                 let match;
                 
                 while ((match = regex.exec(text)) !== null) {
@@ -1131,8 +1135,8 @@ function initGlossary() {
         });
     });
     
-    // Add event listeners for tooltip interactions
-    initTooltipInteractions();
+    // Create single global tooltip and add event listeners
+    initTooltipBehavior();
 }
 
 /**
@@ -1172,151 +1176,237 @@ function escapeRegex(string) {
 }
 
 /**
- * Create a glossary term element with tooltip
+ * Create a glossary term element (no embedded tooltip)
  */
 function createGlossaryTerm(text, definition, wikiLink) {
     const wrapper = document.createElement('span');
     wrapper.className = 'glossary-term';
     wrapper.textContent = text;
     
-    // Create tooltip
-    const tooltip = document.createElement('span');
-    tooltip.className = 'glossary-tooltip';
-    tooltip.setAttribute('role', 'tooltip');
-    
-    // Definition
-    const def = document.createElement('div');
-    def.className = 'glossary-tooltip-definition';
-    def.textContent = definition;
-    tooltip.appendChild(def);
-    
-    // Wikipedia link (rich format similar to Letterboxd link)
-    const link = document.createElement('a');
-    link.className = 'glossary-tooltip-link';
-    link.href = wikiLink;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', `Read more about ${text} on Wikipedia`);
-    
-    // Left side content (icon + text)
-    const linkContent = document.createElement('div');
-    linkContent.className = 'glossary-tooltip-link-content';
-    
-    // Wikipedia icon
-    const wikiIcon = document.createElement('img');
-    wikiIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia%27s_W.svg';
-    wikiIcon.alt = 'Wikipedia';
-    wikiIcon.className = 'wiki-icon';
-    wikiIcon.width = 20;
-    wikiIcon.height = 20;
-    wikiIcon.loading = 'lazy';
-    linkContent.appendChild(wikiIcon);
-    
-    // Text container
-    const linkTextContainer = document.createElement('div');
-    linkTextContainer.className = 'glossary-tooltip-link-text';
-    
-    const linkTitle = document.createElement('span');
-    linkTitle.className = 'glossary-tooltip-link-title';
-    linkTitle.textContent = 'Read more';
-    linkTextContainer.appendChild(linkTitle);
-    
-    const linkSubtitle = document.createElement('span');
-    linkSubtitle.className = 'glossary-tooltip-link-subtitle';
-    linkSubtitle.textContent = 'Wikipedia';
-    linkTextContainer.appendChild(linkSubtitle);
-    
-    linkContent.appendChild(linkTextContainer);
-    link.appendChild(linkContent);
-    
-    // Right side arrow icon
-    const icon = document.createElement('span');
-    icon.className = 'material-symbols-rounded';
-    icon.textContent = 'arrow_forward';
-    icon.setAttribute('aria-hidden', 'true');
-    link.appendChild(icon);
-    
-    tooltip.appendChild(link);
-    wrapper.appendChild(tooltip);
+    // Store definition and link as data attributes
+    wrapper.dataset.definition = definition;
+    wrapper.dataset.wikiLink = wikiLink;
+    wrapper.dataset.termText = text;
     
     return wrapper;
 }
 
 /**
- * Initialize tooltip interaction handlers
+ * Initialize tooltip behavior with single global tooltip
  */
-function initTooltipInteractions() {
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    let activeTooltip = null;
+function initTooltipBehavior() {
+    // Create single global tooltip
+    const tooltip = document.createElement('div');
+    tooltip.className = 'glossary-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tooltip);
     
-    // Handle tooltip toggle
-    document.addEventListener('click', (e) => {
-        const glossaryTerm = e.target.closest('.glossary-term');
+    let currentTerm = null;
+    let hideTimeout = null;
+    
+    /**
+     * Build tooltip content from term data
+     */
+    function buildTooltipContent(term) {
+        const definition = term.dataset.definition;
+        const wikiLink = term.dataset.wikiLink;
+        const termText = term.dataset.termText;
         
-        if (glossaryTerm) {
-            e.preventDefault();
-            
-            // Close active tooltip if clicking a different term
-            if (activeTooltip && activeTooltip !== glossaryTerm) {
-                activeTooltip.classList.remove('active');
-            }
-            
-            // Toggle current tooltip
-            glossaryTerm.classList.toggle('active');
-            activeTooltip = glossaryTerm.classList.contains('active') ? glossaryTerm : null;
-            
-            // Prevent link clicks from closing tooltip on mobile
-            if (e.target.closest('.glossary-tooltip-link')) {
-                return;
-            }
-        } else {
-            // Close tooltip when clicking outside
-            if (activeTooltip) {
-                activeTooltip.classList.remove('active');
-                activeTooltip = null;
-            }
+        // Extract Wikipedia article title from URL
+        // URL format: https://en.wikipedia.org/wiki/Article_Name
+        let articleTitle = 'Wikipedia';
+        try {
+            const url = new URL(wikiLink);
+            const pathParts = url.pathname.split('/');
+            const encodedTitle = pathParts[pathParts.length - 1];
+            // Decode and replace underscores with spaces
+            articleTitle = decodeURIComponent(encodedTitle).replace(/_/g, ' ');
+        } catch (e) {
+            // If URL parsing fails, use default
+            console.warn('Failed to parse Wikipedia URL:', wikiLink);
         }
-    });
-    
-    // Desktop hover behavior
-    if (!isMobile) {
-        document.addEventListener('mouseover', (e) => {
-            const glossaryTerm = e.target.closest('.glossary-term');
-            if (glossaryTerm && !activeTooltip) {
-                glossaryTerm.classList.add('active');
-            }
-        });
         
-        document.addEventListener('mouseout', (e) => {
-            const glossaryTerm = e.target.closest('.glossary-term');
-            if (glossaryTerm && !activeTooltip) {
-                glossaryTerm.classList.remove('active');
-            }
-        });
+        tooltip.innerHTML = '';
+        
+        // Definition
+        const def = document.createElement('div');
+        def.className = 'glossary-tooltip-definition';
+        def.textContent = definition;
+        tooltip.appendChild(def);
+        
+        // Wikipedia link (rich format)
+        const link = document.createElement('a');
+        link.className = 'glossary-tooltip-link';
+        link.href = wikiLink;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', `Read more about ${termText} on Wikipedia`);
+        
+        // Left side content (icon + text)
+        const linkContent = document.createElement('div');
+        linkContent.className = 'glossary-tooltip-link-content';
+        
+        // Wikipedia icon
+        const wikiIcon = document.createElement('img');
+        wikiIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia%27s_W.svg';
+        wikiIcon.alt = 'Wikipedia';
+        wikiIcon.className = 'wiki-icon';
+        wikiIcon.width = 20;
+        wikiIcon.height = 20;
+        wikiIcon.loading = 'lazy';
+        linkContent.appendChild(wikiIcon);
+        
+        // Text container
+        const linkTextContainer = document.createElement('div');
+        linkTextContainer.className = 'glossary-tooltip-link-text';
+        
+        const linkTitle = document.createElement('span');
+        linkTitle.className = 'glossary-tooltip-link-title';
+        linkTitle.textContent = articleTitle;
+        linkTextContainer.appendChild(linkTitle);
+        
+        const linkSubtitle = document.createElement('span');
+        linkSubtitle.className = 'glossary-tooltip-link-subtitle';
+        linkSubtitle.textContent = 'Wikipedia';
+        linkTextContainer.appendChild(linkSubtitle);
+        
+        linkContent.appendChild(linkTextContainer);
+        link.appendChild(linkContent);
+        
+        // Right side icon (open in new tab)
+        const icon = document.createElement('span');
+        icon.className = 'material-symbols-rounded';
+        icon.textContent = 'open_in_new';
+        icon.setAttribute('aria-hidden', 'true');
+        link.appendChild(icon);
+        
+        tooltip.appendChild(link);
     }
     
-    // Keyboard accessibility
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && activeTooltip) {
-            activeTooltip.classList.remove('active');
-            activeTooltip = null;
+    /**
+     * Position tooltip near the term
+     */
+    function positionTooltip(term) {
+        const rect = term.getBoundingClientRect();
+        tooltip.classList.add('show');
+        
+        // Measure tooltip
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        // Calculate position (above the term with scroll offset)
+        let top = rect.top + window.scrollY - tooltipRect.height - 12;
+        let left = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
+        
+        // Keep tooltip within viewport horizontally
+        const viewportWidth = window.innerWidth;
+        if (left < 20) {
+            left = 20;
+        } else if (left + tooltipRect.width > viewportWidth - 20) {
+            left = viewportWidth - tooltipRect.width - 20;
+        }
+        
+        // If not enough space above, show below
+        if (rect.top - tooltipRect.height - 12 < 0) {
+            top = rect.bottom + window.scrollY + 12;
+        }
+        
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+    }
+    
+    /**
+     * Show tooltip for a term
+     */
+    function showTooltip(term) {
+        // Clear any hide timeout
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
+        }
+        
+        // If showing same term, do nothing
+        if (currentTerm === term) {
+            return;
+        }
+        
+        // Hide previous term
+        if (currentTerm) {
+            currentTerm.classList.remove('active');
+        }
+        
+        // Show new term
+        currentTerm = term;
+        term.classList.add('active');
+        buildTooltipContent(term);
+        positionTooltip(term);
+    }
+    
+    /**
+     * Hide tooltip
+     */
+    function hideTooltip() {
+        tooltip.classList.remove('show');
+        if (currentTerm) {
+            currentTerm.classList.remove('active');
+            currentTerm = null;
+        }
+    }
+    
+    /**
+     * Schedule tooltip hide with delay
+     */
+    function scheduleHide() {
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+        }
+        hideTimeout = setTimeout(() => {
+            hideTooltip();
+        }, 300);
+    }
+    
+    // Add event listeners to all glossary terms
+    document.querySelectorAll('.glossary-term').forEach(term => {
+        // Mouse enter
+        term.addEventListener('mouseenter', () => {
+            showTooltip(term);
+        });
+        
+        // Mouse leave
+        term.addEventListener('mouseleave', () => {
+            scheduleHide();
+        });
+        
+        // Click for mobile
+        term.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentTerm === term) {
+                hideTooltip();
+            } else {
+                showTooltip(term);
+            }
+        });
+    });
+    
+    // Allow hovering over tooltip itself
+    tooltip.addEventListener('mouseenter', () => {
+        if (hideTimeout) {
+            clearTimeout(hideTimeout);
+            hideTimeout = null;
         }
     });
     
-    // Close tooltip when clicking on backdrop (mobile)
+    tooltip.addEventListener('mouseleave', () => {
+        scheduleHide();
+    });
+    
+    // Close on outside click
     document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('glossary-term') && 
-            e.target.classList.contains('active') &&
-            !e.target.querySelector('.glossary-tooltip').contains(e.target)) {
-            // Clicked on backdrop
-            if (isMobile) {
-                const glossaryTerm = e.target;
-                if (!e.target.closest('.glossary-tooltip')) {
-                    glossaryTerm.classList.remove('active');
-                    activeTooltip = null;
-                }
-            }
+        if (!e.target.closest('.glossary-term') && !e.target.closest('.glossary-tooltip')) {
+            hideTooltip();
         }
     });
 }
 
+/**
+ * Helper function to get all text nodes in an element
+ */
