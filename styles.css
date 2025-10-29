@@ -1038,8 +1038,8 @@ strong {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.625rem;
-    margin-bottom: 1rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
     color: var(--secondary-text);
     font-size: 0.9375rem;
 }
@@ -1090,8 +1090,10 @@ strong {
     gap: var(--gap-md);
 }
 
-.film-info:last-of-type {
-    margin-bottom: 0;
+/* Remove bottom margin from director line when it comes after genre pills */
+.film-genres + .film-info {
+    margin-top: 0;
+    margin-bottom: 0.625rem;
 }
 
 .icon-text {
@@ -1115,7 +1117,7 @@ strong {
     color: var(--primary-text);
     font-weight: 700;
     letter-spacing: 0.12em;
-    margin-top: 1.25rem;
+    margin-top: 1rem;
     margin-bottom: 1.25rem;
     padding: 0.75rem 0;
     border-top: 1px solid var(--divider-color);
