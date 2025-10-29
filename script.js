@@ -143,6 +143,7 @@ let lightboxInstance = null;
 /**
  * Initialize theme toggle functionality
  * Handles light/dark mode switching with localStorage persistence
+ * Respects system preference, defaults to light mode if no preference detected
  */
 function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
@@ -151,20 +152,32 @@ function initThemeToggle() {
     const html = document.documentElement;
     const icon = themeToggle.querySelector('.material-symbols-rounded');
     
-    // Check for saved theme preference, fallback to system preference
+    // Check for saved theme preference first
     const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     // Apply initial theme
     if (savedTheme) {
+        // User has explicitly chosen a theme
         html.setAttribute('data-theme', savedTheme);
         updateIcon(savedTheme);
-    } else if (systemPrefersDark) {
-        html.setAttribute('data-theme', 'dark');
-        updateIcon('dark');
     } else {
-        html.setAttribute('data-theme', 'light');
-        updateIcon('light');
+        // No saved preference - check system preference
+        const prefersDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const prefersLightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        
+        if (prefersDarkQuery.matches) {
+            // Browser is set to dark mode
+            html.setAttribute('data-theme', 'dark');
+            updateIcon('dark');
+        } else if (prefersLightQuery.matches) {
+            // Browser is explicitly set to light mode
+            html.setAttribute('data-theme', 'light');
+            updateIcon('light');
+        } else {
+            // No browser setting whatsoever - default to light mode
+            html.setAttribute('data-theme', 'light');
+            updateIcon('light');
+        }
     }
     
     // Theme toggle click handler
