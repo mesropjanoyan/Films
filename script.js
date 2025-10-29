@@ -210,17 +210,11 @@ function populateFurtherReadingLinks() {
 function initCollapsibleReadingLists() {
     const toggleButtons = document.querySelectorAll('.links-toggle');
     
-    console.log('Found toggle buttons:', toggleButtons.length);
-    
     toggleButtons.forEach((button, index) => {
-        console.log(`Initializing button ${index + 1}`);
-        
         button.addEventListener('click', function() {
             const linksHeader = this.closest('.links-header');
             const linksSection = linksHeader.closest('.links-section');
             const linksList = linksSection.querySelector('.links-list');
-            
-            console.log('Toggle clicked:', linksList?.id);
             
             // Toggle collapsed state
             const isCollapsed = linksList.classList.contains('collapsed');
@@ -230,11 +224,27 @@ function initCollapsibleReadingLists() {
                 linksList.classList.remove('collapsed');
                 this.setAttribute('aria-expanded', 'true');
                 this.setAttribute('aria-label', 'Collapse reading list');
+                
+                // If this is the last section (dessert), add extra spacing
+                if (linksList.id === 'links-dessert') {
+                    const courseSection = linksSection.closest('.course-section');
+                    if (courseSection) {
+                        courseSection.style.paddingBottom = '150px';
+                    }
+                }
             } else {
                 // Collapse
                 linksList.classList.add('collapsed');
                 this.setAttribute('aria-expanded', 'false');
                 this.setAttribute('aria-label', 'Expand reading list');
+                
+                // If this is the last section (dessert), remove extra spacing
+                if (linksList.id === 'links-dessert') {
+                    const courseSection = linksSection.closest('.course-section');
+                    if (courseSection) {
+                        courseSection.style.paddingBottom = '';
+                    }
+                }
             }
         });
         

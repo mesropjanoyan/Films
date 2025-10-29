@@ -1777,6 +1777,8 @@ strong {
     animation: fadeInLink 0.4s ease-out forwards;
     opacity: 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    position: relative;
+    z-index: 10;
 }
 
 @keyframes fadeInLink {
@@ -1828,6 +1830,8 @@ strong {
 /* When expanded, remove restrictions */
 .links-list:not(.collapsed) {
     max-height: none;
+    position: relative;
+    z-index: 10;
 }
 
 .links-list a {
