@@ -6,37 +6,79 @@ const filmData = {
     'ghost-in-shell': {
         name: 'Ghost in the Shell',
         youtubeId: '8RF09G8Ymqg',
-        images: [] // Will be populated dynamically
+        images: [], // Will be populated dynamically
+        rating: 'TV-MA',
+        year: 1995,
+        duration: '1h 25m',
+        genres: 'Action/Sci-Fi/Anime',
+        tomatometer: 95,
+        rtLink: 'https://www.rottentomatoes.com/m/ghost_in_the_shell'
     },
     'matrix': {
         name: 'The Matrix',
         youtubeId: 'vKQi3bBA1y8',
-        images: []
+        images: [],
+        rating: 'R',
+        year: 1999,
+        duration: '2h 16m',
+        genres: 'Sci-Fi/Action/Mystery & Thriller',
+        tomatometer: 83,
+        rtLink: 'https://www.rottentomatoes.com/m/matrix'
     },
     'perfect-blue': {
         name: 'Perfect Blue',
         youtubeId: 'RrWausp8zDQ',
-        images: []
+        images: [],
+        rating: 'R',
+        year: 1999,
+        duration: '1h 20m',
+        genres: 'Mystery & Thriller/Anime',
+        tomatometer: 84,
+        rtLink: 'https://www.rottentomatoes.com/m/perfect_blue_1999'
     },
     'black-swan': {
         name: 'Black Swan',
         youtubeId: '5jaI1XOB-bs',
-        images: []
+        images: [],
+        rating: 'R',
+        year: 2010,
+        duration: '1h 48m',
+        genres: 'Drama/Mystery & Thriller',
+        tomatometer: 85,
+        rtLink: 'https://www.rottentomatoes.com/m/black_swan_2010'
     },
     'paprika': {
         name: 'Paprika',
         youtubeId: 'PIUqozzyW2k',
-        images: []
+        images: [],
+        rating: 'R',
+        year: 2007,
+        duration: '1h 30m',
+        genres: 'Sci-Fi/Action/Adventure/Anime',
+        tomatometer: 87,
+        rtLink: 'https://www.rottentomatoes.com/m/paprika'
     },
     'inception': {
         name: 'Inception',
         youtubeId: 'LifqWf0BAOA',
-        images: []
+        images: [],
+        rating: 'PG-13',
+        year: 2010,
+        duration: '2h 28m',
+        genres: 'Sci-Fi/Mystery & Thriller/Action',
+        tomatometer: 87,
+        rtLink: 'https://www.rottentomatoes.com/m/inception'
     },
     'millennium-actress': {
         name: 'The Millennium Actress',
         youtubeId: '2u5Ee1_jUCY',
-        images: []
+        images: [],
+        rating: 'PG',
+        year: 2003,
+        duration: '1h 27m',
+        genres: 'Drama/Fantasy/Anime',
+        tomatometer: 93,
+        rtLink: 'https://www.rottentomatoes.com/m/millennium_actress_2001'
     }
 };
 

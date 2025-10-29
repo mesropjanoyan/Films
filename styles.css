@@ -987,6 +987,93 @@ strong {
     padding: 0;
 }
 
+/* Rotten Tomatoes Link Icon */
+.rt-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: #fa320a;
+    transition: all var(--transition-duration-fast) var(--transition-timing-smooth);
+    padding: 2px;
+}
+
+.rt-link:hover {
+    background: #e02d09;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(250, 50, 10, 0.3);
+}
+
+.rt-link:active {
+    transform: translateY(0);
+}
+
+.rt-icon {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* Rotten Tomatoes Score in Metadata */
+.rt-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.rt-tomato-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Film Genres Container */
+.film-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.625rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-text);
+    font-size: 0.9375rem;
+}
+
+/* Genre Pills */
+.genre-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--secondary-text);
+    transition: all 0.2s ease;
+}
+
+.genre-pill .material-symbols-rounded {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+.genre-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.genre-pill:hover .material-symbols-rounded {
+    opacity: 0.9;
+}
+
 .film-metadata {
     margin-top: var(--spacing-md);
 }
@@ -994,13 +1081,17 @@ strong {
 .film-info {
     font-size: 0.9375rem;
     color: var(--secondary-text);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.625rem;
     font-weight: 500;
     letter-spacing: -0.005em;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: var(--gap-md);
+}
+
+.film-info:last-of-type {
+    margin-bottom: 0;
 }
 
 .icon-text {
@@ -1024,7 +1115,8 @@ strong {
     color: var(--primary-text);
     font-weight: 700;
     letter-spacing: 0.12em;
-    margin-bottom: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     padding: 0.75rem 0;
     border-top: 1px solid var(--divider-color);
     border-bottom: 1px solid var(--divider-color);
