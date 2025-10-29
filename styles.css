@@ -1702,8 +1702,17 @@ strong {
     margin-top: var(--spacing-lg);
 }
 
-.links-section h4 {
+/* Links header with toggle button */
+.links-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-md);
     margin-bottom: var(--spacing-md);
+}
+
+.links-section h4 {
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     gap: var(--gap-md);
@@ -1712,6 +1721,40 @@ strong {
 .links-section h4 .material-symbols-rounded {
     font-size: 24px;
     transition: color var(--transition-duration-fast) var(--transition-timing-ease);
+}
+
+/* Toggle button */
+.links-toggle {
+    background: transparent;
+    border: none;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-duration-fast) var(--transition-timing-ease);
+    flex-shrink: 0;
+}
+
+.links-toggle:hover {
+    background: var(--nested-card-background);
+    color: var(--accent-color);
+}
+
+.links-toggle .material-symbols-rounded {
+    font-size: 28px;
+    transition: transform var(--transition-duration-normal) var(--transition-timing-smooth);
+}
+
+.links-toggle[aria-expanded="true"] .material-symbols-rounded {
+    transform: rotate(180deg);
+}
+
+.links-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 /* Links list styles */
@@ -1758,6 +1801,29 @@ strong {
 
 .links-list li:last-child {
     margin-bottom: 0;
+}
+
+/* Collapsed state - show only first link preview */
+.links-list.collapsed {
+    max-height: 5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.links-list.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3rem;
+    background: linear-gradient(to bottom, transparent, var(--card-background));
+    pointer-events: none;
+}
+
+/* When expanded, remove restrictions */
+.links-list:not(.collapsed) {
+    max-height: none;
 }
 
 .links-list a {
@@ -1897,9 +1963,9 @@ strong {
 /* Footer */
 .footer {
     text-align: center;
-    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 360px);
+    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 180px);
     padding-bottom: 0;
-    margin-top: calc(var(--spacing-xxl) - 360px);
+    margin-top: calc(var(--spacing-xxl) + var(--spacing-xl) - 180px);
     margin-bottom: calc(-1 * var(--spacing-xl));
     margin-left: calc(-1 * var(--spacing-md));
     margin-right: calc(-1 * var(--spacing-md));
