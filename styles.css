@@ -473,7 +473,7 @@ strong {
     overflow: visible;
     z-index: 1;
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity var(--transition-duration-normal) var(--transition-timing-ease);
 }
 
 .hero-collage.hidden {
@@ -522,7 +522,7 @@ strong {
     gap: 20px;
     pointer-events: none; /* Prevent interaction with scrolling content */
     opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity var(--transition-duration-normal) var(--transition-timing-ease);
 }
 
 .hero-scrolling.hidden {
@@ -1276,7 +1276,10 @@ strong {
     flex-shrink: 0;
 }
 
-.wiki-link {
+/* Base styles for external link icons */
+.wiki-link,
+.imdb-link,
+.rt-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1285,21 +1288,32 @@ strong {
     width: 28px;
     height: 28px;
     border-radius: 6px;
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     transition: all var(--transition-duration-fast) var(--transition-timing-smooth);
     padding: 0;
+}
+
+.wiki-link:hover,
+.imdb-link:hover,
+.rt-link:hover {
+    transform: translateY(-1px);
+}
+
+.wiki-link:active,
+.imdb-link:active,
+.rt-link:active {
+    transform: translateY(0);
+}
+
+/* Wikipedia link specific styles */
+.wiki-link {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .wiki-link:hover {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(0, 0, 0, 0.15);
-    transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.wiki-link:active {
-    transform: translateY(0);
 }
 
 .wiki-icon {
@@ -1309,28 +1323,14 @@ strong {
     opacity: 1;
 }
 
+/* IMDb link specific styles */
 .imdb-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
     background: var(--imdb-yellow);
-    transition: all var(--transition-duration-fast) var(--transition-timing-smooth);
-    padding: 0;
 }
 
 .imdb-link:hover {
     background: var(--imdb-yellow-hover);
-    transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(245, 199, 3, 0.3);
-}
-
-.imdb-link:active {
-    transform: translateY(0);
 }
 
 .imdb-icon {
@@ -1341,29 +1341,15 @@ strong {
     padding: 0;
 }
 
-/* Rotten Tomatoes Link Icon */
+/* Rotten Tomatoes link specific styles */
 .rt-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
     background: #fa320a;
-    transition: all var(--transition-duration-fast) var(--transition-timing-smooth);
     padding: 2px;
 }
 
 .rt-link:hover {
     background: #e02d09;
-    transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(250, 50, 10, 0.3);
-}
-
-.rt-link:active {
-    transform: translateY(0);
 }
 
 .rt-icon {
@@ -1504,8 +1490,9 @@ strong {
     transform: translateX(2px);
 }
 
-/* Smart Letterboxd Link Card */
-.letterboxd-link.smart-link {
+/* Smart Link Cards - Shared Styles */
+.letterboxd-link.smart-link,
+.director-link.smart-link {
     display: flex;
     align-items: center;
     gap: var(--gap-lg);
@@ -1513,15 +1500,34 @@ strong {
     background: var(--nested-card-background);
     border: 1px solid var(--nested-border-color);
     border-radius: 14px;
-    margin-top: 0;
     transition: all var(--transition-duration-normal) var(--transition-timing-smooth);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    text-decoration: none;
 }
 
-.letterboxd-link.smart-link:hover {
+.letterboxd-link.smart-link:hover,
+.director-link.smart-link:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 113, 227, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
     border-color: var(--accent-color);
+}
+
+.letterboxd-link.smart-link > .material-symbols-rounded,
+.director-link.smart-link > .material-symbols-rounded {
+    margin-left: auto;
+    opacity: 0.6;
+    color: var(--secondary-text);
+    transition: opacity var(--transition-duration-fast) var(--transition-timing-ease);
+}
+
+.letterboxd-link.smart-link:hover > .material-symbols-rounded,
+.director-link.smart-link:hover > .material-symbols-rounded {
+    opacity: 1;
+}
+
+/* Letterboxd Link specific styles */
+.letterboxd-link.smart-link {
+    margin-top: 0;
 }
 
 .letterboxd-thumb {
@@ -1568,40 +1574,13 @@ strong {
     font-size: 0.625rem;
 }
 
-.letterboxd-link.smart-link > .material-symbols-rounded {
-    margin-left: auto;
-    opacity: 0.6;
-    transition: opacity var(--transition-duration-fast) var(--transition-timing-ease);
-}
-
-.letterboxd-link.smart-link:hover > .material-symbols-rounded {
-    opacity: 1;
-}
-
-/* Shared styling for smart link external icons */
-.smart-link > .material-symbols-rounded {
-    color: var(--secondary-text);
-}
-
-/* Director Link Card */
+/* Director Link specific styles */
 .director-link.smart-link {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-lg);
-    padding: 0.875rem;
-    background: var(--nested-card-background);
-    border: 1px solid var(--nested-border-color);
-    border-radius: 14px;
     margin-top: 0.875rem;
-    transition: all var(--transition-duration-normal) var(--transition-timing-smooth);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    text-decoration: none;
 }
 
-.director-link.smart-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 113, 227, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
-    border-color: var(--accent-color);
+.director-link.smart-link > .material-symbols-rounded {
+    font-size: 18px;
 }
 
 .director-thumb {
@@ -1666,17 +1645,6 @@ strong {
     color: var(--secondary-text);
     text-transform: uppercase;
     letter-spacing: 0.025em;
-}
-
-.director-link.smart-link > .material-symbols-rounded {
-    margin-left: auto;
-    opacity: 0.6;
-    transition: opacity var(--transition-duration-fast) var(--transition-timing-ease);
-    font-size: 18px;
-}
-
-.director-link.smart-link:hover > .material-symbols-rounded {
-    opacity: 1;
 }
 
 /* Slideshow Styles */
@@ -1891,7 +1859,7 @@ strong {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--overlay-white);
+    color: #ffffff;
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 10001;
@@ -1906,6 +1874,7 @@ strong {
 
 .lightbox-close .material-symbols-rounded {
     font-size: 24px;
+    color: #ffffff;
 }
 
 .lightbox-close:hover,
@@ -1968,7 +1937,7 @@ strong {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--overlay-white);
+    color: #ffffff;
     font-size: 2rem;
     padding: 1rem;
     cursor: pointer;
@@ -1982,7 +1951,7 @@ strong {
 
 .lightbox-nav .material-symbols-rounded {
     font-size: 32px;
-    color: var(--overlay-white);
+    color: #ffffff;
 }
 
 .lightbox-nav:hover:not(:disabled),
@@ -3116,7 +3085,6 @@ strong {
 
 /* Glossary Tooltip Styles */
 .glossary-term {
-    background: rgba(100, 100, 100, 0.12);
     padding: 2px 4px;
     border-radius: 3px;
     cursor: help;
@@ -3125,83 +3093,7 @@ strong {
     text-decoration: none;
 }
 
-.glossary-term:hover {
-    background: rgba(100, 100, 100, 0.18);
-}
-
-/* Section-specific highlighting colors */
-.course-system .glossary-term {
-    background: rgba(16, 185, 129, 0.12);
-}
-
-.course-system .glossary-term:hover {
-    background: rgba(16, 185, 129, 0.18);
-}
-
-.course-self .glossary-term {
-    background: rgba(30, 144, 255, 0.12);
-}
-
-.course-self .glossary-term:hover {
-    background: rgba(30, 144, 255, 0.18);
-}
-
-.course-bridge .glossary-term {
-    background: rgba(255, 107, 53, 0.12);
-}
-
-.course-bridge .glossary-term:hover {
-    background: rgba(255, 107, 53, 0.18);
-}
-
-.course-dessert .glossary-term {
-    background: rgba(255, 193, 7, 0.12);
-}
-
-.course-dessert .glossary-term:hover {
-    background: rgba(255, 193, 7, 0.18);
-}
-
-/* Dark mode adjustments */
-[data-theme="dark"] .glossary-term {
-    background: rgba(100, 100, 100, 0.25);
-}
-
-[data-theme="dark"] .glossary-term:hover {
-    background: rgba(100, 100, 100, 0.35);
-}
-
-[data-theme="dark"] .course-system .glossary-term {
-    background: rgba(16, 185, 129, 0.22);
-}
-
-[data-theme="dark"] .course-system .glossary-term:hover {
-    background: rgba(16, 185, 129, 0.32);
-}
-
-[data-theme="dark"] .course-self .glossary-term {
-    background: rgba(30, 144, 255, 0.22);
-}
-
-[data-theme="dark"] .course-self .glossary-term:hover {
-    background: rgba(30, 144, 255, 0.32);
-}
-
-[data-theme="dark"] .course-bridge .glossary-term {
-    background: rgba(255, 107, 53, 0.22);
-}
-
-[data-theme="dark"] .course-bridge .glossary-term:hover {
-    background: rgba(255, 107, 53, 0.32);
-}
-
-[data-theme="dark"] .course-dessert .glossary-term {
-    background: rgba(255, 193, 7, 0.22);
-}
-
-[data-theme="dark"] .course-dessert .glossary-term:hover {
-    background: rgba(255, 193, 7, 0.32);
-}
+/* Course-specific glossary highlighting handled by [class*="course-"] selectors above */
 
 .glossary-tooltip {
     position: absolute;

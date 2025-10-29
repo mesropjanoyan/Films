@@ -140,6 +140,47 @@ const glossary = [
 const slideshows = {};
 let lightboxInstance = null;
 
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * LocalStorage helper functions with error handling
+ */
+const storage = {
+    get(key, defaultValue = null) {
+        try {
+            const value = localStorage.getItem(key);
+            return value !== null ? value : defaultValue;
+        } catch (e) {
+            return defaultValue;
+        }
+    },
+    
+    set(key, value) {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+};
+
+/**
+ * Add multiple event listeners to an element
+ * @param {Element} element - The DOM element
+ * @param {Array<string>} events - Array of event names
+ * @param {Function} handler - Event handler function
+ */
+function addMultipleListeners(element, events, handler) {
+    events.forEach(event => element.addEventListener(event, handler));
+}
+
+// ============================================================================
+// THEME & HERO TOGGLE
+// ============================================================================
+
 /**
  * Initialize theme toggle functionality
  * Handles light/dark mode switching with localStorage persistence
@@ -153,7 +194,7 @@ function initThemeToggle() {
     const icon = themeToggle.querySelector('.material-symbols-rounded');
     
     // Check for saved theme preference first
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = storage.get('theme');
     
     // Apply initial theme
     if (savedTheme) {
@@ -186,7 +227,7 @@ function initThemeToggle() {
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
         html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        storage.set('theme', newTheme);
         updateIcon(newTheme);
     });
     
@@ -200,7 +241,7 @@ function initThemeToggle() {
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         // Only update if user hasn't set a preference
-        if (!localStorage.getItem('theme')) {
+        if (!storage.get('theme')) {
             const newTheme = e.matches ? 'dark' : 'light';
             html.setAttribute('data-theme', newTheme);
             updateIcon(newTheme);
@@ -235,7 +276,7 @@ function initHeroToggle() {
     const icon = heroToggle.querySelector('.material-symbols-rounded');
     
     // Check for saved hero preference, default to 'collage'
-    const savedHero = localStorage.getItem('hero-style') || 'collage';
+    const savedHero = storage.get('hero-style', 'collage');
     
     // Track which heroes have been initialized
     let collageInitialized = false;
@@ -274,7 +315,7 @@ function initHeroToggle() {
             collageInitialized = true;
         }
         
-        localStorage.setItem('hero-style', newStyle);
+        storage.set('hero-style', newStyle);
     });
 }
 
@@ -397,6 +438,10 @@ class Slideshow {
         this.indicatorsContainer = element.querySelector('.slide-indicators');
         this.prevBtn = element.querySelector('.slide-nav.prev');
         this.nextBtn = element.querySelector('.slide-nav.next');
+        
+        // Cache for DOM elements (will be populated after render)
+        this.slideElements = [];
+        this.indicatorElements = [];
         
         this.loadSlides();
         this.attachEventListeners();
@@ -525,6 +570,10 @@ class Slideshow {
             this.indicatorsContainer.appendChild(indicator);
         });
         
+        // Cache the rendered elements
+        this.slideElements = Array.from(this.slidesWrapper.querySelectorAll('.slide'));
+        this.indicatorElements = Array.from(this.indicatorsContainer.querySelectorAll('.indicator'));
+        
         this.updateNavigation();
     }
     
@@ -556,15 +605,13 @@ class Slideshow {
     goToSlide(index) {
         if (index < 0 || index >= this.slides.length) return;
         
-        // Update slides
-        const allSlides = this.slidesWrapper.querySelectorAll('.slide');
-        allSlides[this.currentIndex].classList.remove('active');
-        allSlides[index].classList.add('active');
+        // Update slides using cached elements
+        this.slideElements[this.currentIndex].classList.remove('active');
+        this.slideElements[index].classList.add('active');
         
-        // Update indicators
-        const allIndicators = this.indicatorsContainer.querySelectorAll('.indicator');
-        allIndicators[this.currentIndex].classList.remove('active');
-        allIndicators[index].classList.add('active');
+        // Update indicators using cached elements
+        this.indicatorElements[this.currentIndex].classList.remove('active');
+        this.indicatorElements[index].classList.add('active');
         
         this.currentIndex = index;
         this.updateNavigation();
@@ -595,6 +642,9 @@ class Lightbox {
         this.triggerElement = null;
         this.touchStartX = 0;
         this.touchEndX = 0;
+        
+        // Cache for slide elements (populated when lightbox opens)
+        this.slideElements = [];
         
         this.createLightboxHTML();
         this.attachEventListeners();
@@ -745,6 +795,9 @@ class Lightbox {
         this.element.classList.add('active');
         document.body.style.overflow = 'hidden';
         
+        // Cache slide elements after rendering
+        this.slideElements = Array.from(this.slidesContainer.querySelectorAll('.lightbox-slide'));
+        
         // Update navigation
         this.updateNavigation();
         
@@ -765,26 +818,25 @@ class Lightbox {
             }, 100);
         }
         
-        // Clear slides after animation
+        // Clear slides and cache after animation
         setTimeout(() => {
             this.slidesContainer.innerHTML = '';
+            this.slideElements = [];
         }, 300);
     }
     
     goToSlide(index) {
-        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
-        if (index < 0 || index >= allSlides.length) return;
+        if (index < 0 || index >= this.slideElements.length) return;
         
-        allSlides[this.currentIndex].classList.remove('active');
-        allSlides[index].classList.add('active');
+        this.slideElements[this.currentIndex].classList.remove('active');
+        this.slideElements[index].classList.add('active');
         
         this.currentIndex = index;
         this.updateNavigation();
     }
     
     nextSlide() {
-        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
-        if (this.currentIndex < allSlides.length - 1) {
+        if (this.currentIndex < this.slideElements.length - 1) {
             this.goToSlide(this.currentIndex + 1);
         }
     }
@@ -796,9 +848,8 @@ class Lightbox {
     }
     
     updateNavigation() {
-        const allSlides = this.slidesContainer.querySelectorAll('.lightbox-slide');
         this.prevBtn.disabled = this.currentIndex === 0;
-        this.nextBtn.disabled = this.currentIndex === allSlides.length - 1;
+        this.nextBtn.disabled = this.currentIndex === this.slideElements.length - 1;
     }
 }
 
