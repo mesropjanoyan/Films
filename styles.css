@@ -1978,7 +1978,7 @@ strong {
     font-size: clamp(3rem, 5vw, 4rem);
     font-weight: 400;
     letter-spacing: -0.01em;
-    margin-bottom: calc(var(--spacing-xl) + var(--spacing-md));
+    margin-bottom: 2.75rem;
     background: linear-gradient(
         90deg,
         var(--matrix-green-dark),
