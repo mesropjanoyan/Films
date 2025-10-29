@@ -65,6 +65,7 @@
     --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.12);
     --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.10), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-card-subtle: 0 2px 8px rgba(0, 0, 0, 0.04);
     
     /* Transitions */
     --transition-timing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,6 +104,7 @@
     --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
     --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-card-subtle: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* System dark mode preference */
@@ -127,6 +129,7 @@
         --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
         --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.4);
         --shadow-card-hover: 0 20px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-card-subtle: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 }
 
@@ -887,8 +890,8 @@ strong {
 .disclaimer {
     background: var(--card-background);
     border-radius: 18px;
-    border: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-md);
+    border: 1px solid var(--divider-color);
+    box-shadow: var(--shadow-card-subtle);
 }
 
 /* Film Card */
@@ -1894,13 +1897,12 @@ strong {
 /* Footer */
 .footer {
     text-align: center;
-    padding: calc(var(--spacing-xxl) + var(--spacing-xl)) 0 0 0;
-    margin-top: var(--spacing-xxl);
-    margin-bottom: 0;
+    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 360px);
+    padding-bottom: 0;
+    margin-top: calc(var(--spacing-xxl) - 360px);
+    margin-bottom: calc(-1 * var(--spacing-xl));
     position: relative;
     overflow: hidden;
-    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 360px);
-    margin-top: calc(var(--spacing-xxl) - 360px);
 }
 
 .finale {
@@ -1927,6 +1929,7 @@ strong {
 .credit-container {
     position: relative;
     display: inline-block;
+    min-height: 60px;
 }
 
 .credit {
@@ -1935,7 +1938,8 @@ strong {
     color: var(--secondary-text);
     opacity: 0.5;
     letter-spacing: 0.015em;
-    padding: var(--spacing-md) 0;
+    line-height: 1;
+    padding: var(--spacing-md) 0 0 0;
     margin: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     position: relative;
