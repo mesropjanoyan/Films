@@ -50,7 +50,6 @@
     --imdb-yellow-hover: #ffd10d;
     
     /* Overlays/transparency */
-    --overlay-white: #ffffff;
     --overlay-light: rgba(255, 255, 255, 0.1);
     --overlay-medium: rgba(255, 255, 255, 0.2);
     --overlay-dark: rgba(0, 0, 0, 0.97);
@@ -2799,11 +2798,14 @@ strong {
     .double-feature {
         grid-template-columns: 1fr;
         gap: var(--spacing-lg);
+        position: relative;
     }
     
     /* Reposition arrow for stacked cards on mobile */
     .arrow-connector {
+        /* Adjusted to visually center between the two stacked cards */
         top: 50%;
+        left: 50%;
         animation: floatIconCenteredMobile 4s ease-in-out infinite;
         animation-delay: 0.8s;
     }
@@ -3307,12 +3309,6 @@ strong {
 
 [data-theme="dark"] .glossary-tooltip-link .wiki-icon {
     border-color: rgba(255, 255, 255, 0.15);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .glossary-tooltip-link .wiki-icon {
-        border-color: rgba(255, 255, 255, 0.15);
-    }
 }
 
 .glossary-tooltip-link:hover .wiki-icon {

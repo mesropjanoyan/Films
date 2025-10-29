@@ -1410,11 +1410,9 @@ function initTooltipBehavior() {
             const url = new URL(wikiLink);
             const pathParts = url.pathname.split('/');
             const encodedTitle = pathParts[pathParts.length - 1];
-            // Decode and replace underscores with spaces
             articleTitle = decodeURIComponent(encodedTitle).replace(/_/g, ' ');
         } catch (e) {
-            // If URL parsing fails, use default
-            console.warn('Failed to parse Wikipedia URL:', wikiLink);
+            // Silently fall back to term text if URL parsing fails
         }
         
         tooltip.innerHTML = '';
