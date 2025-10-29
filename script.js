@@ -224,27 +224,11 @@ function initCollapsibleReadingLists() {
                 linksList.classList.remove('collapsed');
                 this.setAttribute('aria-expanded', 'true');
                 this.setAttribute('aria-label', 'Collapse reading list');
-                
-                // If this is the last section (dessert), add extra spacing
-                if (linksList.id === 'links-dessert') {
-                    const courseSection = linksSection.closest('.course-section');
-                    if (courseSection) {
-                        courseSection.style.paddingBottom = '150px';
-                    }
-                }
             } else {
                 // Collapse
                 linksList.classList.add('collapsed');
                 this.setAttribute('aria-expanded', 'false');
                 this.setAttribute('aria-label', 'Expand reading list');
-                
-                // If this is the last section (dessert), remove extra spacing
-                if (linksList.id === 'links-dessert') {
-                    const courseSection = linksSection.closest('.course-section');
-                    if (courseSection) {
-                        courseSection.style.paddingBottom = '';
-                    }
-                }
             }
         });
         

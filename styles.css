@@ -1700,8 +1700,6 @@ strong {
 .links-section {
     padding: calc(var(--spacing-md) + 0.25rem) var(--spacing-md) var(--spacing-md);
     margin-top: var(--spacing-lg);
-    position: relative;
-    z-index: 10;
 }
 
 /* Links header with toggle button */
@@ -1738,8 +1736,6 @@ strong {
     justify-content: center;
     transition: all var(--transition-duration-fast) var(--transition-timing-ease);
     flex-shrink: 0;
-    position: relative;
-    z-index: 10;
 }
 
 .links-toggle:hover {
@@ -1777,8 +1773,6 @@ strong {
     animation: fadeInLink 0.4s ease-out forwards;
     opacity: 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-    position: relative;
-    z-index: 10;
 }
 
 @keyframes fadeInLink {
@@ -1830,8 +1824,6 @@ strong {
 /* When expanded, remove restrictions */
 .links-list:not(.collapsed) {
     max-height: none;
-    position: relative;
-    z-index: 10;
 }
 
 .links-list a {
@@ -1971,15 +1963,14 @@ strong {
 /* Footer */
 .footer {
     text-align: center;
-    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 360px);
+    padding-top: calc(var(--spacing-xxl) + var(--spacing-xl) + 180px);
     padding-bottom: 0;
-    margin-top: calc(var(--spacing-xxl) + var(--spacing-xl) - 360px);
+    margin-top: calc(var(--spacing-xxl) + var(--spacing-xl) - 180px);
     margin-bottom: calc(-1 * var(--spacing-xl));
     margin-left: calc(-1 * var(--spacing-md));
     margin-right: calc(-1 * var(--spacing-md));
     position: relative;
     overflow: hidden;
-    z-index: 1;
 }
 
 .finale {
