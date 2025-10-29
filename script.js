@@ -169,6 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Populate Further Reading sections with curated articles
     populateFurtherReadingLinks();
+    
+    // Initialize collapsible reading lists
+    initCollapsibleReadingLists();
 });
 
 /**
@@ -198,6 +201,51 @@ function populateFurtherReadingLinks() {
     addFilmLink('links-dessert', 'https://vaguevisages.com/2019/09/19/millennium-actress-satoshi-kan-essay/', 'Millennium Actress: Satoshi Kon Essay', 'Vague Visages', 'Sep 2019', 'images/link-previews/millennium-vaguevisages.jpg');
     addFilmLink('links-dessert', 'https://bfidatadigipres.github.io/pdf/2022-05-04-millennium-actress.pdf', 'Millennium Actress Analysis', 'BFI', 'May 2022', 'images/link-previews/millennium-bfidatadigipres.jpg');
     addFilmLink('links-dessert', 'https://www.youtube.com/watch?v=1dfn-yMmvis', 'Millennium Actress Video Essay', 'YouTube', null, 'images/link-previews/youtube-millennium.jpg');
+}
+
+/**
+ * Initialize collapsible reading lists
+ * All reading lists start collapsed showing only first link preview
+ */
+function initCollapsibleReadingLists() {
+    const toggleButtons = document.querySelectorAll('.links-toggle');
+    
+    console.log('Found toggle buttons:', toggleButtons.length);
+    
+    toggleButtons.forEach((button, index) => {
+        console.log(`Initializing button ${index + 1}`);
+        
+        button.addEventListener('click', function() {
+            const linksHeader = this.closest('.links-header');
+            const linksSection = linksHeader.closest('.links-section');
+            const linksList = linksSection.querySelector('.links-list');
+            
+            console.log('Toggle clicked:', linksList?.id);
+            
+            // Toggle collapsed state
+            const isCollapsed = linksList.classList.contains('collapsed');
+            
+            if (isCollapsed) {
+                // Expand
+                linksList.classList.remove('collapsed');
+                this.setAttribute('aria-expanded', 'true');
+                this.setAttribute('aria-label', 'Collapse reading list');
+            } else {
+                // Collapse
+                linksList.classList.add('collapsed');
+                this.setAttribute('aria-expanded', 'false');
+                this.setAttribute('aria-label', 'Expand reading list');
+            }
+        });
+        
+        // Add keyboard support
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
 }
 
 /**
