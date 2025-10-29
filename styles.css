@@ -1048,15 +1048,15 @@ strong {
 .genre-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
+    gap: var(--gap-sm);
     padding: 0.375rem 0.875rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--surface-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 1.25rem;
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--secondary-text);
-    transition: all 0.2s ease;
+    transition: all var(--transition-duration-fast) var(--transition-timing-smooth);
 }
 
 .genre-pill .material-symbols-rounded {
@@ -1065,13 +1065,14 @@ strong {
 }
 
 .genre-pill:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--divider-color);
+    border-color: var(--border-color);
     transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
 }
 
 .genre-pill:hover .material-symbols-rounded {
-    opacity: 0.9;
+    opacity: 1;
 }
 
 .film-metadata {
