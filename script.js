@@ -209,16 +209,89 @@ function initThemeToggle() {
 }
 
 /**
+ * Shared constants for both hero systems
+ */
+const HERO_FILMS = [
+    'ghost-in-shell',
+    'matrix',
+    'perfect-blue',
+    'black-swan',
+    'paprika',
+    'inception',
+    'millennium-actress'
+];
+const SCREENGRABS_PER_FILM = 8;
+
+/**
+ * Initialize hero toggle functionality
+ * Handles switching between falling collage and scrolling film strip heroes
+ */
+function initHeroToggle() {
+    const heroToggle = document.getElementById('hero-toggle');
+    if (!heroToggle) return;
+    
+    const heroCollage = document.getElementById('heroCollage');
+    const heroScrolling = document.getElementById('heroScrolling');
+    const icon = heroToggle.querySelector('.material-symbols-rounded');
+    
+    // Check for saved hero preference, default to 'collage'
+    const savedHero = localStorage.getItem('hero-style') || 'collage';
+    
+    // Track which heroes have been initialized
+    let collageInitialized = false;
+    let scrollingInitialized = false;
+    
+    // Apply initial hero style and initialize
+    const isScrolling = savedHero === 'scrolling';
+    heroCollage.classList.toggle('hidden', isScrolling);
+    heroScrolling.classList.toggle('hidden', !isScrolling);
+    if (icon) icon.textContent = isScrolling ? 'auto_awesome_mosaic' : 'theaters';
+    
+    // Initialize only the visible hero
+    if (isScrolling) {
+        initHeroScrolling();
+        scrollingInitialized = true;
+    } else {
+        initHeroCollage();
+        collageInitialized = true;
+    }
+    
+    // Hero toggle click handler
+    heroToggle.addEventListener('click', () => {
+        const isCurrentlyScrolling = !heroScrolling.classList.contains('hidden');
+        const newStyle = isCurrentlyScrolling ? 'collage' : 'scrolling';
+        
+        heroCollage.classList.toggle('hidden', !isCurrentlyScrolling);
+        heroScrolling.classList.toggle('hidden', isCurrentlyScrolling);
+        if (icon) icon.textContent = isCurrentlyScrolling ? 'theaters' : 'auto_awesome_mosaic';
+        
+        // Lazy initialize the hero being switched to
+        if (newStyle === 'scrolling' && !scrollingInitialized) {
+            initHeroScrolling();
+            scrollingInitialized = true;
+        } else if (newStyle === 'collage' && !collageInitialized) {
+            initHeroCollage();
+            collageInitialized = true;
+        }
+        
+        localStorage.setItem('hero-style', newStyle);
+    });
+}
+
+/**
  * Main initialization - runs when DOM is fully loaded
  * Initializes all interactive features in sequence
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize toggle first - this will handle hero initialization internally
+    initHeroToggle();
     initThemeToggle();
+    
+    // Initialize other features
     initSmoothScrolling();
     initLightbox();
     initSlideshows();
     initScrollAnimations();
-    initHeroCollage();
     initLinkManagement();
     initGlossary();
     
@@ -911,29 +984,15 @@ function initHeroCollage() {
         BOTTOM_SAFE_ZONE: 250           // Pixels from bottom to avoid gradient cutoff
     };
 
-    // Film directories with screengrab counts
-    const FILMS = [
-        'ghost-in-shell',
-        'matrix',
-        'perfect-blue',
-        'black-swan',
-        'paprika',
-        'inception',
-        'millennium-actress'
-    ];
-    
-    const SCREENGRABS_PER_FILM = 8;
-
     // Build array of all images: posters + screengrabs
-    // 7 posters + (7 films × 8 screengrabs) = 63 total
     const allImages = [
         // Add posters first (marked with type for sizing)
-        ...FILMS.map(film => ({
+        ...HERO_FILMS.map(film => ({
             src: `images/${film}/poster.jpg`,
             type: 'poster'
         })),
         // Add screengrabs
-        ...FILMS.flatMap(film =>
+        ...HERO_FILMS.flatMap(film =>
             Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) => ({
                 src: `images/${film}/screengrab${i + 1}.jpg`,
                 type: 'screengrab'
@@ -1069,9 +1128,8 @@ function initHeroCollage() {
             });
         });
 
-        // Start cycling: find oldest (bottom-most) image and recycle it
-        let cycleIntervalId = setInterval(() => {
-            // Find images in bottom 30% that are oldest
+        // Cycling logic - find and recycle oldest image
+        const doCycle = () => {
             const container = collageContainer.getBoundingClientRect();
             const containerHeight = container.height;
             const bottomThreshold = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
@@ -1080,55 +1138,91 @@ function initHeroCollage() {
                 img.position.top > bottomThreshold * 0.7 // In lower 30%
             );
             
-            if (bottomImages.length > 0) {
-                // Find oldest cycled image
-                const oldestImage = bottomImages.reduce((oldest, current) => 
+            const oldestImage = (bottomImages.length > 0 ? bottomImages : imageElements)
+                .reduce((oldest, current) => 
                     current.lastCycled < oldest.lastCycled ? current : oldest
                 );
-                
-                cycleImage(oldestImage);
-            } else {
-                // If none at bottom, just cycle the oldest overall
-                const oldestImage = imageElements.reduce((oldest, current) => 
-                    current.lastCycled < oldest.lastCycled ? current : oldest
-                );
-                
-                cycleImage(oldestImage);
-            }
-        }, CONFIG.CYCLE_INTERVAL);
+            
+            cycleImage(oldestImage);
+        };
+
+        // Start cycling animation
+        let cycleIntervalId = setInterval(doCycle, CONFIG.CYCLE_INTERVAL);
         
         // Pause animation when page is not visible (performance optimization)
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                clearInterval(cycleIntervalId);
-            } else {
-                cycleIntervalId = setInterval(() => {
-                    const container = collageContainer.getBoundingClientRect();
-                    const containerHeight = container.height;
-                    const bottomThreshold = 100 - ((CONFIG.BOTTOM_SAFE_ZONE / containerHeight) * 100);
-                    
-                    const bottomImages = imageElements.filter(img => 
-                        img.position.top > bottomThreshold * 0.7
-                    );
-                    
-                    if (bottomImages.length > 0) {
-                        const oldestImage = bottomImages.reduce((oldest, current) => 
-                            current.lastCycled < oldest.lastCycled ? current : oldest
-                        );
-                        cycleImage(oldestImage);
-                    } else {
-                        const oldestImage = imageElements.reduce((oldest, current) => 
-                            current.lastCycled < oldest.lastCycled ? current : oldest
-                        );
-                        cycleImage(oldestImage);
-                    }
-                }, CONFIG.CYCLE_INTERVAL);
+            clearInterval(cycleIntervalId);
+            if (!document.hidden) {
+                cycleIntervalId = setInterval(doCycle, CONFIG.CYCLE_INTERVAL);
             }
         });
     }
 
     // Start the collage
     initialize();
+}
+
+/**
+ * Hero Scrolling Film Strips System
+ * Creates horizontally scrolling rows of film screengrabs in alternating directions
+ */
+function initHeroScrolling() {
+    const scrollingContainer = document.getElementById('heroScrolling');
+    if (!scrollingContainer) return;
+
+    const NUM_ROWS = 8;
+
+    // Build and shuffle image array
+    const allImages = HERO_FILMS
+        .flatMap(film => 
+            Array.from({ length: SCREENGRABS_PER_FILM }, (_, i) => 
+                `images/${film}/screengrab${i + 1}.jpg`
+            )
+        )
+        .sort(() => Math.random() - 0.5);
+
+    // Create a film strip row with seamless infinite scroll
+    const createFilmStrip = (images, direction) => {
+        const strip = document.createElement('div');
+        strip.className = `film-strip ${direction === 'right' ? 'scroll-right' : 'scroll-left'}`;
+        
+        const content = document.createElement('div');
+        content.className = 'film-strip-content loading';
+        
+        // Duplicate images for seamless loop (animate by -50%)
+        const fragment = document.createDocumentFragment();
+        [...images, ...images].forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = 'Film screengrab';
+            fragment.appendChild(img);
+        });
+        
+        content.appendChild(fragment);
+        strip.appendChild(content);
+        return strip;
+    };
+
+    // Create and append all film strips
+    const imagesPerRow = Math.ceil(allImages.length / NUM_ROWS);
+    const fragment = document.createDocumentFragment();
+    
+    for (let i = 0; i < NUM_ROWS; i++) {
+        const startIdx = i * imagesPerRow;
+        const rowImages = allImages.slice(startIdx, startIdx + imagesPerRow);
+        const direction = i % 2 === 0 ? 'left' : 'right';
+        fragment.appendChild(createFilmStrip(rowImages, direction));
+    }
+    
+    scrollingContainer.appendChild(fragment);
+    
+    // Start animations smoothly after DOM settles
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            scrollingContainer.querySelectorAll('.film-strip-content')
+                .forEach(content => content.classList.remove('loading'));
+        }, 100);
+    });
 }
 
 /**
