@@ -908,7 +908,11 @@ strong {
 
 .film-card h3 {
     color: var(--primary-text);
-    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1038,8 +1042,8 @@ strong {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0;
+    margin-bottom: 1.125rem;
     color: var(--secondary-text);
     font-size: 0.9375rem;
 }
@@ -1076,25 +1080,26 @@ strong {
 }
 
 .film-metadata {
-    margin-top: var(--spacing-md);
+    margin-top: 1.5rem;
 }
 
 .film-info {
     font-size: 0.9375rem;
     color: var(--secondary-text);
-    margin-bottom: 0.625rem;
+    margin-bottom: 1rem;
     font-weight: 500;
     letter-spacing: -0.005em;
+    line-height: 1.5;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: var(--gap-md);
+    gap: 0.625rem;
 }
 
 /* Remove bottom margin from director line when it comes after genre pills */
 .film-genres + .film-info {
     margin-top: 0;
-    margin-bottom: 0.625rem;
+    margin-bottom: 1.125rem;
 }
 
 .icon-text {
@@ -1109,8 +1114,9 @@ strong {
 }
 
 .metadata-separator {
-    opacity: 0.4;
-    margin: 0 0.125rem;
+    opacity: 0.3;
+    margin: 0 0.25rem;
+    font-size: 0.875rem;
 }
 
 .film-tagline {
@@ -1118,9 +1124,9 @@ strong {
     color: var(--primary-text);
     font-weight: 700;
     letter-spacing: 0.12em;
-    margin-top: 1rem;
-    margin-bottom: 1.25rem;
-    padding: 0.75rem 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.875rem 0;
     border-top: 1px solid var(--divider-color);
     border-bottom: 1px solid var(--divider-color);
     text-transform: uppercase;
