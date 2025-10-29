@@ -91,7 +91,7 @@ const glossary = [
     },
     {
         term: 'double feature',
-        definition: 'A cinema program where two films are shown back-to-back; used here to pair an anime with its influence.',
+        definition: 'A cinema program where two films are shown back-to-back; used here to pair an anime with the film it influenced.',
         wikiLink: 'https://en.wikipedia.org/wiki/Double_feature'
     },
     {
