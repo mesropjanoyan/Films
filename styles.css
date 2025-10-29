@@ -1901,6 +1901,8 @@ strong {
     padding-bottom: 0;
     margin-top: calc(var(--spacing-xxl) - 360px);
     margin-bottom: calc(-1 * var(--spacing-xl));
+    margin-left: calc(-1 * var(--spacing-md));
+    margin-right: calc(-1 * var(--spacing-md));
     position: relative;
     overflow: hidden;
 }
