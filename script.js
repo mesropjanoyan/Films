@@ -1270,13 +1270,7 @@ function initTooltipBehavior() {
         
         tooltip.innerHTML = '';
         
-        // Definition
-        const def = document.createElement('div');
-        def.className = 'glossary-tooltip-definition';
-        def.textContent = definition;
-        tooltip.appendChild(def);
-        
-        // Wikipedia link (rich format)
+        // Wikipedia link (rich format) - shown first as heading
         const link = document.createElement('a');
         link.className = 'glossary-tooltip-link';
         link.href = wikiLink;
@@ -1323,6 +1317,12 @@ function initTooltipBehavior() {
         link.appendChild(icon);
         
         tooltip.appendChild(link);
+        
+        // Definition - shown below link
+        const def = document.createElement('div');
+        def.className = 'glossary-tooltip-definition';
+        def.textContent = definition;
+        tooltip.appendChild(def);
     }
     
     /**

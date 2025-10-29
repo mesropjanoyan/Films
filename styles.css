@@ -2779,7 +2779,6 @@ strong {
     font-size: 0.875rem;
     line-height: 1.5;
     color: var(--secondary-text);
-    margin-bottom: var(--spacing-md);
     text-align: left;
 }
 
@@ -2797,6 +2796,7 @@ strong {
     border: 1px solid var(--border-color);
     transition: all var(--transition-duration-fast) var(--transition-timing-ease);
     font-weight: 500;
+    margin-bottom: var(--spacing-md);
 }
 
 .glossary-tooltip-link:hover {
