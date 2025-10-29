@@ -564,6 +564,30 @@ strong {
     border: none;
 }
 
+/* Scroll Indicator */
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-sm);
+    margin: var(--spacing-xl) auto var(--spacing-lg);
+    animation: floatIcon 3s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+.scroll-indicator .material-symbols-rounded {
+    font-size: 32px;
+    color: var(--accent-color);
+}
+
+.scroll-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--secondary-text);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
 /* Course Section */
 .course-section {
     margin-bottom: var(--spacing-xl);
@@ -2515,6 +2539,18 @@ strong {
 
     .divider {
         margin: var(--spacing-lg) auto;
+    }
+
+    .scroll-indicator {
+        margin: var(--spacing-lg) auto var(--spacing-md);
+    }
+
+    .scroll-indicator .material-symbols-rounded {
+        font-size: 28px;
+    }
+
+    .scroll-text {
+        font-size: 0.8125rem;
     }
 
     .slide-nav {
